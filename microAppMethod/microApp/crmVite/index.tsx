@@ -6,7 +6,7 @@ import { isTrue } from '@/utils'
 import { microRouterMap } from '@/microAppMethod/util'
 
 export default defineComponent({
-	name: 'viteTest',
+	name: 'crmVite',
 	setup() {
 		const { state, commit } = useStore()
 		const route = useRoute()

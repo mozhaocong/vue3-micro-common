@@ -1,24 +1,52 @@
 export const microRouter = {
-	omsVite: {
-		path: '/childOms',
-		name: 'childOmsKeepAliveView',
-		redirect: '/childOms/omsVite#/userManagement',
+	crmVite: {
+		path: '/childCrm',
+		name: 'childCrmVite',
+		redirect: '/childCrm/crmVite#/userManagement',
 		meta: {
-			title: '测试列表1',
+			title: 'crmVite',
 			keepAlive: true,
 			// 下面的属性只有微前端路由才有的
 			isMicro: true,
-			pathName: 'childOmsKeepAliveView',
+			pathName: 'childCrmVite',
+			appId: 'crmVite',
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childCrm/crmVite:page*',
+				name: 'crmVite',
+				component: () => import('@/microAppMethod/microApp/crmVite/index'),
+				meta: {
+					title: 'vite',
+					keepAlive: true,
+					isMicro: true,
+				},
+			},
+		],
+	},
+	omsVite: {
+		path: '/childOms',
+		name: 'childOmsVite',
+		redirect: '/childOms/omsVite#/omsTest',
+		meta: {
+			title: 'omsViteVite',
+			keepAlive: true,
+			// 下面的属性只有微前端路由才有的
+			isMicro: true,
+			pathName: 'childOmsVite',
 			appId: 'omsVite',
 		},
 		component: () => import('@/layout/index'),
 		children: [
 			{
-				// 因为主应用为history路由，appname-vite子应用是hash路由，这里配置略微不同
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
 				path: '/childOms/omsVite:page*',
-				name: 'viteTest',
-				component: () => import('@/microAppMethod/microApp/vite/index'),
+				name: 'omsVite',
+				component: () => import('@/microAppMethod/microApp/omsVite/index'),
 				meta: {
 					title: 'vite',
 					keepAlive: true,
@@ -44,7 +72,7 @@ export const microRouter = {
 		component: () => import('@/layout/index'),
 		children: [
 			{
-				// 因为主应用为history路由，appname-vite子应用是hash路由，这里配置略微不同
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
 				path: '/childErp/erpVue2:page*',
 				name: 'erpVue2',
@@ -70,14 +98,24 @@ interface microRouterMapType {
 }
 type microRouterMapListType = Array<microRouterMapType>
 
+// 给layout的content的路由添加缓存页面
+export const microKeepAliveView = ['childCrmVite', 'crmVite', 'childOmsVite', 'omsVite', 'childErp', 'erpVue2']
+
 // micro路由 保留基座的header，与基座有互相通信
 export const microRouterMap: microRouterMapListType = [
 	{
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
-		appUrl: 'http://localhost:8992/child/oms/',
+		appUrl: 'http://localhost:8910/child/oms/',
 		router: microRouter.omsVite,
+	},
+	{
+		type: 'vite',
+		appId: 'crmVite',
+		baseUrl: '/child/crm/',
+		appUrl: 'http://localhost:8911/child/crm/',
+		router: microRouter.crmVite,
 	},
 ]
 

@@ -2,13 +2,14 @@ import { defineComponent, reactive, watch, KeepAlive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import RouterTagList from '@/layout/modules/routerTagList'
 import './index.less'
+import { microKeepAliveView } from '@/microAppMethod/util'
 
 export default defineComponent({
 	name: 'Content',
 	setup() {
 		const route = useRoute()
 		const state = reactive<{ includeList: any[] }>({
-			includeList: ['keepAliveView'],
+			includeList: ['keepAliveView', ...microKeepAliveView],
 		})
 
 		const isMicroRouter = ref(false)
@@ -25,7 +26,7 @@ export default defineComponent({
 		return () => (
 			<a-layout class={!isMicroRouter.value ? 'ht_layout_content' : ''}>
 				<a-layout-content>
-					{!isMicroRouter.value && <RouterTagList style="margin: 0 0 16px;" />}
+					<RouterTagList />
 					<router-view
 						style="height: 100%"
 						v-slots={{

@@ -18,7 +18,8 @@ export default async function (res: ObjectMap) {
 	}
 	console.time('路由解析时间')
 	setCurrencyRouter()
-	await setVueRouteEager()
+	await setVueMainRouteEager()
+	await setVueChildRouteEager()
 	console.timeEnd('路由解析时间')
 	if (whiteList.includes(path)) {
 		if (isTrue(search)) {
@@ -52,14 +53,14 @@ function setCurrencyRouter() {
 	})
 }
 
-// 设置前端动态路由 import.meta.globEager 导入模式
-async function setVueRouteEager() {
+// 设置前端公共模块动态路由 import.meta.globEager 导入模式 就是git子模块的路由
+async function setVueMainRouteEager() {
 	const filesEager = await import.meta.globEager('../../../../../router/modules/**/*.ts')
 	let routerData: any[] = []
 	for (const key in filesEager) {
 		const item = filesEager[key]
 		let pushData: any = {}
-		const pathName = getPathName(key) // 获取路由项目名
+		const pathName = getMainPathName(key) // 获取路由项目名
 		pushData = filesRouter(item.default, pathName)
 
 		// 过滤路由
@@ -73,10 +74,37 @@ async function setVueRouteEager() {
 	// const routerDataTest = setRouterFilterData()
 	// setVueRouterFilter(routerDataTest)
 
+	// 是子应用不需要header和加载微前端路由和微前端模块
+	if (ISMICROCHILD) return
 	const microHeaderList = setMicroRouter()
 	const dataMicroModel = setMicroModel()
 	erpLayoutModule.SETLAYOUTROUTERDATE([...routerData, ...microHeaderList])
 	erpLayoutModule.SETMICROMODELLIST(dataMicroModel)
+}
+
+// 设置前端子模块动态路由 import.meta.globEager 导入模式 就是子模块当前路由
+async function setVueChildRouteEager() {
+	const filesEager = await import.meta.globEager('../../../../../../child/router/modules/**/*.ts')
+	// const filesEager = await import.meta.globEager('../../../../../router/modules/**/*.ts')
+	let routerData: any[] = []
+	for (const key in filesEager) {
+		console.log(key)
+		const item = filesEager[key]
+		let pushData: any = {}
+		const pathName = getChildPathName(key) // 获取路由项目名
+		pushData = filesRouter(item.default, pathName)
+
+		// 过滤路由
+		// const dataTest = setArrayFilter([clone(pushData)], (item) => {
+		// 	return !isTrue(item.microAppPath)
+		// })
+
+		routerData = setRouterTree(routerData, pushData, pathName)
+		router.addRoute(pushData)
+	}
+
+	console.log('routerData', routerData)
+	erpLayoutModule.SETLAYOUTROUTERDATE([...erpLayoutModule.layoutRouterData, ...routerData])
 }
 
 // 京东微前端添加路由
@@ -119,11 +147,25 @@ function setMicroModel() {
 }
 
 // 下面都是操作函数，根据不同的业务修改
-function getPathName(path: string): string {
+function getMainPathName(path: string): string {
 	// eslint-disable-next-line no-useless-catch
 	try {
 		const patternA = new RegExp('../../../../router/modules/\\w+', 'g')
 		const patternB = new RegExp('../../../../router/modules/', 'g')
+		let pathName: string | any[] = path.match(patternA) || []
+		pathName = pathName[0].replace(patternB, '')
+		return pathName as string
+	} catch (e) {
+		throw e
+	}
+}
+
+// 下面都是操作函数，根据不同的业务修改
+function getChildPathName(path: string): string {
+	// eslint-disable-next-line no-useless-catch
+	try {
+		const patternA = new RegExp('../../../../../child/router/modules/\\w+', 'g')
+		const patternB = new RegExp('../../../../../child/router/modules/', 'g')
 		let pathName: string | any[] = path.match(patternA) || []
 		pathName = pathName[0].replace(patternB, '')
 		return pathName as string

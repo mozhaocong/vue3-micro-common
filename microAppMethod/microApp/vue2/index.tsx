@@ -4,7 +4,7 @@ import { isTrue } from '@/utils'
 import { microModelMap, microRouterMap } from '@/microAppMethod/util'
 import { useStore } from 'vuex'
 export default defineComponent({
-	name: 'microVue2',
+	name: 'erpVue2',
 	setup() {
 		const route = useRoute()
 		const { commit } = useStore()

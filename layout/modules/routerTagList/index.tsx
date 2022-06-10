@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { getArrayFilterData, isTrue } from '@/utils'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -16,7 +16,9 @@ export default defineComponent({
 		const route = useRoute()
 		const { state, commit } = useStore()
 
-		if (!isTrue(routerTagList.value)) {
+		const isShowTagList = computed(() => !route?.meta?.isMicro)
+
+		if (!isTrue(routerTagList.value) && isShowTagList.value) {
 			const list = state?.erpLayout?.layoutRouterData || []
 			const data = list.filter((item: any) => item.pathName === route.meta.pathName)
 			const filterData = getArrayFilterData(data, (item) => {
@@ -57,24 +59,27 @@ export default defineComponent({
 			microTagRouterClick(item)
 		}
 
-		return () => (
-			<div class="ht_router_list">
-				{routerTagList.value.map((item, index) => {
-					return (
-						<Tag
-							{...{ onClick: () => tagClick(item) }}
-							onClose={() => {
-								tagClose(item, index)
-							}}
-							class={route.name === item.name && 'visible_tag'}
-							closable
-							visible={true}
-						>
-							{item.title}
-						</Tag>
-					)
-				})}
-			</div>
-		)
+		return () =>
+			!isShowTagList.value ? (
+				''
+			) : (
+				<div class="ht_router_list">
+					{routerTagList.value.map((item, index) => {
+						return (
+							<Tag
+								{...{ onClick: () => tagClick(item) }}
+								onClose={() => {
+									tagClose(item, index)
+								}}
+								class={route.name === item.name && 'visible_tag'}
+								closable
+								visible={true}
+							>
+								{item.title}
+							</Tag>
+						)
+					})}
+				</div>
+			)
 	},
 })
