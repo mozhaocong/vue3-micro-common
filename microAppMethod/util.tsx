@@ -107,7 +107,7 @@ export const microRouterMap: microRouterMapListType = [
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
-		appUrl: 'http://localhost:8910/child/oms/',
+		appUrl: 'http://localhost:8912/child/oms/',
 		router: microRouter.omsVite,
 	},
 	{
