@@ -1,0 +1,24 @@
+#ht_header{
+  display: flex;
+  width: 100vw;
+  background:@header-background;
+  height: @header-height;
+  .ht_logo{
+    width: @sidebar-width;
+  }
+  .ht_header_nav{
+    flex: 1;
+    line-height: @header-height;
+    background:@header-background;
+    .ht_menu_item{
+      padding: 0 30px;
+    }
+  }
+  .ht_header_dropdown{
+    margin: 0 16px 0 0;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    cursor: pointer
+  }
+}
