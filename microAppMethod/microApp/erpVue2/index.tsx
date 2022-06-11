@@ -22,7 +22,7 @@ export default defineComponent({
 		// 找不到对应的micro数据就不是微前端路由
 		if (!isTrue(microfilter)) return
 		const microData = microfilter[0]
-		commit('erpLayout/SETLAYOUTSPINNING', true)
+		commit('erpLayout/SETLAYOUTSPINNING', { type: true, time: 20000 })
 		return () => (
 			<div>
 				<micro-app
@@ -33,10 +33,10 @@ export default defineComponent({
 					keep-alive
 					error={() => {
 						message.error('页面加载失败，请重现刷新页面')
-						commit('erpLayout/SETLAYOUTSPINNING', false)
+						commit('erpLayout/SETLAYOUTSPINNING', { type: false })
 					}}
 					onMounted={() => {
-						commit('erpLayout/SETLAYOUTSPINNING', false)
+						commit('erpLayout/SETLAYOUTSPINNING', { type: false })
 					}}
 				/>
 			</div>

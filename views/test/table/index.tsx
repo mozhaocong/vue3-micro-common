@@ -1,7 +1,7 @@
 import { defineComponent, ref } from 'vue'
 import { Common, FormRadioGroup, RSearch, RTable } from '@/components'
 import { customer } from '@/api/erp/crm/customer'
-import { dataSource, SearchRow, TableRow } from '@/views/test/table/list/util'
+import { dataSource, SearchRow, TableRow } from '@/views/test/table/util'
 import Modules from './modules'
 import { defaultRowProps } from '@/config'
 import { Button } from 'ant-design-vue'

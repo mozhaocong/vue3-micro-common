@@ -3,12 +3,13 @@ import store from '@/store'
 import { deepClone, isArray, isTrue } from '@/utils'
 import { clone } from 'ramda'
 import { microSetRouterTag } from '@/microAppMethod'
+import { message } from 'ant-design-vue'
 
 interface routerTagListOperate {
 	data: ObjectMap
 	type: 'add' | 'delete'
 }
-// const timeOutSpinning: any = 0
+let timeOutSpinning: any = 0
 
 @Module({ store, name: 'erpLayout', namespaced: true, dynamic: true })
 class Layout extends VuexModule {
@@ -22,16 +23,16 @@ class Layout extends VuexModule {
 	public layoutSpinning = false
 
 	@Mutation // 设置microModelList
-	public SETLAYOUTSPINNING(item: boolean) {
-		// clearTimeout(timeOutSpinning)
-		// // 过期重置页面
-		// if (item) {
-		// 	timeOutSpinning = setTimeout(() => {
-		// 		this.layoutSpinning = false
-		// 		message.error('页面加载失败，请重现刷新页面')
-		// 	}, 3000)
-		// }
-		this.layoutSpinning = item
+	public SETLAYOUTSPINNING({ type = false, time = 10000 }) {
+		clearTimeout(timeOutSpinning)
+		// 过期重置页面
+		if (type && time) {
+			timeOutSpinning = setTimeout(() => {
+				this.layoutSpinning = false
+				message.error('页面加载失败，请重现刷新页面')
+			}, time)
+		}
+		this.layoutSpinning = type
 	}
 
 	@Mutation // 设置microModelList

@@ -11,11 +11,9 @@ export default defineComponent({
 	setup() {
 		function getTitle(data: string) {
 			const titleMap: ObjectMap = {
-				crm: '客户系统',
-				oms: '订单系统',
+				ccf: '客诉系统',
 				childOmsVite: '订单系统2',
 				childCrmVite: '客户系统',
-				ccf: '客诉系统',
 			}
 			return titleMap[data] ?? data
 		}

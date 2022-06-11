@@ -104,7 +104,7 @@ export const microRouter = {
 				// 已解决带参数时页面丢失的问题
 				path: '/childErp/erpVue2:page*',
 				name: 'erpVue2',
-				component: () => import('@/microAppMethod/microApp/vue2/index'),
+				component: () => import('@/microAppMethod/microApp/erpVue2/index'),
 				meta: {
 					title: 'erpVue2',
 					keepAlive: true,

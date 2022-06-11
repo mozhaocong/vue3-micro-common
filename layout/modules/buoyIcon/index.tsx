@@ -15,6 +15,9 @@ export default defineComponent({
 		const route = useRoute()
 		const defRout = ref('/')
 		const isBuoyIconShow = ref(!ISMICROCHILD)
+		const currentName = computed(() => {
+			return route.name
+		})
 		const data = computed(() => {
 			//有bug在微前端子应用时地址报错, 用点击跳转时更新路由信息
 			return [{ path: defRout.value, title: '中台', name: 'main' }, ...(state?.erpLayout?.microModelList || [])]
@@ -23,13 +26,14 @@ export default defineComponent({
 		function setMainPath() {
 			// 可以直接获取url上的参数和路由 有问题在改route
 			const { pathSearch } = getUrlPathSearch()
-			console.log(pathSearch)
 			defRout.value = pathSearch
 		}
 
 		function MenuItemClick(item: any) {
-			if (!route?.meta?.isMicroModel && item.name === 'main') return
-			setMainPath()
+			if (item.name === currentName.value || (!route?.meta?.isMicroModel && item.name === 'main')) return
+			if (!route?.meta?.isMicroModel) {
+				setMainPath()
+			}
 			router.push(item.path)
 		}
 		return () =>

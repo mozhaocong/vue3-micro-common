@@ -74,11 +74,16 @@ async function setVueMainRouteEager() {
 	// const routerDataTest = setRouterFilterData()
 	// setVueRouterFilter(routerDataTest)
 
+	let layoutHeaderList = [...routerData]
+
+	if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain' && import.meta.env.VITE_ADD_MICRO != 'false') {
+		const microHeaderList = setMicroRouter()
+		layoutHeaderList = [...layoutHeaderList, ...microHeaderList]
+	}
 	// 要设置layoutRouterData数据，侧边栏是使用layoutRouterData来过滤出数据来的
-	const microHeaderList = setMicroRouter()
-	erpLayoutModule.SETLAYOUTROUTERDATE([...routerData, ...microHeaderList])
+	erpLayoutModule.SETLAYOUTROUTERDATE(layoutHeaderList)
 	// 是子应用不需要header和加载微前端路由和微前端模块
-	if (ISMICROCHILD) return
+	if (ISMICROCHILD || import.meta.env.VITE_ADD_MICRO == 'false') return
 	const dataMicroModel = setMicroModel()
 	erpLayoutModule.SETMICROMODELLIST(dataMicroModel)
 }
