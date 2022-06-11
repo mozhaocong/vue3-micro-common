@@ -55,6 +55,34 @@ export const microRouter = {
 			},
 		],
 	},
+	ccfVite: {
+		path: '/childCcf',
+		name: 'childCcfVite',
+		redirect: '/childCcf/ccfVite#/cff',
+		meta: {
+			title: 'cffVite',
+			keepAlive: true,
+			// 下面的属性只有微前端路由才有的
+			isMicro: true,
+			pathName: 'childCcfVite',
+			appId: 'cffVite',
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childCcf/ccfVite:page*',
+				name: 'ccfVite',
+				component: () => import('@/microAppMethod/microApp/ccfVite/index'),
+				meta: {
+					title: 'vite',
+					keepAlive: true,
+					isMicro: true,
+				},
+			},
+		],
+	},
 	erpVue2: {
 		path: '/childErp',
 		name: 'childErp',
@@ -99,7 +127,15 @@ interface microRouterMapType {
 type microRouterMapListType = Array<microRouterMapType>
 
 // 给layout的content的路由添加缓存页面
-export const microKeepAliveView = ['childCrmVite', 'crmVite', 'childOmsVite', 'omsVite', 'childErp', 'erpVue2']
+export const microKeepAliveView = [
+	'childCrmVite',
+	'crmVite',
+	'childOmsVite',
+	'omsVite',
+	'childErp',
+	'erpVue2',
+	'ccfVite',
+]
 
 // micro路由 保留基座的header，与基座有互相通信
 export const microRouterMap: microRouterMapListType = [
@@ -107,6 +143,7 @@ export const microRouterMap: microRouterMapListType = [
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
+<<<<<<< Updated upstream
 		// appUrl: 'http://localhost:8910/child/oms/',
 		appUrl: 'http://47.119.141.146:8080/child/oms/',
 		router: microRouter.omsVite,
@@ -118,6 +155,25 @@ export const microRouterMap: microRouterMapListType = [
 	// 	appUrl: 'http://localhost:8911/child/crm/',
 	// 	router: microRouter.crmVite,
 	// },
+=======
+		appUrl: 'http://localhost:8914/child/oms/',
+		router: microRouter.omsVite,
+	},
+	{
+		type: 'vite',
+		appId: 'crmVite',
+		baseUrl: '/child/crm/',
+		appUrl: 'http://localhost:8911/child/crm/',
+		router: microRouter.crmVite,
+	},
+	{
+		type: 'vite',
+		appId: 'ccfVite',
+		baseUrl: '/child/ccf/',
+		appUrl: 'http://localhost:8913/child/cff/',
+		router: microRouter.ccfVite,
+	},
+>>>>>>> Stashed changes
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的

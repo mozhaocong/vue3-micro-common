@@ -13,8 +13,12 @@ export default defineComponent({
 			const titleMap: ObjectMap = {
 				crm: '客户系统',
 				oms: '订单系统',
+<<<<<<< Updated upstream
 				childOmsVite: '订单系统2',
 				childCrmVite: '客户系统',
+=======
+				ccf: '客诉系统',
+>>>>>>> Stashed changes
 			}
 			return titleMap[data] ?? data
 		}
