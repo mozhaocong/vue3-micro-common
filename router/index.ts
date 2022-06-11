@@ -10,20 +10,33 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'index',
 		component: () => import('@/layout/index'),
 	},
+	// 登录页
 	{
 		path: '/login',
 		name: 'login',
 		component: () => import('@/views/login/index'),
 	},
+	// 低代码生成页
 	{
 		path: '/lowCode',
 		name: 'lowCode',
 		component: lowCode,
 	},
+	// 测试调试页
 	{
 		path: '/antdTest',
 		name: 'antdTest',
 		component: () => import('../views/test/antdTest'),
+	},
+	{
+		path: '/testTable',
+		name: 'testTable',
+		component: () => import('../views/test/table'),
+	},
+	{
+		path: '/testComponents',
+		name: 'antdTest',
+		component: () => import('../views/test/components'),
 	},
 
 	// {

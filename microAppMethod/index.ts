@@ -7,13 +7,9 @@ import { microRouterMap } from '@/microAppMethod/util'
 export const MICROWINDOWDATA: string = import.meta.env.VITE_APP_ID + `windowData`
 // 是否微前端子应用
 // @ts-ignore
-export let ISMICROCHILD = false
-// @ts-ignore
-if (window.__MICRO_APP_BASE_APPLICATION__) {
-	ISMICROCHILD = true
-} else {
-	ISMICROCHILD = import.meta.env.VITE_MICRO_TYPE === 'ViteChild'
-}
+export const ISMICROCHILD = window?.__MICRO_APP_BASE_APPLICATION__
+	? true
+	: import.meta.env.VITE_MICRO_TYPE === 'ViteChild'
 
 // 路由是否WebHashHistory vite微前端默认子应用是hash模式
 export const ISWEbHASHHISTORY = ISMICROCHILD

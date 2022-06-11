@@ -13,6 +13,8 @@ export default defineComponent({
 			const titleMap: ObjectMap = {
 				crm: '客户系统',
 				oms: '订单系统',
+				childOmsVite: '订单系统2',
+				childCrmVite: '客户系统',
 			}
 			return titleMap[data] ?? data
 		}

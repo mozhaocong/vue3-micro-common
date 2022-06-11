@@ -107,16 +107,17 @@ export const microRouterMap: microRouterMapListType = [
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
-		appUrl: 'http://localhost:8912/child/oms/',
+		// appUrl: 'http://localhost:8910/child/oms/',
+		appUrl: 'http://47.119.141.146:8080/child/oms/',
 		router: microRouter.omsVite,
 	},
-	{
-		type: 'vite',
-		appId: 'crmVite',
-		baseUrl: '/child/crm/',
-		appUrl: 'http://localhost:8911/child/crm/',
-		router: microRouter.crmVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'crmVite',
+	// 	baseUrl: '/child/crm/',
+	// 	appUrl: 'http://localhost:8911/child/crm/',
+	// 	router: microRouter.crmVite,
+	// },
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的
@@ -124,10 +125,11 @@ export const microModelMap: microRouterMapListType = [
 	{
 		type: 'vue2',
 		appId: 'erpVue2',
-		baseUrl: '/child/vue3/',
+		baseUrl: '/child/erp/',
 		// appUrl: 'http://10.17.201.63:8002/child/vue3/',
 		// appUrl: 'http://10.17.201.63:8081',
-		appUrl: 'http://10.17.201.63:8080/',
+		// appUrl: 'http://10.17.201.63:8080/',
+		appUrl: 'http://47.119.141.146:8080/child/erp/',
 		baseRoute: '/childErp/erpVue2',
 		router: microRouter.erpVue2,
 	},

@@ -34,9 +34,11 @@ function vueInit() {
 		app.config.warnHandler = (msg: string) => {
 			// 我就是不想打印
 			if (
-				msg ===
-				'Failed to resolve component: micro-app\n' +
-					'If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement.'
+				[
+					'Failed to resolve component: micro-app\n' +
+						'If this is a native custom element, make sure to exclude it from component resolution via compilerOptions.isCustomElement.',
+					'Extraneous non-props attributes (style) were passed to component but could not be automatically inherited because component renders fragment or text root nodes.',
+				].includes(msg)
 			) {
 				return
 			}

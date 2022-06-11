@@ -74,21 +74,20 @@ async function setVueMainRouteEager() {
 	// const routerDataTest = setRouterFilterData()
 	// setVueRouterFilter(routerDataTest)
 
+	// 要设置layoutRouterData数据，侧边栏是使用layoutRouterData来过滤出数据来的
+	const microHeaderList = setMicroRouter()
+	erpLayoutModule.SETLAYOUTROUTERDATE([...routerData, ...microHeaderList])
 	// 是子应用不需要header和加载微前端路由和微前端模块
 	if (ISMICROCHILD) return
-	const microHeaderList = setMicroRouter()
 	const dataMicroModel = setMicroModel()
-	erpLayoutModule.SETLAYOUTROUTERDATE([...routerData, ...microHeaderList])
 	erpLayoutModule.SETMICROMODELLIST(dataMicroModel)
 }
 
 // 设置前端子模块动态路由 import.meta.globEager 导入模式 就是子模块当前路由
 async function setVueChildRouteEager() {
 	const filesEager = await import.meta.globEager('../../../../../../child/router/modules/**/*.ts')
-	// const filesEager = await import.meta.globEager('../../../../../router/modules/**/*.ts')
 	let routerData: any[] = []
 	for (const key in filesEager) {
-		console.log(key)
 		const item = filesEager[key]
 		let pushData: any = {}
 		const pathName = getChildPathName(key) // 获取路由项目名
@@ -103,7 +102,6 @@ async function setVueChildRouteEager() {
 		router.addRoute(pushData)
 	}
 
-	console.log('routerData', routerData)
 	erpLayoutModule.SETLAYOUTROUTERDATE([...erpLayoutModule.layoutRouterData, ...routerData])
 }
 

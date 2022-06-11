@@ -33,7 +33,7 @@ export default defineComponent({
 			router.push(item.path)
 		}
 		return () =>
-			data.value.length === 1 || isBuoyIconShow.value ? (
+			data.value.length === 1 || !isBuoyIconShow.value ? (
 				''
 			) : (
 				<div class="buoyIcon">

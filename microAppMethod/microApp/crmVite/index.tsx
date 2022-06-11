@@ -4,6 +4,7 @@ import microApp, { EventCenterForMicroApp } from '@micro-zoe/micro-app'
 import { useStore } from 'vuex'
 import { isTrue } from '@/utils'
 import { microRouterMap } from '@/microAppMethod/util'
+import { message } from 'ant-design-vue'
 
 export default defineComponent({
 	name: 'crmVite',
@@ -38,6 +39,10 @@ export default defineComponent({
 					disablesandbox
 					onMounted={microMounted}
 					url={data.appUrl}
+					error={() => {
+						message.error('页面加载失败，请重新刷新页面')
+						commit('erpLayout/SETLAYOUTSPINNING', false)
+					}}
 				/>
 			</div>
 		)

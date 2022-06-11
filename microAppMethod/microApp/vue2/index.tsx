@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import { isTrue } from '@/utils'
 import { microModelMap, microRouterMap } from '@/microAppMethod/util'
 import { useStore } from 'vuex'
+import { message } from 'ant-design-vue'
 export default defineComponent({
 	name: 'erpVue2',
 	setup() {
@@ -30,6 +31,10 @@ export default defineComponent({
 					url={microData.appUrl}
 					baseroute={microData.baseRoute}
 					keep-alive
+					error={() => {
+						message.error('页面加载失败，请重现刷新页面')
+						commit('erpLayout/SETLAYOUTSPINNING', false)
+					}}
 					onMounted={() => {
 						commit('erpLayout/SETLAYOUTSPINNING', false)
 					}}
