@@ -143,20 +143,8 @@ export const microRouterMap: microRouterMapListType = [
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
-<<<<<<< Updated upstream
 		// appUrl: 'http://localhost:8910/child/oms/',
 		appUrl: 'http://47.119.141.146:8080/child/oms/',
-		router: microRouter.omsVite,
-	},
-	// {
-	// 	type: 'vite',
-	// 	appId: 'crmVite',
-	// 	baseUrl: '/child/crm/',
-	// 	appUrl: 'http://localhost:8911/child/crm/',
-	// 	router: microRouter.crmVite,
-	// },
-=======
-		appUrl: 'http://localhost:8914/child/oms/',
 		router: microRouter.omsVite,
 	},
 	{
@@ -173,7 +161,6 @@ export const microRouterMap: microRouterMapListType = [
 		appUrl: 'http://localhost:8913/child/cff/',
 		router: microRouter.ccfVite,
 	},
->>>>>>> Stashed changes
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的
