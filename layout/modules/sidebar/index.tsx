@@ -11,19 +11,25 @@ export default defineComponent({
 		const route = useRoute()
 		const router = useRouter()
 		const { state, commit } = useStore()
+		const defPathName = route?.meta?.pathName
+		const sidebarList = ref([])
+		const isShowSider = ref(true)
 		watch(
 			() => route,
 			(value) => {
-				selectedKeys.value = [value.path]
+				if (defPathName !== route?.meta?.pathName || !isTrue(sidebarList.value)) {
+					sidebarList.value = setSidebarListData()
+				}
+				if (!route?.meta?.isMicro !== isShowSider.value) {
+					isShowSider.value = !route?.meta?.isMicro
+				}
+				const path = value?.meta?.pagePath ?? value.path
+				selectedKeys.value = [path as string]
 			},
 			{ deep: true, immediate: true }
 		)
 
-		const isShowSider = computed(() => {
-			return !route?.meta?.isMicro
-		})
-
-		const sidebarList = computed(() => {
+		function setSidebarListData() {
 			const pathName = route?.meta?.pathName
 			if (!isTrue(pathName)) return []
 			const list = state?.erpLayout?.layoutRouterData || []
@@ -32,24 +38,27 @@ export default defineComponent({
 			})
 			if (!isTrue(data)) return []
 			return data[0].children
-		})
+		}
 
 		function setSidebarItem(data: any) {
 			return data.map((item: any) => {
-				if (isTrue(item.children)) {
+				if (isTrue(item.children) && !item?.meta?.showMenuItem) {
 					return (
-						<SubMenu class="sub_menu" key={item.path} title={item.title}>
+						<SubMenu class="sub_menu" key={item?.meta?.menuItemKey} title={item.title}>
 							{setSidebarItem(item.children)}
 						</SubMenu>
 					)
 				} else {
+					if (item?.meta?.showMenuItem) {
+						return setSidebarItem(item.children)
+					}
 					return (
 						<MenuItem
 							onClick={() => {
 								menuClick(item)
 							}}
 							class="sub_menu"
-							key={item.path}
+							key={item?.meta?.menuItemKey}
 						>
 							{item.title}
 						</MenuItem>
@@ -59,7 +68,6 @@ export default defineComponent({
 		}
 		function menuClick(item: any) {
 			commit('erpLayout/SETROUTERTAGLIST', { data: item, type: 'add' })
-			// erpLayoutModule.SETROUTERTAGLIST({ data: item, type: 'add' })
 			router.push(item.path)
 		}
 		return () =>
@@ -67,7 +75,6 @@ export default defineComponent({
 				<LayoutSider class="ht_sider" collapsible width={240}>
 					<Menu
 						class="menu"
-						// onClick={menuClick}
 						v-model={[selectedKeys.value, 'selectedKeys']}
 						theme="dark"
 						mode="inline"

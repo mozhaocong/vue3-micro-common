@@ -4,6 +4,7 @@ import router from '@/router'
 import { clone, has } from 'ramda'
 import { ISMICROCHILD } from '@/microAppMethod'
 import { microModelMap, microRouterMap } from '@/microAppMethod/util'
+
 const whiteList = ['/login']
 
 export default async function (res: ObjectMap) {
@@ -18,8 +19,7 @@ export default async function (res: ObjectMap) {
 	}
 	console.time('路由解析时间')
 	setCurrencyRouter()
-	await setVueMainRouteEager()
-	await setVueChildRouteEager()
+	await setVueRouteEager()
 	console.timeEnd('路由解析时间')
 	if (whiteList.includes(path)) {
 		if (isTrue(search)) {
@@ -32,8 +32,6 @@ export default async function (res: ObjectMap) {
 		router.replace(pathSearch)
 	}
 }
-
-// const isWqd = false //判断是否微前端
 
 function setCurrencyRouter() {
 	const list = [
@@ -54,32 +52,22 @@ function setCurrencyRouter() {
 }
 
 // 设置前端公共模块动态路由 import.meta.globEager 导入模式 就是git子模块的路由
-async function setVueMainRouteEager() {
-	const filesEager = await import.meta.globEager('../../../../../router/modules/**/*.ts')
-	let routerData: any[] = []
-	for (const key in filesEager) {
-		const item = filesEager[key]
-		let pushData: any = {}
-		const pathName = getMainPathName(key) // 获取路由项目名
-		pushData = filesRouter(item.default, pathName)
+async function setVueRouteEager() {
+	// 获取公共路由去src目录找文件
+	const publicRouter = await getGlobEagerRouter('public')
+	// 获取当前项目的路由去child目录找文件
+	const childRouter = await getGlobEagerRouter('child')
 
-		// 过滤路由
-		// const dataTest = setArrayFilter([clone(pushData)], (item) => {
-		// 	return !isTrue(item.microAppPath)
-		// })
-
-		routerData = setRouterTree(routerData, pushData, pathName)
-		router.addRoute(pushData)
-	}
 	// const routerDataTest = setRouterFilterData()
 	// setVueRouterFilter(routerDataTest)
 
-	let layoutHeaderList = [...routerData]
+	let layoutHeaderList: any = [...publicRouter, ...childRouter]
 
 	if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain' && import.meta.env.VITE_ADD_MICRO != 'false') {
 		const microHeaderList = setMicroRouter()
 		layoutHeaderList = [...layoutHeaderList, ...microHeaderList]
 	}
+
 	// 要设置layoutRouterData数据，侧边栏是使用layoutRouterData来过滤出数据来的
 	erpLayoutModule.SETLAYOUTROUTERDATE(layoutHeaderList)
 	// 是子应用不需要header和加载微前端路由和微前端模块
@@ -88,26 +76,43 @@ async function setVueMainRouteEager() {
 	erpLayoutModule.SETMICROMODELLIST(dataMicroModel)
 }
 
-// 设置前端子模块动态路由 import.meta.globEager 导入模式 就是子模块当前路由
-async function setVueChildRouteEager() {
-	const filesEager = await import.meta.globEager('../../../../../../child/router/modules/**/*.ts')
-	let routerData: any[] = []
-	for (const key in filesEager) {
-		const item = filesEager[key]
-		let pushData: any = {}
-		const pathName = getChildPathName(key) // 获取路由项目名
-		pushData = filesRouter(item.default, pathName)
-
-		// 过滤路由
-		// const dataTest = setArrayFilter([clone(pushData)], (item) => {
-		// 	return !isTrue(item.microAppPath)
-		// })
-
-		routerData = setRouterTree(routerData, pushData, pathName)
-		router.addRoute(pushData)
+// 通过搜索文件,找到对应的路由文件,读取配置的路由信息
+async function getGlobEagerRouter(path = '../../../../../../child/router/modules/') {
+	try {
+		let filesEager: any = {}
+		switch (path) {
+			case 'public':
+				filesEager = await import.meta.globEager('../../../../../router/modules/index.ts')
+				break
+			case 'child':
+				filesEager = await import.meta.globEager('../../../../../../child/router/modules/index.ts')
+				break
+			default:
+				console.error('getGlobEagerRouter: 找不到对应的路径')
+				return []
+		}
+		let routerData: any[] = []
+		for (const key in filesEager) {
+			const item = filesEager[key]
+			item.default.forEach((res: any) => {
+				let pushData: any = {}
+				res.router.forEach((routerItem: any) => {
+					// 修改vueRouter参数提供layout的组件的字段
+					pushData = filesRouter(routerItem, res.pathName)
+					// 过滤路由
+					// const dataTest = setArrayFilter([clone(pushData)], (item) => {
+					// 	return !isTrue(item.microAppPath)
+					// })
+					routerData = setRouterTree(routerData, pushData, res.pathName)
+					router.addRoute(pushData)
+				})
+			})
+		}
+		return routerData
+	} catch (err) {
+		console.error('getGlobEagerRouter', err)
+		return []
 	}
-
-	erpLayoutModule.SETLAYOUTROUTERDATE([...erpLayoutModule.layoutRouterData, ...routerData])
 }
 
 // 京东微前端添加路由
@@ -147,34 +152,6 @@ function setMicroModel() {
 		data.push({ ...item.router, title: item?.router?.meta?.title })
 	})
 	return data
-}
-
-// 下面都是操作函数，根据不同的业务修改
-function getMainPathName(path: string): string {
-	// eslint-disable-next-line no-useless-catch
-	try {
-		const patternA = new RegExp('../../../../router/modules/\\w+', 'g')
-		const patternB = new RegExp('../../../../router/modules/', 'g')
-		let pathName: string | any[] = path.match(patternA) || []
-		pathName = pathName[0].replace(patternB, '')
-		return pathName as string
-	} catch (e) {
-		throw e
-	}
-}
-
-// 下面都是操作函数，根据不同的业务修改
-function getChildPathName(path: string): string {
-	// eslint-disable-next-line no-useless-catch
-	try {
-		const patternA = new RegExp('../../../../../child/router/modules/\\w+', 'g')
-		const patternB = new RegExp('../../../../../child/router/modules/', 'g')
-		let pathName: string | any[] = path.match(patternA) || []
-		pathName = pathName[0].replace(patternB, '')
-		return pathName as string
-	} catch (e) {
-		throw e
-	}
 }
 
 function setRouterTree(data: any[], pushData: ObjectMap, pathName: string) {
@@ -335,7 +312,8 @@ function filesRouter(data: ObjectMap, pathName: string) {
 				if (!isTrue(item.meta)) {
 					item.meta = {}
 				}
-				item.meta = { pathName, ...item.meta }
+				item.meta = { pathName, menuItemKey: item.path, ...item.meta }
+
 				// if (!has(pathName, dataRouterObject)) {
 				// 	dataRouterObject[pathName] = {}
 				// }
