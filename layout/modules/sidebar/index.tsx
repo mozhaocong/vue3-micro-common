@@ -42,6 +42,9 @@ export default defineComponent({
 
 		function setSidebarItem(data: any) {
 			return data.map((item: any) => {
+				if (item?.meta?.hideMenuItem) {
+					return ''
+				}
 				if (isTrue(item.children) && !item?.meta?.showMenuItem) {
 					return (
 						<SubMenu class="sub_menu" key={item?.meta?.menuItemKey} title={item.title}>
