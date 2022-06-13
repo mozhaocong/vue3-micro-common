@@ -15,6 +15,14 @@ let timeOutSpinning: any = 0
 class Layout extends VuexModule {
 	//header的数据列表
 	public layoutRouterData: any[] = []
+	//header选中key
+	public headerSelectedKey = ''
+	//侧边栏选中key
+	public sidebarSelectedKey = ''
+	//侧边栏数据列表
+	public sidebarList: any[] = []
+	//routerTag选中key
+	public routerTagKey = ''
 	//routerTag数据
 	public routerTagList: any[] = []
 	// microModel
@@ -23,7 +31,7 @@ class Layout extends VuexModule {
 	public layoutSpinning = false
 
 	@Mutation // 设置microModelList
-	public SETLAYOUTSPINNING({ type = false, time = 10000 }) {
+	public SetLayoutSpinning({ type = false, time = 10000 }) {
 		clearTimeout(timeOutSpinning)
 		// 过期重置页面
 		if (type && time) {
@@ -35,23 +43,43 @@ class Layout extends VuexModule {
 		this.layoutSpinning = type
 	}
 
+	@Mutation // 设置侧边栏数据列表
+	public SetHeaderSelectedKey(item: string) {
+		this.headerSelectedKey = item
+	}
+
+	@Mutation // 设置侧边栏Key
+	public SetSidebarSelectedKey(item: string) {
+		this.sidebarSelectedKey = item
+	}
+
+	@Mutation // 设置侧边栏数据列表
+	public SetSidebarList(item: any[]) {
+		this.sidebarList = deepClone(item)
+	}
+
+	@Mutation // 设置routerTagKey选中key
+	public SetRouterTagKey(item: string) {
+		this.routerTagKey = item
+	}
+
 	@Mutation // 设置microModelList
-	public SETMICROMODELLIST(item: any[]) {
+	public SetMicroModeList(item: any[]) {
 		this.microModelList = deepClone(item)
 	}
 
 	@Mutation // 重置routerTag数据
-	public RESETROUTERTAGLIST(item: any[]) {
+	public ResetRouterTagList(item: any[]) {
 		this.routerTagList = deepClone(item)
 	}
 
 	@Mutation // 设置header的数据列表
-	public SETLAYOUTROUTERDATE(item: any[]) {
+	public SetLayoutRouterDate(item: any[]) {
 		this.layoutRouterData = clone(isArray(item) ? item : [])
 	}
 
 	@Mutation // 设置路由标签列表数组
-	public SETROUTERTAGLIST(item: routerTagListOperate) {
+	public AddDeleteRouterTagList(item: routerTagListOperate) {
 		const { data, type } = item
 		if (!isTrue(data)) return
 		// 添加微前端类型

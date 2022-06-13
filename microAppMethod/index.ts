@@ -64,7 +64,7 @@ export function microAppInit(item: any) {
 				const { type } = res
 				switch (type) {
 					case 'setRouterTagList':
-						store.commit('erpLayout/SETROUTERTAGLIST', res.data || {})
+						store.commit('erpLayout/AddDeleteRouterTagList', res.data || {})
 						return
 					case 'microTagRouterClick':
 						microTagRouterClick(deepClone(res.data))
@@ -124,7 +124,7 @@ function mount() {
 				data.forEach((res: any) => {
 					switch (res.type) {
 						case 'resetRouterTagList':
-							store.commit('erpLayout/RESETROUTERTAGLIST', res.data || [])
+							store.commit('erpLayout/ResetRouterTagList', res.data || [])
 							return
 					}
 				})

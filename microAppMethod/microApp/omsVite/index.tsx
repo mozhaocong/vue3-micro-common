@@ -28,14 +28,14 @@ export default defineComponent({
 		window[windowKey] = new EventCenterForMicroApp(data.appId) as any
 		const microAppData = ref({})
 		function microMounted() {
-			commit('erpLayout/SETLAYOUTSPINNING', { type: false })
+			commit('erpLayout/SetLayoutSpinning', { type: false })
 
 			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: state?.erpLayout?.routerTagList }] })
 		}
 
 		const basePath = import.meta.env.BASE_URL + route.path?.slice(1, route.path.length) + '#/'
 		microAppData.value = { basePath }
-		commit('erpLayout/SETLAYOUTSPINNING', { type: true })
+		commit('erpLayout/SetLayoutSpinning', { type: true })
 
 		return () => (
 			<div>
@@ -49,7 +49,7 @@ export default defineComponent({
 					url={data.appUrl}
 					error={() => {
 						message.error('页面加载失败，请重现刷新页面')
-						commit('erpLayout/SETLAYOUTSPINNING', { type: false })
+						commit('erpLayout/SetLayoutSpinning', { type: false })
 					}}
 				/>
 			</div>

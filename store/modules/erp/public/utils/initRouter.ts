@@ -69,11 +69,11 @@ async function setVueRouteEager() {
 	}
 
 	// 要设置layoutRouterData数据，侧边栏是使用layoutRouterData来过滤出数据来的
-	erpLayoutModule.SETLAYOUTROUTERDATE(layoutHeaderList)
+	erpLayoutModule.SetLayoutRouterDate(layoutHeaderList)
 	// 是子应用不需要header和加载微前端路由和微前端模块
 	if (ISMICROCHILD || import.meta.env.VITE_ADD_MICRO == 'false') return
 	const dataMicroModel = setMicroModel()
-	erpLayoutModule.SETMICROMODELLIST(dataMicroModel)
+	erpLayoutModule.SetMicroModeList(dataMicroModel)
 }
 
 // 通过搜索文件,找到对应的路由文件,读取配置的路由信息

@@ -4,27 +4,31 @@ import { useRoute, useRouter } from 'vue-router'
 import './index.less'
 import { LayoutSider, Menu, MenuItem, SubMenu } from 'ant-design-vue'
 import { useStore } from 'vuex'
+import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 export default defineComponent({
 	name: 'Sidebar',
 	setup() {
-		const selectedKeys = ref<string[]>([])
 		const route = useRoute()
 		const router = useRouter()
 		const { state, commit } = useStore()
 		const defPathName = route?.meta?.pathName
-		const sidebarList = ref([])
-		const isShowSider = ref(true)
+		const selectedKeys = computed(() => {
+			return [erpLayoutModule.sidebarSelectedKey]
+		})
+		const sidebarList = computed(() => {
+			return erpLayoutModule.sidebarList
+		})
+
+		const isShowSidebar = computed(() => {
+			return !route?.meta?.isMicro
+		})
 		watch(
 			() => route,
 			(value) => {
 				if (defPathName !== route?.meta?.pathName || !isTrue(sidebarList.value)) {
-					sidebarList.value = setSidebarListData()
+					erpLayoutModule.SetSidebarList(setSidebarListData())
 				}
-				if (!route?.meta?.isMicro !== isShowSider.value) {
-					isShowSider.value = !route?.meta?.isMicro
-				}
-				const path = value?.meta?.pagePath ?? value.path
-				selectedKeys.value = [path as string]
+				erpLayoutModule.SetSidebarSelectedKey(value.path)
 			},
 			{ deep: true, immediate: true }
 		)
@@ -70,15 +74,15 @@ export default defineComponent({
 			})
 		}
 		function menuClick(item: any) {
-			commit('erpLayout/SETROUTERTAGLIST', { data: item, type: 'add' })
+			commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'add' })
 			router.push(item.path)
 		}
 		return () =>
-			isTrue(sidebarList.value) && isShowSider.value ? (
+			isTrue(sidebarList.value) && isShowSidebar.value ? (
 				<LayoutSider class="ht_sider" collapsible width={240}>
 					<Menu
 						class="menu"
-						v-model={[selectedKeys.value, 'selectedKeys']}
+						selectedKeys={selectedKeys.value}
 						theme="dark"
 						mode="inline"
 						style={{ height: '100%', borderRight: 0 }}
