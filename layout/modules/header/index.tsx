@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 import './index.less'
 import { Dropdown, Menu, MenuItem } from 'ant-design-vue'
 import { ISMICROCHILD } from '@/microAppMethod'
+import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'Header',
@@ -18,14 +19,18 @@ export default defineComponent({
 			return titleMap[data] ?? data
 		}
 
-		const vuexStore = useStore()
+		const { state, dispatch } = useStore()
 		const owm = computed<ObjectMap>(() => {
-			return vuexStore.state?.erpLogin?.owm || []
+			return state?.erpLogin?.owm || []
 		})
 		const router = useRouter()
 		const route = useRoute()
 
-		const selectedKeys = ref<string[]>([(useRoute()?.meta?.pathName as string) || ''])
+		// const selectedKeys = ref<string[]>([(useRoute()?.meta?.pathName as string) || ''])
+
+		const selectedKeys = computed(() => {
+			return [erpLayoutModule.headerSelectedKey]
+		})
 
 		// 是否显示header
 		const isHeader = computed(() => {
@@ -35,19 +40,19 @@ export default defineComponent({
 		watch(
 			() => route,
 			(value) => {
-				selectedKeys.value = [(value?.meta?.pathName as string) || '']
+				erpLayoutModule.SetHeaderSelectedKey((value?.meta?.pathName as string) || '')
 			},
 			{ deep: true, immediate: true }
 		)
 
 		const headList = computed<any[]>(() => {
-			const list = vuexStore?.state.erpLayout?.layoutRouterData || []
+			const list = state.erpLayout?.layoutRouterData || []
 			return list.map((item: any) => {
 				return { title: item.pathName, name: item.pathName }
 			})
 		})
 		function menuClick(item: any) {
-			const list = vuexStore.state?.erpLayout?.layoutRouterData || []
+			const list = state?.erpLayout?.layoutRouterData || []
 			const data = list.filter((res: any) => res.pathName === item.key)
 			if (isTrue(data)) {
 				const routerData = data[0]
@@ -88,7 +93,7 @@ export default defineComponent({
 										<MenuItem>修改密码</MenuItem>
 										<MenuItem
 											onClick={() => {
-												vuexStore.dispatch('erpLogin/signOut')
+												dispatch('erpLogin/signOut')
 												// erpLoginModule.signOut()
 											}}
 										>

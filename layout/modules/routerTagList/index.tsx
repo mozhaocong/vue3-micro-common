@@ -1,4 +1,4 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { getArrayFilterData, isTrue } from '@/utils'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -6,6 +6,7 @@ import { Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microTagRouterClick } from '@/microAppMethod'
+import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'RouterTagList',
@@ -13,10 +14,19 @@ export default defineComponent({
 		const routerTagList = computed<any[]>(() => {
 			return state?.erpLayout?.routerTagList || []
 		})
+
 		const route = useRoute()
 		const { state, commit } = useStore()
 
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
+
+		watch(
+			() => route,
+			(value) => {
+				erpLayoutModule.SetRouterTagKey((value?.name as string) || '')
+			},
+			{ deep: true, immediate: true }
+		)
 
 		if (!isTrue(routerTagList.value) && isShowTagList.value) {
 			const list = state?.erpLayout?.layoutRouterData || []
@@ -28,12 +38,12 @@ export default defineComponent({
 				return route.name === item.name
 			})
 			if (isTrue(filterData)) {
-				commit('erpLayout/SETROUTERTAGLIST', { data: filterData[0], type: 'add' })
+				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
 			}
 		}
 
 		function tagClose(item: any, index: number) {
-			commit('erpLayout/SETROUTERTAGLIST', { data: item, type: 'delete' })
+			commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'delete' })
 			if (!routerTagList.value.length) {
 				// router.push('/')
 				microEmptyRouterTag()
@@ -59,6 +69,10 @@ export default defineComponent({
 			microTagRouterClick(item)
 		}
 
+		function setVisibleTag(item: any) {
+			return erpLayoutModule.routerTagKey === item.name ? 'visible_tag' : ''
+		}
+
 		return () =>
 			!isShowTagList.value ? (
 				''
@@ -71,7 +85,7 @@ export default defineComponent({
 								onClose={() => {
 									tagClose(item, index)
 								}}
-								class={route.name === item.name && 'visible_tag'}
+								class={setVisibleTag(item)}
 								closable
 								visible={true}
 							>
