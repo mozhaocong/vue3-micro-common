@@ -8,6 +8,7 @@ import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
 import { erpLoginModule } from '@/store/modules/erp/public/login'
 import { isTrue } from '@/utils'
 
+console.log('2022 6 14')
 // 京东框架微前端初始化
 microAppInit({ mount })
 
