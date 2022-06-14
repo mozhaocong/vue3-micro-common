@@ -1,5 +1,5 @@
 let apiUrl = ''
-const crm = 'http://crm_test.admin.htwig.com:8000'
+const crm = 'http://crm_test.htwig.com'
 const erp_test = 'http://erp_test.admin.htwig.com'
 apiUrl = ''
 apiUrl = crm
