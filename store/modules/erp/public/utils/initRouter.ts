@@ -297,14 +297,14 @@ function filesRouter(data: ObjectMap, pathName: string) {
 		if (isTrue(pathName)) {
 			return setArrayData([data], (item) => {
 				// 区分微前端子应用
-				if (!ISMICROCHILD) {
-					if (isTrue(item.path)) {
-						item.path = `/${pathName}${item.path}`
-					}
-					if (isTrue(item.redirect)) {
-						item.redirect = `/${pathName}${item.redirect}`
-					}
-				}
+				// if (!ISMICROCHILD) {
+				// 	if (isTrue(item.path)) {
+				// 		item.path = `/${pathName}${item.path}`
+				// 	}
+				// 	if (isTrue(item.redirect)) {
+				// 		item.redirect = `/${pathName}${item.redirect}`
+				// 	}
+				// }
 
 				if (isTrue(item.microAppPath)) {
 					item.path = item.microAppPath
