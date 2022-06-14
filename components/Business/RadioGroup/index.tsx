@@ -47,7 +47,7 @@ const FormRadioGroup = defineComponent({
 			}
 			const filter = props.filter
 			if (filter) {
-				return (([props.prop] as Options[]) || []).filter(filter)
+				return ((configBusinessDataOptions[props.prop] as Options[]) || []).filter(filter)
 			} else {
 				return configBusinessDataOptions[props.prop] || []
 			}
@@ -85,7 +85,6 @@ const FormRadioGroup = defineComponent({
 
 		const buttonValue = computed<any[]>(() => {
 			if (isArray(props.value)) {
-				console.log(props.value, '222')
 				const data: any[] = props.value || []
 				if (!isTrue(props.value)) {
 					return data
@@ -128,7 +127,6 @@ const FormRadioGroup = defineComponent({
 					)}
 					{map(
 						(item: ObjectMap) => (
-							// {console.log(item,'111')}
 							// <a-badge count={props.countList[item.value] || 0} overflowCount={9999}>
 							<Button
 								style="margin: 0 16px 0 0;"
