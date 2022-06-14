@@ -77,7 +77,7 @@ async function setVueRouteEager() {
 }
 
 // 通过搜索文件,找到对应的路由文件,读取配置的路由信息
-async function getGlobEagerRouter(path = '../../../../../../child/router/modules/') {
+async function getGlobEagerRouter(path = 'public') {
 	try {
 		let filesEager: any = {}
 		switch (path) {

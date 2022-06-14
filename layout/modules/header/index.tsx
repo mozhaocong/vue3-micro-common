@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isTrue } from '@/utils'
 import { useStore } from 'vuex'
@@ -73,7 +73,7 @@ export default defineComponent({
 						class="ht_header_nav"
 						theme="dark"
 						mode="horizontal"
-						v-model={[selectedKeys.value, 'selectedKeys']}
+						selectedKeys={selectedKeys.value}
 						onClick={menuClick}
 					>
 						{headList.value.map((item) => {
