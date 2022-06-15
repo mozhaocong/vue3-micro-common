@@ -7,7 +7,7 @@ import { microRouterMap } from '@/microAppMethod/util'
 import { message } from 'ant-design-vue'
 
 export default defineComponent({
-	name: 'ccfVite',
+	name: 'rmaVite',
 	setup() {
 		const { state, commit } = useStore()
 		const route = useRoute()
