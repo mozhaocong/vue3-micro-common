@@ -67,7 +67,7 @@ export function microAppInit(item: any) {
 						store.commit('erpLayout/AddDeleteRouterTagList', res.data || {})
 						return
 					case 'microTagRouterClick':
-						microTagRouterClick(deepClone(res.data))
+						microTagRouterClick(deepClone(res.data), vueRouter)
 						return
 					case 'setMainRouter':
 						// eslint-disable-next-line no-case-declarations
@@ -199,16 +199,16 @@ function unmount() {
 	// console.log('微应用child-vite卸载了')
 }
 
-export function microTagRouterClick(data: any) {
+export function microTagRouterClick(data: any, router: any) {
 	if (import.meta.env.VITE_APP_ID === data.microId) {
-		vueRouter.push(data.path)
+		router.push(data.path)
 	} else if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
 		const filter = microRouterMap.filter((item) => item.appId === data.microId)
 		if (isTrue(filter)) {
 			let filterData = filter[0].router.children[0].path
 			filterData = filterData.replace(':page*', '#')
 			const pushRouter = filterData + data.path
-			vueRouter.push(pushRouter)
+			router.push(pushRouter)
 		} else {
 			console.log('tagList 找不到对应的路由')
 		}

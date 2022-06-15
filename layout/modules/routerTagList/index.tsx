@@ -1,6 +1,6 @@
 import { computed, defineComponent, watch } from 'vue'
 import { getArrayFilterData, isTrue } from '@/utils'
-import { useRoute } from 'vue-router'
+import {useRoute, useRouter} from 'vue-router'
 import { useStore } from 'vuex'
 import { Tag } from 'ant-design-vue'
 import { last } from 'ramda'
@@ -16,6 +16,7 @@ export default defineComponent({
 		})
 
 		const route = useRoute()
+		const router = useRouter()
 		const { state, commit } = useStore()
 
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
@@ -57,16 +58,16 @@ export default defineComponent({
 			// }
 
 			if (index >= routerTagList.value.length) {
-				microTagRouterClick(last(routerTagList.value))
+				tagClick(last(routerTagList.value))
 			} else {
-				microTagRouterClick(routerTagList.value[index])
+				tagClick(routerTagList.value[index])
 			}
 		}
 		function tagClick(item: any) {
 			// 不用微前端可以使用时这个
 			// router.push(item.path)
 			// 判断当前tag是不是当地环 由于是微前端，在 microAppMethod 统一处理
-			microTagRouterClick(item)
+			microTagRouterClick(item, router)
 		}
 
 		function setVisibleTag(item: any) {
