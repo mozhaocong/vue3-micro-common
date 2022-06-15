@@ -1,6 +1,7 @@
 import { defineComponent, ref, watch } from 'vue'
 import { Dropdown, InputSearch, Menu, MenuItem, Tree } from 'ant-design-vue'
 import { debounce, deepClone, isTrue } from '@/utils'
+import LocalRouter from './localRouter'
 
 export default defineComponent({
 	name: 'routerList.tsx',
@@ -71,6 +72,7 @@ export default defineComponent({
 		const searchTree = debounce(searchChange, 300)
 		return () => (
 			<div>
+				<LocalRouter />
 				<InputSearch v-model={[searchValue.value, 'value']} onChange={searchTree} placeholder="Search" />
 				<Tree
 					v-model={[expandedKeys.value, 'expandedKeys']}

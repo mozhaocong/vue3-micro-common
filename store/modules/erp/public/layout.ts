@@ -13,7 +13,7 @@ let timeOutSpinning: any = 0
 
 @Module({ store, name: 'erpLayout', namespaced: true, dynamic: true })
 class Layout extends VuexModule {
-	//header的数据列表
+	//routerData的数据列表
 	public layoutRouterData: any[] = []
 	//header选中key
 	public headerSelectedKey = ''

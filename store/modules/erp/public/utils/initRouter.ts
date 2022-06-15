@@ -53,8 +53,11 @@ function setCurrencyRouter() {
 
 // 设置前端公共模块动态路由 import.meta.globEager 导入模式 就是git子模块的路由
 async function setVueRouteEager() {
-	// 获取公共路由去src目录找文件
-	const publicRouter = await getGlobEagerRouter('public')
+	let publicRouter = []
+	// 获取公共路由去src目录找文件 子模块不需要加载公共模块路由
+	if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
+		publicRouter = await getGlobEagerRouter('public')
+	}
 	// 获取当前项目的路由去child目录找文件
 	const childRouter = await getGlobEagerRouter('child')
 
@@ -162,7 +165,7 @@ function setRouterTree(data: any[], pushData: ObjectMap, pathName: string) {
 	if (isTrue(filterData)) {
 		filterData[0].children.push(pushData)
 	} else {
-		data.push({ pathName, children: [pushData] })
+		data.push({ path: pathName, pathName, name: pathName, title: pathName, children: [pushData] })
 	}
 	return data
 }

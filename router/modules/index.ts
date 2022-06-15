@@ -5,5 +5,5 @@ interface routerModulesType {
 	pathName: string
 	router: Array<RouteRecordRaw>
 }
-const data: Array<routerModulesType> = [{ pathName: 'basis', router: [basis] }]
+const data: Array<routerModulesType> = [{ pathName: 'basisModules', router: [basis] }]
 export default data
