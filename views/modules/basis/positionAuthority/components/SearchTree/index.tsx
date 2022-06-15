@@ -37,7 +37,7 @@ const propsData = {
 export default defineComponent({
 	props: propsData,
 	name: 'SearchTree',
-	emits: ['change', 'update:expandedKeys', 'update:searchValue'],
+	emits: ['select', 'update:expandedKeys', 'update:searchValue'],
 	setup(props, { emit }) {
 		// 默认tree数组 用来重置treeData
 		let defaultTreeData: any[] = []
@@ -116,12 +116,19 @@ export default defineComponent({
 			}
 		}
 
-		function titleClick(item: any) {
-			const { data } = item
-			const children = data[props.fieldNames.children]
-			const key = data[props.fieldNames.key]
-			if (!isTrue(children)) return
+		function titleClick(selectedKeys: any, e: any) {
+			const { node = {} } = e
+			const { dataRef = {} } = node
+			const key = dataRef[props.fieldNames.key]
+			const children = dataRef[props.fieldNames.children]
+			if (isTrue(selectedKeys)) {
+				emit('select', dataRef)
+			}
+			if (!isTrue(children) || !isTrue(key)) {
+				return
+			}
 			if (expandedKeys.value.includes(key)) {
+				if (isTrue(selectedKeys)) return
 				expandedKeys.value = expandedKeys.value.filter((item) => item !== key)
 			} else {
 				const data = deepClone(expandedKeys.value)
@@ -137,43 +144,23 @@ export default defineComponent({
 					fieldNames={props.fieldNames}
 					v-model={[computedExpandedKeys.value, 'expandedKeys']}
 					tree-data={treeData.value}
+					onSelect={titleClick}
 					v-slots={{
 						title: (item: any) => {
 							const { title } = item
 							if (!props.dropdownOverlay) {
-								return (
-									<span
-										onClick={() => {
-											titleClick(item)
-										}}
-									>
-										{title}
-									</span>
-								)
+								return <span>{title}</span>
 							}
 							return (
 								<Dropdown
 									trigger={['contextmenu']}
 									v-slots={{
 										overlay: () => {
-											// return (
-											// 	<Menu>
-											// 		<MenuItem key="1">添加下类</MenuItem>
-											// 		<MenuItem key="2">删除该类</MenuItem>
-											// 	</Menu>
-											// )
-											// @ts-ignore
-											return props.dropdownOverlay(item) as any
+											return (props.dropdownOverlay as any)(item)
 										},
 									}}
 								>
-									<span
-										onClick={() => {
-											titleClick(item)
-										}}
-									>
-										{title}
-									</span>
+									<span>{title}</span>
 								</Dropdown>
 							)
 						},
