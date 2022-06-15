@@ -1,6 +1,6 @@
 import { computed, defineComponent, watch } from 'vue'
 import { getArrayFilterData, isTrue } from '@/utils'
-import {useRoute, useRouter} from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Tag } from 'ant-design-vue'
 import { last } from 'ramda'
