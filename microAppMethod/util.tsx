@@ -55,26 +55,26 @@ export const microRouter = {
 			},
 		],
 	},
-	ccfVite: {
-		path: '/childCcf',
-		name: 'childCcfVite',
-		redirect: '/childCcf/ccfVite#/cff',
+	cmaVite: {
+		path: '/childCma',
+		name: 'childCmaVite',
+		redirect: '/childCma/cmaVite#/cma',
 		meta: {
 			title: 'cffVite',
 			keepAlive: true,
 			// 下面的属性只有微前端路由才有的
 			isMicro: true,
-			pathName: 'childCcfVite',
-			appId: 'cffVite',
+			pathName: 'childCmaVite',
+			appId: 'cmaVite',
 		},
 		component: () => import('@/layout/index'),
 		children: [
 			{
 				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
-				path: '/childCcf/ccfVite:page*',
-				name: 'ccfVite',
-				component: () => import('@/microAppMethod/microApp/ccfVite/index'),
+				path: '/childCma/cmaVite:page*',
+				name: 'cmaVite',
+				component: () => import('@/microAppMethod/microApp/cmaVite/index'),
 				meta: {
 					title: 'vite',
 					keepAlive: true,
@@ -134,7 +134,7 @@ export const microKeepAliveView = [
 	'omsVite',
 	'childErp',
 	'erpVue2',
-	'ccfVite',
+	'cmaVite',
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
@@ -156,10 +156,10 @@ export const microRouterMap: microRouterMapListType = [
 	},
 	{
 		type: 'vite',
-		appId: 'ccfVite',
-		baseUrl: '/child/ccf/',
-		appUrl: 'http://localhost:8913/child/cff/',
-		router: microRouter.ccfVite,
+		appId: 'cmaVite',
+		baseUrl: '/child/cma/',
+		appUrl: 'http://localhost:8913/child/cma/',
+		router: microRouter.cmaVite,
 	},
 ]
 

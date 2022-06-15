@@ -6,7 +6,7 @@ import { isTrue } from '@/utils'
 import { microRouterMap } from '@/microAppMethod/util'
 
 export default defineComponent({
-	name: 'ccfVite',
+	name: 'cmaVite',
 	setup() {
 		const { state, commit } = useStore()
 		const route = useRoute()
