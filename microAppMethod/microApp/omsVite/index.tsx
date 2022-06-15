@@ -13,22 +13,30 @@ export default defineComponent({
 		const route = useRoute()
 		const microKey = route?.meta?.appId
 		// 没有appid就不是微前端路由
-		if (!microKey) return
+		if (!microKey) {
+			console.warn('没有appid就不是微前端路由')
+			return
+		}
 		const microfilter = microRouterMap.filter((res) => res.appId === microKey)
 		// 找不到对应的micro数据就不是微前端路由
-		if (!isTrue(microfilter)) return
+		if (!isTrue(microfilter)) {
+			console.warn('找不到对应的micro数据就不是微前端路由')
+			return
+		}
 		const data = microfilter[0]
 		const windowKey: any = `eventCenterForAppName${data.appId}`
 		window[windowKey] = new EventCenterForMicroApp(data.appId) as any
 		const microAppData = ref({})
 		function microMounted() {
-			commit('erpLayout/SETLAYOUTSPINNING', false)
+			commit('erpLayout/SetLayoutSpinning', { type: false })
+
 			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: state?.erpLayout?.routerTagList }] })
 		}
 
 		const basePath = import.meta.env.BASE_URL + route.path?.slice(1, route.path.length) + '#/'
 		microAppData.value = { basePath }
-		commit('erpLayout/SETLAYOUTSPINNING', true)
+		commit('erpLayout/SetLayoutSpinning', { type: true })
+
 		return () => (
 			<div>
 				<micro-app
@@ -41,7 +49,7 @@ export default defineComponent({
 					url={data.appUrl}
 					error={() => {
 						message.error('页面加载失败，请重现刷新页面')
-						commit('erpLayout/SETLAYOUTSPINNING', false)
+						commit('erpLayout/SetLayoutSpinning', { type: false })
 					}}
 				/>
 			</div>

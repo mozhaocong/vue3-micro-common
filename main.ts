@@ -8,7 +8,8 @@ import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
 import { erpLoginModule } from '@/store/modules/erp/public/login'
 import { isTrue } from '@/utils'
 
-// 京东框架微前端初始化
+console.log('test分支')
+// 京东框架微前端 初始化
 microAppInit({ mount })
 
 // 初始化接口请求

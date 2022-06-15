@@ -1,11 +1,12 @@
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { getArrayFilterData, isTrue } from '@/utils'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microTagRouterClick } from '@/microAppMethod'
+import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'RouterTagList',
@@ -13,10 +14,20 @@ export default defineComponent({
 		const routerTagList = computed<any[]>(() => {
 			return state?.erpLayout?.routerTagList || []
 		})
+
 		const route = useRoute()
+		const router = useRouter()
 		const { state, commit } = useStore()
 
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
+
+		watch(
+			() => route,
+			(value) => {
+				erpLayoutModule.SetRouterTagKey((value?.name as string) || '')
+			},
+			{ deep: true, immediate: true }
+		)
 
 		if (!isTrue(routerTagList.value) && isShowTagList.value) {
 			const list = state?.erpLayout?.layoutRouterData || []
@@ -28,12 +39,12 @@ export default defineComponent({
 				return route.name === item.name
 			})
 			if (isTrue(filterData)) {
-				commit('erpLayout/SETROUTERTAGLIST', { data: filterData[0], type: 'add' })
+				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
 			}
 		}
 
 		function tagClose(item: any, index: number) {
-			commit('erpLayout/SETROUTERTAGLIST', { data: item, type: 'delete' })
+			commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'delete' })
 			if (!routerTagList.value.length) {
 				// router.push('/')
 				microEmptyRouterTag()
@@ -47,16 +58,20 @@ export default defineComponent({
 			// }
 
 			if (index >= routerTagList.value.length) {
-				microTagRouterClick(last(routerTagList.value))
+				tagClick(last(routerTagList.value))
 			} else {
-				microTagRouterClick(routerTagList.value[index])
+				tagClick(routerTagList.value[index])
 			}
 		}
 		function tagClick(item: any) {
 			// 不用微前端可以使用时这个
 			// router.push(item.path)
 			// 判断当前tag是不是当地环 由于是微前端，在 microAppMethod 统一处理
-			microTagRouterClick(item)
+			microTagRouterClick(item, router)
+		}
+
+		function setVisibleTag(item: any) {
+			return erpLayoutModule.routerTagKey === item.name ? 'visible_tag' : ''
 		}
 
 		return () =>
@@ -71,7 +86,7 @@ export default defineComponent({
 								onClose={() => {
 									tagClose(item, index)
 								}}
-								class={route.name === item.name && 'visible_tag'}
+								class={setVisibleTag(item)}
 								closable
 								visible={true}
 							>

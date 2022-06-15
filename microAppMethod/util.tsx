@@ -55,26 +55,26 @@ export const microRouter = {
 			},
 		],
 	},
-	cmaVite: {
-		path: '/childCma',
-		name: 'childCmaVite',
-		redirect: '/childCma/cmaVite#/cma',
+	rmaVite: {
+		path: '/childRma',
+		name: 'childRmaVite',
+		redirect: '/childRma/rmaVite#/rma',
 		meta: {
-			title: 'cffVite',
+			title: 'rmaVite',
 			keepAlive: true,
 			// 下面的属性只有微前端路由才有的
 			isMicro: true,
-			pathName: 'childCmaVite',
-			appId: 'cmaVite',
+			pathName: 'childRmaVite',
+			appId: 'rmaVite',
 		},
 		component: () => import('@/layout/index'),
 		children: [
 			{
 				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
-				path: '/childCma/cmaVite:page*',
-				name: 'cmaVite',
-				component: () => import('@/microAppMethod/microApp/cmaVite/index'),
+				path: '/childRma/rmaVite:page*',
+				name: 'rmaVite',
+				component: () => import('@/microAppMethod/microApp/rmaVite/index'),
 				meta: {
 					title: 'vite',
 					keepAlive: true,
@@ -104,7 +104,7 @@ export const microRouter = {
 				// 已解决带参数时页面丢失的问题
 				path: '/childErp/erpVue2:page*',
 				name: 'erpVue2',
-				component: () => import('@/microAppMethod/microApp/vue2/index'),
+				component: () => import('@/microAppMethod/microApp/erpVue2/index'),
 				meta: {
 					title: 'erpVue2',
 					keepAlive: true,
@@ -134,32 +134,35 @@ export const microKeepAliveView = [
 	'omsVite',
 	'childErp',
 	'erpVue2',
-	'cmaVite',
+	'rmaVite',
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
+const origin = window.location.origin
+
 export const microRouterMap: microRouterMapListType = [
 	{
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
 		// appUrl: 'http://localhost:8910/child/oms/',
-		appUrl: 'http://47.119.141.146:8080/child/oms/',
+		appUrl: origin + '/child/oms/',
 		router: microRouter.omsVite,
 	},
 	{
 		type: 'vite',
 		appId: 'crmVite',
 		baseUrl: '/child/crm/',
-		appUrl: 'http://localhost:8911/child/crm/',
+		appUrl: origin + '/child/crm/',
 		router: microRouter.crmVite,
 	},
 	{
 		type: 'vite',
-		appId: 'cmaVite',
-		baseUrl: '/child/cma/',
-		appUrl: 'http://localhost:8913/child/cma/',
-		router: microRouter.cmaVite,
+		appId: 'rmaVite',
+		baseUrl: '/child/rma/',
+		appUrl: origin + '/child/rma/',
+		// appUrl: 'http://localhost:8913/child/rma/',
+		router: microRouter.rmaVite,
 	},
 ]
 
