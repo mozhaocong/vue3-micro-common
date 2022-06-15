@@ -138,29 +138,31 @@ export const microKeepAliveView = [
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
+const origin = window.location.origin
+
 export const microRouterMap: microRouterMapListType = [
 	{
 		type: 'vite',
 		appId: 'omsVite',
 		baseUrl: '/child/oms/',
 		// appUrl: 'http://localhost:8910/child/oms/',
-		appUrl: 'http://47.119.141.146:8080/child/oms/',
+		appUrl: origin + '/child/oms/',
 		router: microRouter.omsVite,
 	},
 	{
 		type: 'vite',
 		appId: 'crmVite',
 		baseUrl: '/child/crm/',
-		appUrl: 'http://localhost:8911/child/crm/',
+		appUrl: origin + '/child/crm/',
 		router: microRouter.crmVite,
 	},
-	{
-		type: 'vite',
-		appId: 'ccfVite',
-		baseUrl: '/child/ccf/',
-		appUrl: 'http://localhost:8913/child/cff/',
-		router: microRouter.ccfVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'ccfVite',
+	// 	baseUrl: '/child/ccf/',
+	// 	appUrl: origin + '/child/cff/',
+	// 	router: microRouter.ccfVite,
+	// },
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的
