@@ -39,6 +39,12 @@ export default defineComponent({
 				return route.name === item.name
 			})
 			if (isTrue(filterData)) {
+				console.log(filterData[0])
+				const res = new URLSearchParams((route?.query as any) || {})
+				const searchString = res.toString()
+				if (isTrue(searchString)) {
+					filterData[0].path = filterData[0].path + '?' + searchString
+				}
 				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
 			}
 		}

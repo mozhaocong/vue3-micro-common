@@ -11,7 +11,7 @@ export default defineComponent({
 		const route = useRoute()
 		const router = useRouter()
 		const { state, commit } = useStore()
-		const defPathName = route?.meta?.pathName
+		let defPathName = route?.meta?.pathName
 		const selectedKeys = computed(() => {
 			return [erpLayoutModule.sidebarSelectedKey]
 		})
@@ -28,6 +28,7 @@ export default defineComponent({
 				if (defPathName !== route?.meta?.pathName || !isTrue(sidebarList.value)) {
 					erpLayoutModule.SetSidebarList(setSidebarListData())
 				}
+				defPathName = route?.meta?.pathName
 				erpLayoutModule.SetSidebarSelectedKey(value.path)
 			},
 			{ deep: true, immediate: true }

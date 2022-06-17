@@ -114,10 +114,41 @@ export const microRouter = {
 			},
 		],
 	},
+	kibana: {
+		path: '/childKibana',
+		name: 'childKibana',
+		redirect: '/childKibana/Kibana',
+		meta: {
+			title: 'kibana',
+			keepAlive: true,
+			// 下面的属性只有微前端才有的(路由和模块都有)
+			isMicro: true,
+			pathName: 'childKibana',
+			appId: 'kibana',
+			// 下面属性是只有微前端模块才有的
+			isMicroModel: true,
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childKibana/Kibana',
+				name: 'kibana',
+				component: () => import('@/microAppMethod/microApp/Kibana/index'),
+				meta: {
+					title: 'Kibana',
+					keepAlive: true,
+					isMicro: true,
+					isMicroModel: true,
+				},
+			},
+		],
+	},
 }
 
 interface microRouterMapType {
-	type: 'vite' | 'vue2'
+	type: 'vite' | 'vue2' | 'iframe'
 	appId: string // micro name, 唯一值
 	baseUrl: string // 部署地址 path
 	appUrl: string // 项目地址 和 baseUrl有依赖性
@@ -175,8 +206,19 @@ export const microModelMap: microRouterMapListType = [
 		// appUrl: 'http://10.17.201.63:8002/child/vue3/',
 		// appUrl: 'http://10.17.201.63:8081',
 		// appUrl: 'http://10.17.201.63:8080/',
-		appUrl: 'http://47.119.141.146:8080/child/erp/',
+		appUrl: origin + '/child/erp/',
 		baseRoute: '/childErp/erpVue2',
 		router: microRouter.erpVue2,
+	},
+	{
+		type: 'iframe',
+		appId: 'kibana',
+		baseUrl: '/child/erp/',
+		// appUrl: 'http://10.17.201.63:8002/child/vue3/',
+		// appUrl: 'http://10.17.201.63:8081',
+		// appUrl: 'http://10.17.201.63:8080/',
+		appUrl: 'http://47.119.141.146:8080/child/erp/',
+		baseRoute: '/childErp/kibana',
+		router: microRouter.kibana,
 	},
 ]

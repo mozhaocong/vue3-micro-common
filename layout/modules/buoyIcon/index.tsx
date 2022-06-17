@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, Teleport } from 'vue'
 import { BlockOutlined } from '@ant-design/icons-vue'
 import './index.less'
 import { Dropdown, Menu, MenuItem } from 'ant-design-vue'
@@ -40,26 +40,28 @@ export default defineComponent({
 			data.value.length === 1 || !isBuoyIconShow.value ? (
 				''
 			) : (
-				<div class="buoyIcon">
-					<Dropdown
-						placement="top"
-						v-slots={{
-							overlay: () => {
-								return (
-									<Menu>
-										{data.value.map((item: any) => {
-											return <MenuItem onClick={() => MenuItemClick(item)}>{item.title}</MenuItem>
-										})}
-									</Menu>
-								)
-							},
-						}}
-					>
-						<div class="buoyIcon_radius">
-							<BlockOutlined />
-						</div>
-					</Dropdown>
-				</div>
+				<Teleport to="body">
+					<div class="buoyIcon">
+						<Dropdown
+							placement="top"
+							v-slots={{
+								overlay: () => {
+									return (
+										<Menu>
+											{data.value.map((item: any) => {
+												return <MenuItem onClick={() => MenuItemClick(item)}>{item.title}</MenuItem>
+											})}
+										</Menu>
+									)
+								},
+							}}
+						>
+							<div class="buoyIcon_radius">
+								<BlockOutlined />
+							</div>
+						</Dropdown>
+					</div>
+				</Teleport>
 			)
 	},
 })

@@ -7,8 +7,9 @@ import { axiosInit } from '@/http'
 import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
 import { erpLoginModule } from '@/store/modules/erp/public/login'
 import { isTrue } from '@/utils'
+// 日期中文问题
+import 'dayjs/locale/zh-cn'
 
-console.log('test分支')
 // 京东框架微前端 初始化
 microAppInit({ mount })
 

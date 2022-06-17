@@ -10,7 +10,7 @@ export const configFilter = (prop: string, key: Key) => {
 		key = key.text
 	}
 	if (has(prop, businessOptObject)) {
-		return businessOptObject[prop][key as string]
+		return businessOptObject[prop][key as string] ?? key
 	}
 	return key
 }
