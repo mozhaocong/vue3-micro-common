@@ -1,5 +1,5 @@
 import { computed, defineComponent, watch } from 'vue'
-import { getArrayFilterData, isTrue } from '@/utils'
+import { getArrayFilterData, getSearchString, isTrue } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Tag } from 'ant-design-vue'
@@ -24,7 +24,7 @@ export default defineComponent({
 		watch(
 			() => route,
 			(value) => {
-				erpLayoutModule.SetRouterTagKey((value?.name as string) || '')
+				erpLayoutModule.SetRouterTagKey((value?.fullPath as string) || '')
 			},
 			{ deep: true, immediate: true }
 		)
@@ -33,18 +33,13 @@ export default defineComponent({
 			const list = state?.erpLayout?.layoutRouterData || []
 			const data = list.filter((item: any) => item.pathName === route.meta.pathName)
 			const filterData = getArrayFilterData(data, (item) => {
-				if (!isTrue(item.name) || item.children) {
+				if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem) {
 					return false
 				}
 				return route.name === item.name
 			})
 			if (isTrue(filterData)) {
-				console.log(filterData[0])
-				const res = new URLSearchParams((route?.query as any) || {})
-				const searchString = res.toString()
-				if (isTrue(searchString)) {
-					filterData[0].path = filterData[0].path + '?' + searchString
-				}
+				filterData[0].path = route.fullPath
 				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
 			}
 		}
@@ -77,7 +72,7 @@ export default defineComponent({
 		}
 
 		function setVisibleTag(item: any) {
-			return erpLayoutModule.routerTagKey === item.name ? 'visible_tag' : ''
+			return erpLayoutModule.routerTagKey === item.path ? 'visible_tag' : ''
 		}
 
 		return () =>

@@ -87,8 +87,10 @@ class Layout extends VuexModule {
 		data.microType = data.microType ?? import.meta.env.VITE_MICRO_TYPE
 		data.microId = data.microId ?? import.meta.env.VITE_APP_ID
 		if (type === 'add') {
-			if (!this.routerTagList.map((item) => item.name).includes(data.name) || isAdd) {
+			if (!this.routerTagList.map((item) => item.path).includes(data.path) || isAdd) {
 				this.routerTagList.push(data)
+			} else {
+				return
 			}
 		} else if (type === 'delete') {
 			this.routerTagList = this.routerTagList.filter((item) => data.path !== item.path)
