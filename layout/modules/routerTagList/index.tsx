@@ -12,8 +12,8 @@ export default defineComponent({
 	name: 'RouterTagList',
 	setup() {
 		const routerTagList = computed<any[]>(() => {
-			console.log('state?.erpLayout?.routerTagList || []', state?.erpLayout?.routerTagList || [])
-			return state?.erpLayout?.routerTagList || []
+			console.log('erpLayoutModule.routerTagList', erpLayoutModule.routerTagList)
+			return erpLayoutModule.routerTagList || []
 		})
 
 		const route = useRoute()
