@@ -10,6 +10,8 @@ import { isTrue } from '@/utils'
 // 日期中文问题
 // import 'dayjs/locale/zh-cn'
 
+console.log('617')
+
 // 京东框架微前端 初始化
 microAppInit({ mount })
 
