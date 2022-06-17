@@ -41,7 +41,8 @@ export default defineComponent({
 			})
 			if (isTrue(filterData)) {
 				filterData[0].path = route.fullPath
-				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
+				// commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
+				erpLayoutModule.AddDeleteRouterTagList({ data: filterData[0], type: 'add' })
 			}
 		}
 
