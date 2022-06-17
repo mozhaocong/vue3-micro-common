@@ -10,7 +10,7 @@ export default defineComponent({
 	setup() {
 		const route = useRoute()
 		const router = useRouter()
-		const { state, commit } = useStore()
+		const { state } = useStore()
 		let defPathName = route?.meta?.pathName
 		const selectedKeys = computed(() => {
 			return [erpLayoutModule.sidebarSelectedKey]
@@ -75,7 +75,8 @@ export default defineComponent({
 			})
 		}
 		function menuClick(item: any) {
-			commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'add' })
+			// commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'add' })
+			erpLayoutModule.AddDeleteRouterTagList({ data: item, type: 'add' })
 			router.push(item.path)
 		}
 		return () =>
