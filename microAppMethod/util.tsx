@@ -135,7 +135,7 @@ export const microRouter = {
 				// 已解决带参数时页面丢失的问题
 				path: '/childKibana/Kibana',
 				name: 'kibana',
-				component: () => import('@/microAppMethod/microApp/Kibana/index'),
+				component: () => import('@/microAppMethod/microApp/kibana/index'),
 				meta: {
 					title: 'Kibana',
 					keepAlive: true,
