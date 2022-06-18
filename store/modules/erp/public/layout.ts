@@ -87,12 +87,10 @@ class Layout extends VuexModule {
 		data.microType = data.microType ?? import.meta.env.VITE_MICRO_TYPE
 		data.microId = data.microId ?? import.meta.env.VITE_APP_ID
 		if (type === 'add') {
-			console.log('AddDeleteRouterTagList1', this.routerTagList, data.path)
 			if (!this.routerTagList.map((item) => item.path).includes(data.path) || isAdd) {
 				const pushData = deepClone(this.routerTagList)
 				pushData.push(data)
 				this.routerTagList = pushData
-				console.log('AddDeleteRouterTagList2')
 			} else {
 				return
 			}
