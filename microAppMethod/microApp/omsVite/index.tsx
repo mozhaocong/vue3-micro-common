@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 import { isTrue } from '@/utils'
 import { microRouterMap } from '@/microAppMethod/util'
 import { message } from 'ant-design-vue'
+import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'omsVite',
@@ -30,7 +31,7 @@ export default defineComponent({
 		function microMounted() {
 			commit('erpLayout/SetLayoutSpinning', { type: false })
 
-			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: state?.erpLayout?.routerTagList }] })
+			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: erpLayoutModule.routerTagList }] })
 		}
 
 		const basePath = import.meta.env.BASE_URL + route.path?.slice(1, route.path.length) + '#/'
