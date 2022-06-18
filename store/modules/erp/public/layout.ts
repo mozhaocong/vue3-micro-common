@@ -71,6 +71,7 @@ class Layout extends VuexModule {
 
 	@Mutation // 重置routerTag数据
 	public ResetRouterTagList(item: any[]) {
+		console.log('ResetRouterTagList', deepClone(item))
 		this.routerTagList = deepClone(item)
 	}
 
