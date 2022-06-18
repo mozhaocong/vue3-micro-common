@@ -5,7 +5,6 @@ import { useStore } from 'vuex'
 import './index.less'
 import { Dropdown, Menu, MenuItem } from 'ant-design-vue'
 import { ISMICROCHILD } from '@/microAppMethod'
-import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'Header',
@@ -22,7 +21,7 @@ export default defineComponent({
 			return titleMap[data] ?? data
 		}
 
-		const { state, dispatch } = useStore()
+		const { state, dispatch, commit } = useStore()
 		const owm = computed<ObjectMap>(() => {
 			return state?.erpLogin?.owm || []
 		})
@@ -32,9 +31,10 @@ export default defineComponent({
 		// const selectedKeys = ref<string[]>([(useRoute()?.meta?.pathName as string) || ''])
 
 		const selectedKeys = computed(() => {
-			return [erpLayoutModule.headerSelectedKey]
+			return [state.erpLayout?.headerSelectedKey || '']
 		})
 
+		console.log('state', state)
 		// 是否显示header
 		const isHeader = computed(() => {
 			return !ISMICROCHILD && !route?.meta?.isMicroModel
@@ -43,7 +43,8 @@ export default defineComponent({
 		watch(
 			() => route,
 			(value) => {
-				erpLayoutModule.SetHeaderSelectedKey((value?.meta?.pathName as string) || '')
+				// commit('erpLayout/SetHeaderSelectedKey', value?.meta?.pathName as string)
+				console.log(commit, state)
 			},
 			{ deep: true, immediate: true }
 		)

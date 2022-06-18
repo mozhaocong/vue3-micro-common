@@ -1,5 +1,4 @@
-import { getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import store from '@/store'
+import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { deepClone, isArray, isTrue } from '@/utils'
 import { clone } from 'ramda'
 import { microSetRouterTag } from '@/microAppMethod'
@@ -12,7 +11,7 @@ interface routerTagListOperate {
 }
 let timeOutSpinning: any = 0
 
-@Module({ store, name: 'erpLayout', namespaced: true, dynamic: true })
+@Module({ name: 'erpLayout', namespaced: true })
 class Layout extends VuexModule {
 	//routerData的数据列表
 	public layoutRouterData: any[] = []
@@ -71,7 +70,6 @@ class Layout extends VuexModule {
 
 	@Mutation // 重置routerTag数据
 	public ResetRouterTagList(item: any[]) {
-		console.log('ResetRouterTagList', deepClone(item))
 		this.routerTagList = deepClone(item)
 	}
 
@@ -104,4 +102,4 @@ class Layout extends VuexModule {
 		microSetRouterTag(item)
 	}
 }
-export const erpLayoutModule = getModule(Layout)
+export const erpLayoutModule = Layout

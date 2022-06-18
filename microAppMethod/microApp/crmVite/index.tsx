@@ -5,12 +5,11 @@ import { useStore } from 'vuex'
 import { isTrue } from '@/utils'
 import { microRouterMap } from '@/microAppMethod/util'
 import { message } from 'ant-design-vue'
-import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'crmVite',
 	setup() {
-		const { commit } = useStore()
+		const { state, commit } = useStore()
 		const route = useRoute()
 		const microKey = route?.meta?.appId
 		// 没有appid就不是微前端路由
@@ -30,8 +29,7 @@ export default defineComponent({
 		const microAppData = ref({})
 		function microMounted() {
 			commit('erpLayout/SetLayoutSpinning', { type: false })
-			console.log('microMounted', erpLayoutModule.routerTagList)
-			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: erpLayoutModule.routerTagList }] })
+			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: state?.erpLayout?.routerTagList }] })
 		}
 
 		const basePath = import.meta.env.BASE_URL + route.path?.slice(1, route.path.length) + '#/'

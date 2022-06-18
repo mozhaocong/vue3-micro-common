@@ -10,8 +10,6 @@ import { isTrue } from '@/utils'
 // 日期中文问题
 // import 'dayjs/locale/zh-cn'
 
-console.log('617')
-
 // 京东框架微前端 初始化
 microAppInit({ mount })
 
@@ -35,6 +33,7 @@ function vueInit() {
 
 	// 页面跳转滚动条显示问题
 	router.afterEach(() => {
+		console.log('router.afterEach')
 		const scrollTopDom = document.querySelector('.ht_layout_content')
 		if (scrollTopDom) {
 			scrollTopDom.scrollTop = 0

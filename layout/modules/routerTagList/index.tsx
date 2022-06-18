@@ -6,26 +6,22 @@ import { Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microTagRouterClick } from '@/microAppMethod'
-import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'RouterTagList',
 	setup() {
-		const routerTagList = computed<any[]>(() => {
-			console.log('erpLayoutModule.routerTagList', erpLayoutModule.routerTagList)
-			return erpLayoutModule.routerTagList || []
-		})
-
 		const route = useRoute()
 		const router = useRouter()
 		const { state, commit } = useStore()
-
+		const routerTagList = computed<any[]>(() => {
+			return state.erpLayout?.routerTagList || []
+		})
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
 
 		watch(
 			() => route,
 			(value) => {
-				erpLayoutModule.SetRouterTagKey((value?.fullPath as string) || '')
+				commit('erpLayout/SetRouterTagKey', (value?.fullPath as string) || '')
 			},
 			{ deep: true, immediate: true }
 		)
@@ -41,8 +37,7 @@ export default defineComponent({
 			})
 			if (isTrue(filterData)) {
 				filterData[0].path = route.fullPath
-				// commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
-				erpLayoutModule.AddDeleteRouterTagList({ data: filterData[0], type: 'add' })
+				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
 			}
 		}
 
@@ -74,7 +69,7 @@ export default defineComponent({
 		}
 
 		function setVisibleTag(item: any) {
-			return erpLayoutModule.routerTagKey === item.path ? 'visible_tag' : ''
+			return state.erpLayout?.routerTagKey === item.path ? 'visible_tag' : ''
 		}
 
 		return () =>
