@@ -91,6 +91,7 @@ class Layout extends VuexModule {
 			if (!this.routerTagList.map((item) => item.path).includes(data.path) || isAdd) {
 				const pushData = deepClone(this.routerTagList)
 				pushData.push(data)
+				console.log('AddDeleteRouterTagList', pushData)
 				this.routerTagList = pushData
 			} else {
 				return
