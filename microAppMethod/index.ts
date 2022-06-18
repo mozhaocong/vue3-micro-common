@@ -1,9 +1,9 @@
 import microApp from '@micro-zoe/micro-app'
 import { isObject, isTrue, deepClone, getUrlPathSearch } from '@/utils'
-import store from '@/store/index'
 import vueRouter from '@/router'
 import { microRouterMap } from '@/microAppMethod/util'
 import { Router } from 'vue-router'
+import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export const MICROWINDOWDATA: string = import.meta.env.VITE_APP_ID + `windowData`
 // 是否微前端子应用
@@ -64,7 +64,8 @@ export function microAppInit(item: any) {
 				const { type } = res
 				switch (type) {
 					case 'setRouterTagList':
-						store.commit('erpLayout/AddDeleteRouterTagList', res.data || {})
+						// store.commit('erpLayout/AddDeleteRouterTagList', res.data || {})
+						erpLayoutModule.AddDeleteRouterTagList(res.data || {})
 						return
 					case 'microTagRouterClick':
 						microTagRouterClick(deepClone(res.data), vueRouter)
@@ -124,11 +125,11 @@ function mount() {
 				data.forEach((res: any) => {
 					switch (res.type) {
 						case 'resetRouterTagList':
-							store.commit('erpLayout/ResetRouterTagList', res.data || [])
+							// store.commit('erpLayout/ResetRouterTagList', res.data || [])
+							erpLayoutModule.ResetRouterTagList(res.data || [])
 							return
 					}
 				})
-				console.log('addDataListener', data)
 			})
 		}
 	}
