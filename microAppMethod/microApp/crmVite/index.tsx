@@ -10,7 +10,7 @@ import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 export default defineComponent({
 	name: 'crmVite',
 	setup() {
-		const { state, commit } = useStore()
+		const { commit } = useStore()
 		const route = useRoute()
 		const microKey = route?.meta?.appId
 		// 没有appid就不是微前端路由
@@ -30,6 +30,7 @@ export default defineComponent({
 		const microAppData = ref({})
 		function microMounted() {
 			commit('erpLayout/SetLayoutSpinning', { type: false })
+			console.log('microMounted', erpLayoutModule.routerTagList)
 			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: erpLayoutModule.routerTagList }] })
 		}
 

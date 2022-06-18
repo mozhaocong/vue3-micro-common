@@ -1,5 +1,5 @@
 import { computed, defineComponent, watch } from 'vue'
-import { getArrayFilterData, getSearchString, isTrue } from '@/utils'
+import { getArrayFilterData, isTrue } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Tag } from 'ant-design-vue'
@@ -12,6 +12,7 @@ export default defineComponent({
 	name: 'RouterTagList',
 	setup() {
 		const routerTagList = computed<any[]>(() => {
+			console.log('erpLayoutModule.routerTagList', erpLayoutModule.routerTagList)
 			return erpLayoutModule.routerTagList || []
 		})
 

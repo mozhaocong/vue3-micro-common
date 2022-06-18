@@ -126,6 +126,7 @@ function mount() {
 					switch (res.type) {
 						case 'resetRouterTagList':
 							// store.commit('erpLayout/ResetRouterTagList', res.data || [])
+							console.log('res.data', res.data)
 							erpLayoutModule.ResetRouterTagList(res.data || [])
 							return
 					}
