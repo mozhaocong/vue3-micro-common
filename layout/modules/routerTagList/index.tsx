@@ -15,6 +15,10 @@ export default defineComponent({
 			console.log('erpLayoutModule.routerTagList', erpLayoutModule.routerTagList)
 			return erpLayoutModule.routerTagList || []
 		})
+		setInterval(() => {
+			console.log('setInterval')
+			console.log(erpLayoutModule.routerTagList)
+		}, 1000)
 
 		const route = useRoute()
 		const router = useRouter()
