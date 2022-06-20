@@ -1,6 +1,7 @@
 import { configCurryFilter, configFilter } from './filter/index'
 import { ref } from 'vue'
 import { isObject, isTrue } from '@/utils'
+import { clone } from 'ramda'
 export { configCurryFilter, configFilter }
 // 请求成功判断
 export function requestJudgment(item: ObjectMap): boolean {
@@ -24,10 +25,9 @@ export function asyncApiRes(Api: Promise<any>, data?: { value: any }, call?: (it
 }
 
 export function routeToRouterTagListData(route: ObjectMap) {
-	console.log(route)
-	const meta = {}
-	// const path = route.path
-	// const name = route.name
-	// const title = {}
-	return { meta }
+	const meta = JSON.parse(JSON.stringify(route.meta || ''))
+	const name = JSON.parse(JSON.stringify(route.name || ''))
+	const path = JSON.parse(JSON.stringify(route.fullPath || ''))
+	const title = JSON.parse(JSON.stringify(route?.meta?.title || ''))
+	return { meta, name, path, title }
 }

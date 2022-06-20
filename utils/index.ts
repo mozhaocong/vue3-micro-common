@@ -1,4 +1,13 @@
-import { isTrue, isString, isObject, isArray, getUrlPathSearch, isNumber, isFunction } from './modules/tools/index'
+import {
+	isTrue,
+	isString,
+	isObject,
+	isArray,
+	getUrlPathSearch,
+	isNumber,
+	isFunction,
+	getSearchString,
+} from './modules/tools/index'
 import { messageError, messageSuccess, messageWarning } from './modules/tools/message'
 import {
 	deepClone,
@@ -8,8 +17,15 @@ import {
 	ArrayKeyToMap,
 	ObjectToArray,
 	getArrayFilterData,
+	ArrayObjectIncludes,
 } from './modules/data'
-import { configCurryFilter, configFilter, requestJudgment, asyncApiRes } from '@/utils/modules/business'
+import {
+	configCurryFilter,
+	configFilter,
+	requestJudgment,
+	asyncApiRes,
+	routeToRouterTagListData,
+} from '@/utils/modules/business'
 import { throttle, debounce, defaultCustomRender } from './modules/tools/common'
 import { jsBarcodeInit } from './modules/plugin'
 
@@ -54,4 +70,7 @@ export {
 	messageWarning,
 	jsBarcodeInit,
 	getArrayFilterData,
+	routeToRouterTagListData,
+	getSearchString,
+	ArrayObjectIncludes,
 }

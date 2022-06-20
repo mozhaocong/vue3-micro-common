@@ -27,3 +27,8 @@ export function getUrlPathSearch(): { path: string; pathSearch: string; search: 
 
 	return { pathSearch: path + search, path, search }
 }
+
+export function getSearchString(query = {}) {
+	const res = new URLSearchParams(query)
+	return res.toString()
+}

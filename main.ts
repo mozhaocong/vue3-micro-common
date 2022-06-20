@@ -10,6 +10,8 @@ import { isTrue } from '@/utils'
 // 日期中文问题
 // import 'dayjs/locale/zh-cn'
 
+console.log('617')
+
 // 京东框架微前端 初始化
 microAppInit({ mount })
 
@@ -30,6 +32,15 @@ function vueInit() {
 	app.use(store)
 	app.use(Antd)
 	app.use(router).mount(`#${import.meta.env.VITE_APP_ID}`)
+
+	// 页面跳转滚动条显示问题
+	router.afterEach(() => {
+		const scrollTopDom = document.querySelector('.ht_layout_content')
+		if (scrollTopDom) {
+			scrollTopDom.scrollTop = 0
+		}
+	})
+
 	// 初始化动态路由
 	erpLoginModule.appDataInit()
 	if (isTrue(app)) {

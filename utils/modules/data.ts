@@ -1,4 +1,4 @@
-import { isNil } from 'ramda'
+import { includes, isNil } from 'ramda'
 import { isTrue } from '@/utils'
 
 export function ObjectToArray(object: ObjectMap) {
@@ -86,6 +86,7 @@ export function deepClone(source: any) {
 		// RegExp正则类型
 		return new RegExp(source)
 	}
+
 	let result: any
 	if (Array.isArray(source)) {
 		// 数组
@@ -104,4 +105,9 @@ export function deepClone(source: any) {
 		})
 		return result
 	}
+}
+
+export function ArrayObjectIncludes(data: ObjectMap[], key: string, item: string) {
+	if (!isTrue(data)) return false
+	return data.map((item) => item[key]).includes(item)
 }
