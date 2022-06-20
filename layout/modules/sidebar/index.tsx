@@ -56,7 +56,7 @@ export default defineComponent({
 							class="sub_menu"
 							key={item?.meta?.menuItemKey}
 							title={item.title}
-							v-slots={{ icon: <AppstoreFilled /> }}
+							v-slots={{ icon: () => <AppstoreFilled /> }}
 						>
 							{setSidebarItem(item.children)}
 						</SubMenu>

@@ -27,16 +27,11 @@ export default defineComponent({
 			<a-layout class={!isMicroRouter.value ? 'ht_layout_content' : ''}>
 				<a-layout-content>
 					<RouterTagList />
-					<div style="height: 100%" class={!isMicroRouter.value ? 'ht_layout_routerView' : ''}>
+					<div class={!isMicroRouter.value ? 'ht_layout_routerView' : 'ht_microRouter_routerView'}>
 						<router-view
-							key={route.fullPath}
-							style="height: 100%"
+							style="height:100%"
 							v-slots={{
-								default: (scope: any) => (
-									<KeepAlive key={route.fullPath} include={state.includeList}>
-										{scope.Component}
-									</KeepAlive>
-								),
+								default: (scope: any) => <KeepAlive include={state.includeList}>{scope.Component}</KeepAlive>,
 							}}
 						/>
 					</div>

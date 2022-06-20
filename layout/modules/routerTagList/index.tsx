@@ -2,7 +2,7 @@ import { computed, defineComponent, watch } from 'vue'
 import { getArrayFilterData, isTrue } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { Tag } from 'ant-design-vue'
+import { Dropdown, Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microTagRouterClick } from '@/microAppMethod'
@@ -79,17 +79,39 @@ export default defineComponent({
 				<div class="ht_router_list">
 					{routerTagList.value.map((item, index) => {
 						return (
-							<Tag
-								{...{ onClick: () => tagClick(item) }}
-								onClose={() => {
-									tagClose(item, index)
+							<Dropdown
+								trigger={['contextmenu']}
+								getPopupContainer={(triggerNode: any) => triggerNode.parentNode}
+								v-slots={{
+									overlay: () => {
+										return (
+											<a-menu>
+												<a-menu-item key="1">关闭左侧标签</a-menu-item>
+												<a-menu-item key="2">关闭右侧标签</a-menu-item>
+												<a-menu-item key="3">关闭其他标签</a-menu-item>
+												<a-menu-item key="4">关闭所有标签</a-menu-item>
+											</a-menu>
+										)
+									},
 								}}
-								class={setVisibleTag(item)}
-								closable
-								visible={true}
 							>
-								{item.title}
-							</Tag>
+								<Tag
+									v-hover={(e: any) => {
+										console.log('a', e, item)
+									}}
+									{...{
+										onClick: () => tagClick(item),
+									}}
+									onClose={() => {
+										tagClose(item, index)
+									}}
+									class={setVisibleTag(item)}
+									closable
+									visible={true}
+								>
+									<span>{item.title}</span>
+								</Tag>
+							</Dropdown>
 						)
 					})}
 				</div>
