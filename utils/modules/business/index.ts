@@ -26,8 +26,8 @@ export function asyncApiRes(Api: Promise<any>, data?: { value: any }, call?: (it
 export function routeToRouterTagListData(route: ObjectMap) {
 	console.log(route)
 	const meta = {}
-	const path = route.path
-	const name = route.name
-	const title = {}
+	// const path = route.path
+	// const name = route.name
+	// const title = {}
 	return { meta }
 }

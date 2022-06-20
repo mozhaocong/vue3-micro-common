@@ -1,5 +1,6 @@
 import { defineComponent, ref, watch, PropType, App, Plugin, markRaw } from 'vue'
 import { Input } from 'ant-design-vue'
+import password from '../../assets/image/password.png'
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons-vue'
 const propsData = {
 	value: {
@@ -32,6 +33,9 @@ const _PassWordInput = defineComponent({
 				onChange={change}
 				type={inputState.value}
 				v-slots={{
+					prefix: () => {
+						return <img class="imageIcon" src={password}></img>
+					},
 					suffix: () => {
 						return inputState.value === 'password' ? (
 							<EyeOutlined
@@ -41,6 +45,7 @@ const _PassWordInput = defineComponent({
 							/>
 						) : (
 							<EyeInvisibleOutlined
+								style="font-size:18px"
 								onClick={() => {
 									inputState.value = 'password'
 								}}
