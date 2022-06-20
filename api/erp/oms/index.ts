@@ -1,5 +1,5 @@
 import { get, methodType } from '@/http'
-import { apiUrl, erpUrl } from '@/api/erp'
+import { apiUrl } from '@/api/erp'
 
 // 查询订单列表
 export function orderApiOrder(data: ObjectMap, options?: ObjectMap) {
