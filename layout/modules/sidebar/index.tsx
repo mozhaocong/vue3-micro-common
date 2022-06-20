@@ -1,8 +1,9 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { isTrue } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import './index.less'
 import { LayoutSider, Menu, MenuItem, SubMenu } from 'ant-design-vue'
+import { AppstoreFilled } from '@ant-design/icons-vue'
 import { useStore } from 'vuex'
 export default defineComponent({
 	name: 'Sidebar',
@@ -15,7 +16,6 @@ export default defineComponent({
 			return [state.erpLayout?.sidebarSelectedKey]
 		})
 		const sidebarList = computed(() => {
-			console.log(state.erpLayout?.sidebarList)
 			return state.erpLayout?.sidebarList
 		})
 
@@ -52,7 +52,12 @@ export default defineComponent({
 				}
 				if (isTrue(item.children) && !item?.meta?.showMenuItem) {
 					return (
-						<SubMenu class="sub_menu" key={item?.meta?.menuItemKey} title={item.title}>
+						<SubMenu
+							class="sub_menu"
+							key={item?.meta?.menuItemKey}
+							title={item.title}
+							v-slots={{ icon: <AppstoreFilled /> }}
+						>
 							{setSidebarItem(item.children)}
 						</SubMenu>
 					)

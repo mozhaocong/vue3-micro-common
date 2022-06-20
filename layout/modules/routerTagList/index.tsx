@@ -73,7 +73,7 @@ export default defineComponent({
 		}
 
 		return () =>
-			!isShowTagList.value ? (
+			!isShowTagList.value || !routerTagList.value.length ? (
 				''
 			) : (
 				<div class="ht_router_list">

@@ -2,10 +2,11 @@ import { PropType, ref, defineComponent, App, Plugin, renderSlot, watch, compute
 import { DownOutlined, SearchOutlined } from '@ant-design/icons-vue'
 import { RForm } from '@/components'
 import { clone } from 'ramda'
-import Rconfigure from '../Configure'
+import Reconfigure from '../Configure'
 import { deepClone, isTrue } from '@/utils'
 import { columnsSetArrayDiffArray, setCustomRow } from '@/components/Common/utils'
 import { Button, Divider } from 'ant-design-vue'
+import { DoubleRightOutlined } from '@ant-design/icons-vue'
 import './index.less'
 const Props = {
 	model: {
@@ -176,18 +177,18 @@ const Rsearch = defineComponent({
 						<Button loading={props.loading} type="primary" style="margin: 0 0 0 16px;" onClick={props.clear}>
 							重置
 						</Button>
-						{props.expand !== null && columnsData.value.length > props.lineLength && (
-							<Button
-								type="primary"
-								style="margin: 0 0 0 16px;"
-								onClick={() => {
-									expandData.value = !expandData.value
-								}}
-							>
-								{expandData.value ? '收起' : '更多'}查询
-								<DownOutlined rotate={expandData.value ? 180 : 0} />
-							</Button>
-						)}
+						{/*{props.expand !== null && columnsData.value.length > props.lineLength && (*/}
+						{/*	<Button*/}
+						{/*		type="primary"*/}
+						{/*		style="margin: 0 0 0 16px;"*/}
+						{/*		onClick={() => {*/}
+						{/*			expandData.value = !expandData.value*/}
+						{/*		}}*/}
+						{/*	>*/}
+						{/*		{expandData.value ? '收起' : '更多'}查询*/}
+						{/*		<DownOutlined rotate={expandData.value ? 180 : 0} />*/}
+						{/*	</Button>*/}
+						{/*)}*/}
 
 						<Button type="primary" onClick={custom} style="margin: 0 0 0 16px;">
 							自定义显示
@@ -198,8 +199,8 @@ const Rsearch = defineComponent({
 		}
 		return () => {
 			return (
-				<>
-					<div style="background: #fff; padding: 8px 16px 0;  box-sizing: border-box;">
+				<div style="position: relative; margin: 0 0 16px;border-radius: 4px;background: #fff;">
+					<div style=" padding: 8px 16px 0;  box-sizing: border-box;">
 						{searchQuery()}
 						<Divider style="margin: 8px 0 17px;color: #F2EFFD" />
 						{renderSlot(slots, 'header')}
@@ -216,13 +217,24 @@ const Rsearch = defineComponent({
 							formItemStyle={formItemStyle}
 						/>
 					</div>
-					<Rconfigure
+					{props.expand !== null && columnsData.value.length > props.lineLength && (
+						<div
+							class="more_but"
+							onClick={() => {
+								expandData.value = !expandData.value
+							}}
+						>
+							<DoubleRightOutlined class="icon" rotate={expandData.value ? 270 : 90} />
+							<div class="radius" />
+						</div>
+					)}
+					<Reconfigure
 						v-model={visible.value}
 						onSubmit={submit}
 						title="查询条件调整自定义"
 						columns={clone(customRow.value) as any}
 					/>
-				</>
+				</div>
 			)
 		}
 	},

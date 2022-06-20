@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 import './index.less'
 import { Dropdown, Menu, MenuItem } from 'ant-design-vue'
 import { ISMICROCHILD } from '@/microAppMethod'
+import Logo from '@/assets/image/logo.png'
 
 export default defineComponent({
 	name: 'Header',
@@ -43,8 +44,7 @@ export default defineComponent({
 		watch(
 			() => route,
 			(value) => {
-				// commit('erpLayout/SetHeaderSelectedKey', value?.meta?.pathName as string)
-				console.log(commit, state)
+				commit('erpLayout/SetHeaderSelectedKey', value?.meta?.pathName as string)
 			},
 			{ deep: true, immediate: true }
 		)
@@ -72,7 +72,9 @@ export default defineComponent({
 				''
 			) : (
 				<div id="ht_header">
-					<div class="ht_logo">LOGO</div>
+					<div class="ht_logo">
+						<img src={Logo} alt="" />
+					</div>
 					<Menu
 						class="ht_header_nav"
 						theme="dark"

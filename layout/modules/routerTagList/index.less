@@ -1,23 +1,28 @@
 .ht_router_list {
-  padding: 16px 0 0;
+  padding: 12px;
   margin: 0 0 16px;
+  height: 50px;
+  box-sizing: border-box;
+  background: #FFFFFF;
   .ant-tag {
     cursor: pointer;
     font-size: 13px;
-    padding: 7px 11px;
+    background: @tag_def_background;
+    color: @tag_primary_color;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 11px;
+    border: 1px solid #DCDFE6;
     border-radius: 4px;
+    margin: 0 16px 0 0;
   }
   .visible_tag {
-    background: @button_primary_background;
-    color: @button_primary_color;
-    box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
-    text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+    background: @tag_primary_background;
     .ant-tag-close-icon {
-      color: @button_primary_color;
+      color: @tag_primary_color;
     }
   }
   .ant-tag-close-icon {
-    font-size: 12px;
-    margin-left: 5px;
+    font-size: 13px;
   }
 }

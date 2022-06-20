@@ -5,6 +5,9 @@
   height: @header-height;
   .ht_logo{
     width: @sidebar-width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .ht_header_nav{
     flex: 1;
@@ -12,6 +15,12 @@
     background:@header-background;
     .ht_menu_item{
       padding: 0 30px;
+    }
+    .ht_menu_item.ant-menu-item-selected{
+      background:@header-menu_item_selected-background;
+    }
+    .ant-menu-item:hover{
+      background: @header-menu_item_selected-background;
     }
   }
   .ht_header_dropdown{
