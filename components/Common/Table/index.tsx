@@ -1,5 +1,5 @@
 import { defineComponent, ref, watch, PropType, App, Plugin, markRaw, renderSlot, onMounted } from 'vue'
-import { Button, Divider, Table } from 'ant-design-vue'
+import { Button, Table } from 'ant-design-vue'
 import { deepClone, isTrue } from '@/utils'
 import { clone } from 'ramda'
 import { columnsSetArrayDiffArray, setCustomRow } from '../utils/index'
@@ -212,12 +212,8 @@ const _Table = defineComponent({
 			}
 		}
 		return () => (
-			<div
-				class={`r_table ${unique}_r_table`}
-				style="background: #fff;padding: 0 16px; box-sizing: border-box;position: relative;"
-			>
+			<div class={`r_table ${unique}_r_table`}>
 				<div style="position: relative;">
-					<Divider style="margin: 0;  padding: 0 0 10px 0;" />
 					{headerButtonItem()}
 					<Table
 						pagination={props.pagination as any}

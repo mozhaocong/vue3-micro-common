@@ -7,10 +7,9 @@ import { axiosInit } from '@/http'
 import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
 import { erpLoginModule } from '@/store/modules/erp/public/login'
 import { isTrue } from '@/utils'
+import { hover } from '@/directive'
 // 日期中文问题
 // import 'dayjs/locale/zh-cn'
-
-console.log('617')
 
 // 京东框架微前端 初始化
 microAppInit({ mount })
@@ -31,7 +30,8 @@ function vueInit() {
 	const app = createApp(App)
 	app.use(store)
 	app.use(Antd)
-	app.use(router).mount(`#${import.meta.env.VITE_APP_ID}`)
+	app.use(router)
+	app.directive('hover', hover).mount(`#${import.meta.env.VITE_APP_ID}`)
 
 	// 页面跳转滚动条显示问题
 	router.afterEach(() => {

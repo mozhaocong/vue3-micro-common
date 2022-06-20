@@ -1,18 +1,19 @@
 import { defineComponent, ref } from 'vue'
 import { Button, Menu, MenuItem, Modal } from 'ant-design-vue'
-import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 import { copyText, deepClone, isTrue, setArrayData } from '@/utils'
 import SearchTree from '@/views/modules/basis/positionAuthority/components/SearchTree'
+import { useStore } from 'vuex'
 export default defineComponent({
 	name: 'LocalRouter',
 	setup() {
+		const { state } = useStore()
 		const visible = ref(false)
 		const sourData = ref<any[]>([])
 		return () => (
 			<div>
 				<Button
 					onClick={() => {
-						const data = setArrayData(deepClone(erpLayoutModule.layoutRouterData), (res) => {
+						const data = setArrayData(deepClone(state.erpLayout?.layoutRouterData), (res) => {
 							const { name, path, title, children } = res
 							const data: ObjectMap = { name, path, title }
 							if (isTrue(children)) {

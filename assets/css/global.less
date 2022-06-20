@@ -1,15 +1,83 @@
-@header-background: #001529; // 头部背景色
+@header-background: linear-gradient(90deg, #22429D 0%, #22429D 100%);; // 头部背景色
 @header-height: 56px; //头部高度
 @sidebar-width:240px; // 侧边栏宽度
-@sidebar-background: #3E3E41; //侧边栏颜色
+@header-menu_item_selected-background:#013378;
+
+@sidebar-menu_item_selected-background:linear-gradient(90deg, #00357C 0%, #2E2D34 100%);;
+
+@sidebar-background: linear-gradient(180deg, #33323A 0%, #242328 100%);; //侧边栏颜色
+@content-background: #EEF4FF; // 内容区域颜色0
 
 @pagination-bottom:10px; // 列表分页器 bottom距离
 @pagination-top:10px; // 列表分页器底部 top距离
 
-@button_primary_background:#1890ff;
+@button_primary_background:#00A9BE;
 @button_primary_color:#fff;
+
+@tag_primary_background: #EDF3FF;
+@tag_def_background: #FFFFFF;
+@tag_primary_color: #555555;
 
 .r_table .ant-table-sticky-scroll{
   display: none;
 }
 
+body{
+  .ant-btn-primary{
+    background: @button_primary_background;
+    border-color: @button_primary_background;
+    border-radius: 4px;
+  }
+  .ant-btn-primary:focus,.ant-btn-primary:hover,.ant-btn-primary:active{
+    background: @button_primary_background;
+    border-color:@button_primary_background;
+
+  }
+}
+
+body.global{
+  .ant-form-item-label{
+    >label{
+      white-space: break-spaces;
+      min-height:32px;
+      height: auto;
+    }
+  }
+  .ant-form-item-control-input-content{
+    word-break: break-all;
+  }
+}
+
+
+&::-webkit-scrollbar {
+  // 滚动条的背景
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+}
+
+&::-webkit-scrollbar-track,
+&::-webkit-scrollbar-thumb {
+  //border-radius: 999px;
+  width: 10px;
+  //border: 5px solid transparent;
+}
+
+&::-webkit-scrollbar-track {
+  //box-shadow: 1px 1px 5px #191a37 inset;
+
+  background: #ffffff;
+
+}
+
+&::-webkit-scrollbar-thumb {
+  //滚动条的滑块样式修改
+  width: 10px;
+  border-radius: 10px;
+  background: #555555;
+}
+
+&::-webkit-scrollbar-corner {
+  //background: #191a37;
+  background: #ffffff;
+}

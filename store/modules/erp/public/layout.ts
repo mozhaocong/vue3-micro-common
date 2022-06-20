@@ -1,5 +1,4 @@
-import { getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import store from '@/store'
+import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { deepClone, isArray, isTrue } from '@/utils'
 import { clone } from 'ramda'
 import { microSetRouterTag } from '@/microAppMethod'
@@ -12,7 +11,7 @@ interface routerTagListOperate {
 }
 let timeOutSpinning: any = 0
 
-@Module({ store, name: 'erpLayout', namespaced: true, dynamic: true })
+@Module({ name: 'erpLayout', namespaced: true })
 class Layout extends VuexModule {
 	//routerData的数据列表
 	public layoutRouterData: any[] = []
@@ -87,10 +86,11 @@ class Layout extends VuexModule {
 		data.microType = data.microType ?? import.meta.env.VITE_MICRO_TYPE
 		data.microId = data.microId ?? import.meta.env.VITE_APP_ID
 		if (type === 'add') {
-			console.log('AddDeleteRouterTagList1', this.routerTagList, data.path)
 			if (!this.routerTagList.map((item) => item.path).includes(data.path) || isAdd) {
-				this.routerTagList.push(data)
-				console.log('AddDeleteRouterTagList2')
+				const pushData = deepClone(this.routerTagList)
+				pushData.push(data)
+				console.log('AddDeleteRouterTagList', pushData)
+				this.routerTagList = pushData
 			} else {
 				return
 			}
@@ -102,4 +102,4 @@ class Layout extends VuexModule {
 		microSetRouterTag(item)
 	}
 }
-export const erpLayoutModule = getModule(Layout)
+export const erpLayoutModule = Layout

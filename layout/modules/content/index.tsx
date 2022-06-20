@@ -27,12 +27,14 @@ export default defineComponent({
 			<a-layout class={!isMicroRouter.value ? 'ht_layout_content' : ''}>
 				<a-layout-content>
 					<RouterTagList />
-					<router-view
-						style="height: 100%"
-						v-slots={{
-							default: (scope: any) => <KeepAlive include={state.includeList}>{scope.Component}</KeepAlive>,
-						}}
-					/>
+					<div class={!isMicroRouter.value ? 'ht_layout_routerView' : 'ht_microRouter_routerView'}>
+						<router-view
+							style="height:100%"
+							v-slots={{
+								default: (scope: any) => <KeepAlive include={state.includeList}>{scope.Component}</KeepAlive>,
+							}}
+						/>
+					</div>
 				</a-layout-content>
 			</a-layout>
 		)

@@ -1,31 +1,27 @@
 import { computed, defineComponent, watch } from 'vue'
-import { getArrayFilterData, getSearchString, isTrue } from '@/utils'
+import { getArrayFilterData, isTrue } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { Tag } from 'ant-design-vue'
+import { Dropdown, Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microTagRouterClick } from '@/microAppMethod'
-import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 
 export default defineComponent({
 	name: 'RouterTagList',
 	setup() {
-		const routerTagList = computed<any[]>(() => {
-			console.log('state?.erpLayout?.routerTagList || []', state?.erpLayout?.routerTagList || [])
-			return state?.erpLayout?.routerTagList || []
-		})
-
 		const route = useRoute()
 		const router = useRouter()
 		const { state, commit } = useStore()
-
+		const routerTagList = computed<any[]>(() => {
+			return state.erpLayout?.routerTagList || []
+		})
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
 
 		watch(
 			() => route,
 			(value) => {
-				erpLayoutModule.SetRouterTagKey((value?.fullPath as string) || '')
+				commit('erpLayout/SetRouterTagKey', (value?.fullPath as string) || '')
 			},
 			{ deep: true, immediate: true }
 		)
@@ -73,27 +69,49 @@ export default defineComponent({
 		}
 
 		function setVisibleTag(item: any) {
-			return erpLayoutModule.routerTagKey === item.path ? 'visible_tag' : ''
+			return state.erpLayout?.routerTagKey === item.path ? 'visible_tag' : ''
 		}
 
 		return () =>
-			!isShowTagList.value ? (
+			!isShowTagList.value || !routerTagList.value.length ? (
 				''
 			) : (
 				<div class="ht_router_list">
 					{routerTagList.value.map((item, index) => {
 						return (
-							<Tag
-								{...{ onClick: () => tagClick(item) }}
-								onClose={() => {
-									tagClose(item, index)
+							<Dropdown
+								trigger={['contextmenu']}
+								getPopupContainer={(triggerNode: any) => triggerNode.parentNode}
+								v-slots={{
+									overlay: () => {
+										return (
+											<a-menu>
+												<a-menu-item key="1">关闭左侧标签</a-menu-item>
+												<a-menu-item key="2">关闭右侧标签</a-menu-item>
+												<a-menu-item key="3">关闭其他标签</a-menu-item>
+												<a-menu-item key="4">关闭所有标签</a-menu-item>
+											</a-menu>
+										)
+									},
 								}}
-								class={setVisibleTag(item)}
-								closable
-								visible={true}
 							>
-								{item.title}
-							</Tag>
+								<Tag
+									v-hover={(e: any) => {
+										console.log('a', e, item)
+									}}
+									{...{
+										onClick: () => tagClick(item),
+									}}
+									onClose={() => {
+										tagClose(item, index)
+									}}
+									class={setVisibleTag(item)}
+									closable
+									visible={true}
+								>
+									<span>{item.title}</span>
+								</Tag>
+							</Dropdown>
 						)
 					})}
 				</div>

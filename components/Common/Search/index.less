@@ -6,4 +6,28 @@
   padding: @pagination-top 50px @pagination-bottom ;
   box-sizing: border-box;
   z-index: 2;
+  border-top: 1px solid #EBEEF5;
+}
+.more_but{
+  cursor: pointer;
+  position: absolute;
+  bottom: -10px;
+  right: 20px;
+  width: 54px;
+  height: 18px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .radius{
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border-radius: 70px;
+    position: absolute;
+    top: -52px;
+  }
+  .icon{
+    z-index: 2;
+  }
 }

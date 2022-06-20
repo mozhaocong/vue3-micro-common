@@ -1,7 +1,7 @@
 import microApp from '@micro-zoe/micro-app'
 import { isObject, isTrue, deepClone, getUrlPathSearch } from '@/utils'
-import store from '@/store/index'
 import vueRouter from '@/router'
+import store from '@/store'
 import { microRouterMap } from '@/microAppMethod/util'
 import { Router } from 'vue-router'
 
@@ -86,6 +86,7 @@ export const eventCenterForAppNameKey = `eventCenterForAppName${import.meta.env.
 
 // 微前端子应用加载完后调用的方法
 function mount() {
+	console.log('12616373')
 	if (window[MICROWINDOWDATA as any]) {
 		console.log('有重复的 VITE_APP_ID', MICROWINDOWDATA)
 		return
@@ -128,7 +129,6 @@ function mount() {
 							return
 					}
 				})
-				console.log('addDataListener', data)
 			})
 		}
 	}

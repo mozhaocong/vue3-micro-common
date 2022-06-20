@@ -1,10 +1,10 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import { isTrue } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import './index.less'
 import { LayoutSider, Menu, MenuItem, SubMenu } from 'ant-design-vue'
+import { AppstoreFilled } from '@ant-design/icons-vue'
 import { useStore } from 'vuex'
-import { erpLayoutModule } from '@/store/modules/erp/public/layout'
 export default defineComponent({
 	name: 'Sidebar',
 	setup() {
@@ -13,10 +13,10 @@ export default defineComponent({
 		const { state, commit } = useStore()
 		let defPathName = route?.meta?.pathName
 		const selectedKeys = computed(() => {
-			return [erpLayoutModule.sidebarSelectedKey]
+			return [state.erpLayout?.sidebarSelectedKey]
 		})
 		const sidebarList = computed(() => {
-			return erpLayoutModule.sidebarList
+			return state.erpLayout?.sidebarList
 		})
 
 		const isShowSidebar = computed(() => {
@@ -26,10 +26,10 @@ export default defineComponent({
 			() => route,
 			(value) => {
 				if (defPathName !== route?.meta?.pathName || !isTrue(sidebarList.value)) {
-					erpLayoutModule.SetSidebarList(setSidebarListData())
+					commit('erpLayout/SetSidebarList', setSidebarListData())
 				}
 				defPathName = route?.meta?.pathName
-				erpLayoutModule.SetSidebarSelectedKey(value.path)
+				commit('erpLayout/SetSidebarSelectedKey', value.path)
 			},
 			{ deep: true, immediate: true }
 		)
@@ -52,7 +52,12 @@ export default defineComponent({
 				}
 				if (isTrue(item.children) && !item?.meta?.showMenuItem) {
 					return (
-						<SubMenu class="sub_menu" key={item?.meta?.menuItemKey} title={item.title}>
+						<SubMenu
+							class="sub_menu"
+							key={item?.meta?.menuItemKey}
+							title={item.title}
+							v-slots={{ icon: () => <AppstoreFilled /> }}
+						>
 							{setSidebarItem(item.children)}
 						</SubMenu>
 					)

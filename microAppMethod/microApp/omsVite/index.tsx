@@ -29,7 +29,6 @@ export default defineComponent({
 		const microAppData = ref({})
 		function microMounted() {
 			commit('erpLayout/SetLayoutSpinning', { type: false })
-
 			microApp.setData(data.appId, { data: [{ type: 'resetRouterTagList', data: state?.erpLayout?.routerTagList }] })
 		}
 
