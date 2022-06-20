@@ -11,7 +11,7 @@
 @pagination-bottom:10px; // 列表分页器 bottom距离
 @pagination-top:10px; // 列表分页器底部 top距离
 
-@button_primary_background:#1890ff;
+@button_primary_background:#00A9BE;
 @button_primary_color:#fff;
 
 @tag_primary_background: #EDF3FF;
@@ -24,8 +24,14 @@
 
 body{
   .ant-btn-primary{
-    background: #00A9BE;
+    background: @button_primary_background;
+    border-color: @button_primary_background;
     border-radius: 4px;
+  }
+  .ant-btn-primary:focus,.ant-btn-primary:hover,.ant-btn-primary:active{
+    background: @button_primary_background;
+    border-color:@button_primary_background;
+
   }
 }
 
