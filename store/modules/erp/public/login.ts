@@ -32,6 +32,7 @@ export const actions = {
 			commit('SetOwm', res.data)
 			commit('SetToken', localStorage.getItem('Authorization') || '')
 		}
+		console.log(res)
 		initRouter(res.code === 0 ? res : {})
 	},
 

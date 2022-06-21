@@ -18,7 +18,6 @@ export default defineComponent({
 				key: 'name',
 				rules: [{ required: true, message: '账号不能为空', trigger: 'change' }],
 				customRender: ({ record }) => {
-					console.log(record)
 					return (
 						<Input
 							v-model={[record.name, 'value']}
@@ -57,8 +56,8 @@ export default defineComponent({
 
 		return () => (
 			<div class="login">
-				<img src={iconImg} class="iconImg" alt="" />
-				<img src={titleImg} class="titleImg" alt="" />
+				{/* <img src={iconImg} class="iconImg" alt="" />
+				<img src={titleImg} class="titleImg" alt="" /> */}
 				<div class="content">
 					<div class="pack">
 						<div class="titleTop">
