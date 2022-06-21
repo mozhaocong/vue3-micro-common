@@ -66,6 +66,9 @@ export function microAppInit(item: any) {
 					case 'setRouterTagList':
 						store.commit('erpLayout/AddDeleteRouterTagList', res.data || {})
 						return
+					case 'resetRouterTagList':
+						store.commit('erpLayout/ResetRouterTagList', res.data || {})
+						return
 					case 'microTagRouterClick':
 						microTagRouterClick(deepClone(res.data), vueRouter)
 						return
@@ -86,7 +89,6 @@ export const eventCenterForAppNameKey = `eventCenterForAppName${import.meta.env.
 
 // 微前端子应用加载完后调用的方法
 function mount() {
-	console.log('12616373')
 	if (window[MICROWINDOWDATA as any]) {
 		console.log('有重复的 VITE_APP_ID', MICROWINDOWDATA)
 		return
@@ -231,6 +233,16 @@ export function microSetRouterTag(item: any) {
 		if (window[eventCenterForAppNameKey]) {
 			// @ts-ignore
 			window[eventCenterForAppNameKey].setGlobalData({ data: [{ type: 'setRouterTagList', data: deepClone(item) }] })
+		}
+	}
+}
+
+export function microResetRouterTag(item: any) {
+	if (import.meta.env.VITE_MICRO_TYPE === 'ViteChild') {
+		// @ts-ignore
+		if (window[eventCenterForAppNameKey]) {
+			// @ts-ignore
+			window[eventCenterForAppNameKey].setGlobalData({ data: [{ type: 'resetRouterTagList', data: deepClone(item) }] })
 		}
 	}
 }

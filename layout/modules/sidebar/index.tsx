@@ -70,6 +70,7 @@ export default defineComponent({
 							onClick={() => {
 								menuClick(item)
 							}}
+							v-slots={{ icon: () => <AppstoreFilled /> }}
 							class="sub_menu"
 							key={item?.meta?.menuItemKey}
 						>
