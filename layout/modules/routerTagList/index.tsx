@@ -100,6 +100,7 @@ export default defineComponent({
 					data = []
 					break
 			}
+			console.log('ResetRouterTagList data', data)
 			store.commit('erpLayout/ResetRouterTagList', data || [])
 			microResetRouterTag(data)
 			if (isTrue(data)) {
