@@ -82,6 +82,7 @@ export const mutations = {
 
 	// 重置routerTag数据
 	ResetRouterTagList(state: ObjectMap, item: any[]) {
+		console.log('ResetRouterTagList')
 		state.routerTagList = deepClone(item)
 	},
 
@@ -91,6 +92,7 @@ export const mutations = {
 	},
 
 	AddDeleteRouterTagList(state: ObjectMap, item: routerTagListOperate) {
+		console.log('AddDeleteRouterTagList')
 		const { data, type, isAdd = false } = item
 		if (!isTrue(data)) return
 		// 添加微前端类型 用来微前端判断

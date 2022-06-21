@@ -15,6 +15,7 @@ export default defineComponent({
 		const router = useRouter()
 		const { state, commit } = useStore()
 		const routerTagList = computed<any[]>(() => {
+			console.log(' state.erpLayout?.routerTagList', state.erpLayout?.routerTagList)
 			return state.erpLayout?.routerTagList || []
 		})
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
