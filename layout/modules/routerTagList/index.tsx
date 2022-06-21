@@ -1,5 +1,5 @@
 import { computed, defineComponent, watch } from 'vue'
-import { getArrayFilterData, isTrue } from '@/utils'
+import { getArrayFilterData, isTrue, routeToRouterTagListData } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Dropdown, Tag } from 'ant-design-vue'
@@ -23,24 +23,29 @@ export default defineComponent({
 			() => route,
 			(value) => {
 				commit('erpLayout/SetRouterTagKey', (value?.fullPath as string) || '')
+				const item: ObjectMap = routeToRouterTagListData(route)
+				if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem || item.name === 'index') {
+					return false
+				}
+				commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'add' })
 			},
 			{ deep: true, immediate: true }
 		)
 
-		if (!isTrue(routerTagList.value) && isShowTagList.value) {
-			const list = state?.erpLayout?.layoutRouterData || []
-			const data = list.filter((item: any) => item.pathName === route.meta.pathName)
-			const filterData = getArrayFilterData(data, (item) => {
-				if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem) {
-					return false
-				}
-				return route.name === item.name
-			})
-			if (isTrue(filterData)) {
-				filterData[0].path = route.fullPath
-				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
-			}
-		}
+		// if (!isTrue(routerTagList.value) && isShowTagList.value) {
+		// 	const list = state?.erpLayout?.layoutRouterData || []
+		// 	const data = list.filter((item: any) => item.pathName === route.meta.pathName)
+		// 	const filterData = getArrayFilterData(data, (item) => {
+		// 		if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem) {
+		// 			return false
+		// 		}
+		// 		return route.name === item.name
+		// 	})
+		// 	if (isTrue(filterData)) {
+		// 		filterData[0].path = route.fullPath
+		// 		commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
+		// 	}
+		// }
 
 		function tagClose(item: any, index: number) {
 			commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'delete' })
