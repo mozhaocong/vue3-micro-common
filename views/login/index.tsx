@@ -1,18 +1,17 @@
 import { defineComponent, ref } from 'vue'
 import { RForm, PassWordInput } from '@/components'
-
 import { Button, Input } from 'ant-design-vue'
-import { erpLoginModule } from '@/store/modules/erp/public/login'
 import iconImg from '../../assets/image/title.png'
 import titleImg from '../../assets/image/contentValue.png'
 import account from '../../assets/image/account.png'
 import './login.less'
-import { EyeOutlined } from '@ant-design/icons-vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
 	name: 'login',
 	setup() {
 		const data = ref<ObjectMap>({})
+		const { dispatch } = useStore()
 		const rows: FormRowArray = [
 			{
 				title: '',
@@ -52,7 +51,7 @@ export default defineComponent({
 
 		async function toLogin() {
 			const { name, password } = data.value
-			const res = await erpLoginModule.onLogin({ name, password })
+			const res = await dispatch('erpLogin/onLogin', { name, password })
 			console.log(res)
 		}
 

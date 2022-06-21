@@ -1,5 +1,5 @@
 import { computed, defineComponent, watch } from 'vue'
-import { getArrayFilterData, isTrue, routeToRouterTagListData } from '@/utils'
+import { isTrue, routeToRouterTagListData } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Dropdown, Tag } from 'ant-design-vue'
@@ -14,7 +14,6 @@ export default defineComponent({
 		const router = useRouter()
 		const { state, commit } = useStore()
 		const routerTagList = computed<any[]>(() => {
-			console.log(' state.erpLayout?.routerTagList', state.erpLayout?.routerTagList)
 			return state.erpLayout?.routerTagList || []
 		})
 		const isShowTagList = computed(() => !route?.meta?.isMicro)
@@ -24,7 +23,14 @@ export default defineComponent({
 			(value) => {
 				commit('erpLayout/SetRouterTagKey', (value?.fullPath as string) || '')
 				const item: ObjectMap = routeToRouterTagListData(route)
-				if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem || item.name === 'index') {
+				const routerFilter = route.matched.filter((res) => res.name === route.name) || []
+				const routerData = routerFilter[0] || {}
+				if (
+					!isTrue(routerData.name) ||
+					isTrue(routerData.children) ||
+					item?.meta?.hideMenuItem ||
+					item.name === 'index'
+				) {
 					return false
 				}
 				commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'add' })
