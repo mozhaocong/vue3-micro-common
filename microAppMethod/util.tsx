@@ -187,14 +187,14 @@ export const microRouterMap: microRouterMapListType = [
 		appUrl: origin + '/child/crm/',
 		router: microRouter.crmVite,
 	},
-	{
-		type: 'vite',
-		appId: 'rmaVite',
-		baseUrl: '/child/rma/',
-		appUrl: origin + '/child/rma/',
-		// appUrl: 'http://localhost:8913/child/rma/',
-		router: microRouter.rmaVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'rmaVite',
+	// 	baseUrl: '/child/rma/',
+	// 	appUrl: origin + '/child/rma/',
+	// 	// appUrl: 'http://localhost:8913/child/rma/',
+	// 	router: microRouter.rmaVite,
+	// },
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的
