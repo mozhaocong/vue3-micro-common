@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, Teleport } from 'vue'
+import { computed, defineComponent, ref, Teleport, watch } from 'vue'
 import { BlockOutlined } from '@ant-design/icons-vue'
 import './index.less'
 import { Dropdown, Menu, MenuItem } from 'ant-design-vue'
@@ -15,6 +15,7 @@ export default defineComponent({
 		const route = useRoute()
 		const defRout = ref('/')
 		const isBuoyIconShow = ref(!ISMICROCHILD)
+		const selectedKeys = ref<string[]>([''])
 		const currentName = computed(() => {
 			return route.name
 		})
@@ -28,6 +29,14 @@ export default defineComponent({
 			const { pathSearch } = getUrlPathSearch()
 			defRout.value = pathSearch
 		}
+
+		watch(
+			() => route,
+			(value) => {
+				selectedKeys.value = [value?.meta?.isMicroModel ? (value.meta.pathName as string) : 'main']
+			},
+			{ deep: true, immediate: true }
+		)
 
 		function MenuItemClick(item: any) {
 			if (item.name === currentName.value || (!route?.meta?.isMicroModel && item.name === 'main')) return
@@ -47,9 +56,13 @@ export default defineComponent({
 							v-slots={{
 								overlay: () => {
 									return (
-										<Menu>
+										<Menu selectedKeys={selectedKeys.value}>
 											{data.value.map((item: any) => {
-												return <MenuItem onClick={() => MenuItemClick(item)}>{item.title}</MenuItem>
+												return (
+													<MenuItem key={item.name} onClick={() => MenuItemClick(item)}>
+														{item.title}
+													</MenuItem>
+												)
 											})}
 										</Menu>
 									)

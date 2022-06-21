@@ -35,7 +35,6 @@ export default defineComponent({
 			return [state.erpLayout?.headerSelectedKey || '']
 		})
 
-		console.log('state', state)
 		// 是否显示header
 		const isHeader = computed(() => {
 			return !ISMICROCHILD && !route?.meta?.isMicroModel
