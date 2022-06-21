@@ -6,7 +6,6 @@ import { Dropdown, Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microResetRouterTag, microTagRouterClick } from '@/microAppMethod'
-import store from '@/store'
 
 export default defineComponent({
 	name: 'RouterTagList',
@@ -101,8 +100,7 @@ export default defineComponent({
 					data = []
 					break
 			}
-			console.log('ResetRouterTagList data', data)
-			store.commit('erpLayout/ResetRouterTagList', data || [])
+			commit('erpLayout/ResetRouterTagList', data || [])
 			microResetRouterTag(data)
 			if (isTrue(data)) {
 				microTagRouterClick(data[0], router)
