@@ -22,4 +22,10 @@ export const omsOptObject: Config = {
 		1: '确认收件',
 		2: '取消退货',
 	},
+	OrderType: {
+		0: '一票一件',
+		1: '一票多件',
+		2: '多票多件',
+		3: '全是物料',
+	},
 }
