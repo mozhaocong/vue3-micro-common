@@ -9,6 +9,7 @@ import { loginAgain } from '@/store/modules/erp/public/utils/routerOperation'
 export const state: ObjectMap = {
 	token: localStorage.getItem('Authorization') || '',
 	owm: {},
+	layoutSpinning: false,
 }
 
 // 定义menu模块下的mutations
@@ -33,13 +34,17 @@ export const actions = {
 			commit('SetToken', localStorage.getItem('Authorization') || '')
 		}
 		initRouter(res.code === 0 ? res : {})
+		commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 	},
 
 	async onLogin({ commit, dispatch }: ObjectMap, data?: ObjectMap) {
+		commit('erpLayout/SetLayoutSpinning', { type: true }, { root: true })
 		const res: any = await authorizations(data || {})
 		if (!res.code) {
 			commit('SetToken', res.data.token_type + ' ' + res.data.access_token)
 			dispatch('appDataInit')
+		} else {
+			commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 		}
 	},
 

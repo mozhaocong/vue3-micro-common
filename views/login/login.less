@@ -1,11 +1,20 @@
 .login{
-    background-image: url('../../assets/image/background.jpg');
+    background-image: url('../../assets/image/backgroundName.jpg');
     height: 100vh;
     display: flex;
     justify-content: right;
     align-items: center;
     position: relative;
     background-size: 100vw 100vh;
+    // 解决谷歌浏览器输入框自动填充后,背景变色问题
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus { 
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important; 
+    /* -webkit-text-fill-color: #fff; */
+    -webkit-transition-delay: 99999s; 
+    -webkit-transition: color  99999s ease-out, background-color  99999s ease-out;
+    }
     .ant-form-item-explain-error{
         text-align: left;
     }
@@ -32,20 +41,10 @@
     #form_item_name, .ant-input-affix-wrapper{
         background-color: #fff !important;
         border-top-width: 0px;
-        border-left-width: 0px;
+        border-left-width: 0px !important;
         border-right: 0px solid #d9d9d9 !important;
        
     }
-    .ant-input:focus, .ant-input-affix-wrapper:focus{
-        box-shadow:none !important;
-        // -webkit-text-fill-color:  #fff;
-
-    }
-    .ant-input-affix-wrapper
-    input:-webkit-autofill { 
-        -webkit-box-shadow:0 0 0px 1000px white inset;
-        -webkit-text-fill-color: #333; 
-      } 
     .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,.ant-form-item-has-error :not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus{
         box-shadow:none !important;
         border-right-width: 0px !important;
@@ -56,8 +55,8 @@
     }
     .content{
         background: #fff;
-        width: 460px;
-        height: 670px;
+        width: 500px;
+        height: 700px;
         line-height: 605px;
         border-radius: 10px;
         text-align: center;
@@ -70,6 +69,7 @@
                 line-height: normal;
                 font-size: 30px;
                 color: #444;
+                margin-bottom: 30px;
                 .decorate{
                     width: 107px;
                     height: 4px;

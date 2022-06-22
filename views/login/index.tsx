@@ -1,8 +1,6 @@
 import { defineComponent, ref } from 'vue'
 import { RForm, PassWordInput } from '@/components'
 import { Button, Input } from 'ant-design-vue'
-import iconImg from '../../assets/image/title.png'
-import titleImg from '../../assets/image/contentValue.png'
 import account from '../../assets/image/account.png'
 import './login.less'
 import { useStore } from 'vuex'
@@ -18,7 +16,6 @@ export default defineComponent({
 				key: 'name',
 				rules: [{ required: true, message: '账号不能为空', trigger: 'change' }],
 				customRender: ({ record }) => {
-					console.log(record)
 					return (
 						<Input
 							v-model={[record.name, 'value']}
@@ -51,14 +48,11 @@ export default defineComponent({
 
 		async function toLogin() {
 			const { name, password } = data.value
-			const res = await dispatch('erpLogin/onLogin', { name, password })
-			console.log(res)
+			dispatch('erpLogin/onLogin', { name, password })
 		}
 
 		return () => (
 			<div class="login">
-				<img src={iconImg} class="iconImg" alt="" />
-				<img src={titleImg} class="titleImg" alt="" />
 				<div class="content">
 					<div class="pack">
 						<div class="titleTop">

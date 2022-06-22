@@ -29,7 +29,8 @@ export default defineComponent({
 					!isTrue(routerData.name) ||
 					isTrue(routerData.children) ||
 					item?.meta?.hideMenuItem ||
-					item.name === 'index'
+					item.name === 'index' ||
+					item.title === 'vite'
 				) {
 					return false
 				}
