@@ -4,7 +4,6 @@ import { apiGetPermission, authorizations } from '@/api/erp/login'
 import { requestJudgment } from '@/utils'
 import initRouter from '@/store/modules/erp/public/utils/initRouter'
 import { loginAgain } from '@/store/modules/erp/public/utils/routerOperation'
-import erpLayoutModule from '@/store/modules/erp/public/layout'
 
 // 定义menu模块下的state
 export const state: ObjectMap = {
@@ -34,18 +33,18 @@ export const actions = {
 			commit('SetOwm', res.data)
 			commit('SetToken', localStorage.getItem('Authorization') || '')
 		}
-		console.log(res)
 		initRouter(res.code === 0 ? res : {})
+		commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 	},
 
 	async onLogin({ commit, dispatch }: ObjectMap, data?: ObjectMap) {
+		commit('erpLayout/SetLayoutSpinning', { type: true }, { root: true })
 		const res: any = await authorizations(data || {})
-		// commit('SetLayoutSpinning', { type: true })
-		// erpLayoutModule.mutations.SetLayoutSpinning(state, { type: true, time: 2000 })
-		console.log(res, 'res')
 		if (!res.code) {
 			commit('SetToken', res.data.token_type + ' ' + res.data.access_token)
 			dispatch('appDataInit')
+		} else {
+			commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 		}
 	},
 
