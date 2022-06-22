@@ -23,6 +23,10 @@ export default defineComponent({
 			},
 			{ deep: true, immediate: true }
 		) // 开启深度监听
+		const defaultComponent =
+			import.meta.env?.VITE_CTX && import.meta.env.VITE_CTX === 'false'
+				? (scope: any) => scope.Component
+				: (scope: any) => <KeepAlive include={state.includeList}>{scope.Component}</KeepAlive>
 		return () => (
 			<a-layout class={!isMicroRouter.value ? 'ht_layout_content' : ''}>
 				<a-layout-content>
@@ -31,7 +35,7 @@ export default defineComponent({
 						<router-view
 							style="height:100%"
 							v-slots={{
-								default: (scope: any) => <KeepAlive include={state.includeList}>{scope.Component}</KeepAlive>,
+								default: defaultComponent,
 							}}
 						/>
 					</div>

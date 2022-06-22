@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw, createWebHashHistory } from 'vue-router'
 import lowCode from '@/lowCode'
-import { ISWEbHASHHISTORY } from '@/microAppMethod'
 
-const history = ISWEbHASHHISTORY ? createWebHashHistory() : createWebHistory(import.meta.env.BASE_URL)
+// 引进来变量，热更新报错所以直接在当前页面赋值
+// @ts-ignore
+const ISMICROCHILD = window?.__MICRO_APP_BASE_APPLICATION__ ? true : import.meta.env.VITE_MICRO_TYPE === 'ViteChild'
+const history = ISMICROCHILD ? createWebHashHistory() : createWebHistory(import.meta.env.BASE_URL)
 
 const routes: Array<RouteRecordRaw> = [
 	{

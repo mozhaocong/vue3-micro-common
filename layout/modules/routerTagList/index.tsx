@@ -1,12 +1,11 @@
 import { computed, defineComponent, watch } from 'vue'
-import { getArrayFilterData, isTrue } from '@/utils'
+import { isTrue, routeToRouterTagListData } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { Dropdown, Tag } from 'ant-design-vue'
 import { last } from 'ramda'
 import './index.less'
 import { microEmptyRouterTag, microResetRouterTag, microTagRouterClick } from '@/microAppMethod'
-import store from '@/store'
 
 export default defineComponent({
 	name: 'RouterTagList',
@@ -23,24 +22,37 @@ export default defineComponent({
 			() => route,
 			(value) => {
 				commit('erpLayout/SetRouterTagKey', (value?.fullPath as string) || '')
+				const item: ObjectMap = routeToRouterTagListData(route)
+				const routerFilter = route.matched.filter((res) => res.name === route.name) || []
+				const routerData = routerFilter[0] || {}
+				if (
+					!isTrue(routerData.name) ||
+					isTrue(routerData.children) ||
+					item?.meta?.hideMenuItem ||
+					item.name === 'index' ||
+					item.title === 'vite'
+				) {
+					return false
+				}
+				commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'add' })
 			},
 			{ deep: true, immediate: true }
 		)
 
-		if (!isTrue(routerTagList.value) && isShowTagList.value) {
-			const list = state?.erpLayout?.layoutRouterData || []
-			const data = list.filter((item: any) => item.pathName === route.meta.pathName)
-			const filterData = getArrayFilterData(data, (item) => {
-				if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem) {
-					return false
-				}
-				return route.name === item.name
-			})
-			if (isTrue(filterData)) {
-				filterData[0].path = route.fullPath
-				commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
-			}
-		}
+		// if (!isTrue(routerTagList.value) && isShowTagList.value) {
+		// 	const list = state?.erpLayout?.layoutRouterData || []
+		// 	const data = list.filter((item: any) => item.pathName === route.meta.pathName)
+		// 	const filterData = getArrayFilterData(data, (item) => {
+		// 		if (!isTrue(item.name) || item.children || item?.meta?.hideMenuItem) {
+		// 			return false
+		// 		}
+		// 		return route.name === item.name
+		// 	})
+		// 	if (isTrue(filterData)) {
+		// 		filterData[0].path = route.fullPath
+		// 		commit('erpLayout/AddDeleteRouterTagList', { data: filterData[0], type: 'add' })
+		// 	}
+		// }
 
 		function tagClose(item: any, index: number) {
 			commit('erpLayout/AddDeleteRouterTagList', { data: item, type: 'delete' })
@@ -100,7 +112,7 @@ export default defineComponent({
 					data = []
 					break
 			}
-			store.commit('erpLayout/ResetRouterTagList', data || [])
+			commit('erpLayout/ResetRouterTagList', data || [])
 			microResetRouterTag(data)
 			if (isTrue(data)) {
 				microTagRouterClick(data[0], router)

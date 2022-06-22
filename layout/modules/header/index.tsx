@@ -99,7 +99,6 @@ export default defineComponent({
 										<MenuItem
 											onClick={() => {
 												dispatch('erpLogin/signOut')
-												// erpLoginModule.signOut()
 											}}
 										>
 											退出登录

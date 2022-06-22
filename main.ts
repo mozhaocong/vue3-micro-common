@@ -5,7 +5,6 @@ import store from './store'
 import Antd from 'ant-design-vue'
 import { axiosInit } from '@/http'
 import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
-import { erpLoginModule } from '@/store/modules/erp/public/login'
 import { isTrue } from '@/utils'
 import { hover } from '@/directive'
 // 日期中文问题
@@ -42,7 +41,7 @@ function vueInit() {
 	})
 
 	// 初始化动态路由
-	erpLoginModule.appDataInit()
+	store.dispatch('erpLogin/appDataInit')
 	if (isTrue(app)) {
 		app.config.warnHandler = (msg: string) => {
 			// 我就是不想打印
