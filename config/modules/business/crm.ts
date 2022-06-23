@@ -7,4 +7,9 @@ export const crmOptObject: Config = {
 		4: 'BQ',
 		5: 'Naija',
 	},
+	crmGiftCardType: {
+		0: '部分剩余',
+		1: '已用完',
+		2: '已失效',
+	},
 }
