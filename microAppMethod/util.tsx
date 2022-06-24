@@ -168,7 +168,7 @@ export const microRouter = {
 				name: 'general',
 				component: () => import('@/microAppMethod/microApp/general/index'),
 				meta: {
-					title: 'General',
+					title: 'Grafana',
 					keepAlive: true,
 					isMicro: true,
 					isMicroModel: true,

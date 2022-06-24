@@ -2,14 +2,16 @@ import { defineComponent, onActivated } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 import './index.less'
 export default defineComponent({
-	name: 'kibana',
+	name: 'general',
 	setup: function () {
-		const iframe = document.createElement('iframe')
-		iframe.height = '100%'
-		iframe.width = '100%'
-		iframe.id = 'general_iframe'
-		iframe.src = 'http://47.119.141.146:3000/?orgId=1'
-		document.querySelector(`#${import.meta.env.VITE_APP_ID}`)?.appendChild(iframe)
+		if (!document.querySelector('#general_iframe')) {
+			const iframe = document.createElement('iframe')
+			iframe.height = '100%'
+			iframe.width = '100%'
+			iframe.id = 'general_iframe'
+			iframe.src = 'http://47.119.141.146:3000/?orgId=1'
+			document.querySelector(`#${import.meta.env.VITE_APP_ID}`)?.appendChild(iframe)
+		}
 		onActivated(() => {
 			try {
 				// @ts-ignore
