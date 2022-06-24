@@ -3,9 +3,11 @@ import { has, isEmpty, isNil, map } from 'ramda'
 import { throttle } from '@/utils'
 import store from '@/store'
 import { getSysUserList } from '@/api/erp/user'
+import { orderOrderCategories } from '@/api/erp/oms'
 
 const throttleObject: ObjectMap = {
 	getBasicSysUserListThrottle: throttle(getSysUserList),
+	getBasicCategoryListThrottle: throttle(orderOrderCategories),
 }
 
 // 做低代码优化识别
@@ -18,6 +20,8 @@ export class basicData extends VuexModule {
 	public listMapData = listMapData //做低代码优化识别
 	public basicSysUserList: Array<ObjectMap> = [] //系统用户
 	private basicSysUserListConfig: ObjectMap = { value: 'old_user_id', label: 'real_name' }
+	public basicCategoryList: Array<ObjectMap> = [] //系统用户
+	private basicCategoryListConfig: ObjectMap = { value: 'key', label: 'name' }
 
 	@Action
 	public async getBasicDataList(item: { type: string; params?: ObjectMap }) {
@@ -30,7 +34,7 @@ export class basicData extends VuexModule {
 			if (isNil(res) || isEmpty(res)) {
 				return
 			}
-			this.SETBASICDATALIST({ type, data: res?.data?.items })
+			this.SETBASICDATALIST({ type, data: res?.data?.result })
 		} else {
 			console.error('basicData找不到' + type + '对应的接口')
 			return
