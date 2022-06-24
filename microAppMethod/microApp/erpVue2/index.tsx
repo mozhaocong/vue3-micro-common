@@ -31,7 +31,7 @@ export default defineComponent({
 					url={microData.appUrl}
 					baseroute={microData.baseRoute}
 					keep-alive
-					disableScopecss={true}
+					// disableScopecss={true}
 					error={() => {
 						message.error('页面加载失败，请重现刷新页面')
 						commit('erpLayout/SetLayoutSpinning', { type: false })
