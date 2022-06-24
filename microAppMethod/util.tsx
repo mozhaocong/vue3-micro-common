@@ -145,6 +145,37 @@ export const microRouter = {
 			},
 		],
 	},
+	general: {
+		path: '/childGeneral',
+		name: 'childGeneral',
+		redirect: '/childKibana/General',
+		meta: {
+			title: 'General',
+			keepAlive: true,
+			// 下面的属性只有微前端才有的(路由和模块都有)
+			isMicro: true,
+			pathName: 'childGeneral',
+			appId: 'General',
+			// 下面属性是只有微前端模块才有的
+			isMicroModel: true,
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childKibana/General',
+				name: 'general',
+				component: () => import('@/microAppMethod/microApp/general/index'),
+				meta: {
+					title: 'Grafana',
+					keepAlive: true,
+					isMicro: true,
+					isMicroModel: true,
+				},
+			},
+		],
+	},
 }
 
 interface microRouterMapType {
@@ -214,11 +245,16 @@ export const microModelMap: microRouterMapListType = [
 		type: 'iframe',
 		appId: 'kibana',
 		baseUrl: '/child/erp/',
-		// appUrl: 'http://10.17.201.63:8002/child/vue3/',
-		// appUrl: 'http://10.17.201.63:8081',
-		// appUrl: 'http://10.17.201.63:8080/',
 		appUrl: 'http://47.119.141.146:8080/child/erp/',
 		baseRoute: '/childErp/kibana',
 		router: microRouter.kibana,
+	},
+	{
+		type: 'iframe',
+		appId: 'general',
+		baseUrl: '/child/erp/',
+		appUrl: 'http://47.119.141.146:8080/child/erp/',
+		baseRoute: '/childErp/kibana',
+		router: microRouter.general,
 	},
 ]
