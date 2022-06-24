@@ -44,6 +44,16 @@ export function setArrayData(item: any[], call: (callItem: ObjectMap) => ObjectM
 	})
 }
 
+// 设置递归数组
+export function forArrayData(item: any[], call: (callItem: ObjectMap) => void): void {
+	item.forEach((res) => {
+		call(res)
+		if (isTrue(res.children)) {
+			forArrayData(res.children, call)
+		}
+	})
+}
+
 // 过滤递归数组
 export function setArrayFilter(item: any[], call: (callItem: ObjectMap) => boolean) {
 	return item.filter((res: any) => {
@@ -107,6 +117,7 @@ export function deepClone(source: any) {
 	}
 }
 
+// data = [{id:1},{id:2}] key= 'id' item=2
 export function ArrayObjectIncludes(data: ObjectMap[], key: string, item: string) {
 	if (!isTrue(data)) return false
 	return data.map((item) => item[key]).includes(item)
