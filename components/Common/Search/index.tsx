@@ -20,13 +20,13 @@ const Props = {
 	labelCol: {
 		type: Object as PropType<LabelCol>,
 		default: () => {
-			return { style: { width: '90px', margin: '0 16px 0 0' } }
+			return { style: { width: '100px', margin: '0 16px 0 0' } }
 		},
 	},
 	wrapperCol: {
 		type: Object as PropType<LabelCol>,
 		default: () => {
-			return { style: { width: '220px', margin: '0 70px 0 0' } }
+			return { style: { width: '220px', margin: '0 60px 0 0' } }
 		},
 	},
 	labelAlign: {

@@ -12,4 +12,8 @@ export const crmOptObject: Config = {
 		1: '已用完',
 		2: '已失效',
 	},
+	crmPaid: {
+		0: '非付费会员',
+		1: '付费会员',
+	},
 }

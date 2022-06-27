@@ -5,7 +5,7 @@ import { map } from 'ramda'
 import { Select } from 'ant-design-vue'
 // import { isTrue } from 'rantion-tools/es'
 const Props = {
-	value: [String, Number] as PropType<string | number>,
+	value: [String, Number, Array] as PropType<string | number | Array<any>>,
 	label: [String, Number] as PropType<string | number>,
 	// @Prop(String) readonly prop!: string,
 	prop: {
