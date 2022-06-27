@@ -15,9 +15,11 @@ export default defineComponent({
 				crm: '客户系统',
 				oms: '订单系统',
 				rma: '客诉系统',
+				wms: '仓储系统',
 				childOmsVite: '订单系统',
 				childCrmVite: '客户系统',
 				childRmaVite: '客诉系统',
+				childWmsVite: '仓储系统',
 			}
 			return titleMap[data] ?? data
 		}
