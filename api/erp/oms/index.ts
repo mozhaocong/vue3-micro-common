@@ -1,4 +1,4 @@
-import { get, methodType } from '@/http'
+import { get } from '@/http'
 import { apiUrl } from '@/api/erp'
 
 // 查询订单渠道
