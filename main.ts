@@ -8,7 +8,9 @@ import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
 import { isTrue } from '@/utils'
 import { hover } from '@/directive'
 // 日期中文问题
+// import dayjs from 'dayjs'
 // import 'dayjs/locale/zh-cn'
+// dayjs.locale('zh-cn')
 
 // 京东框架微前端 初始化
 microAppInit({ mount })

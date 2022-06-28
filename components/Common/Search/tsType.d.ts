@@ -1,7 +1,8 @@
 interface LabelCol {
 	span?: number
 	offset?: number
-	style?: { width: string }
+	style?: { width: string; [index: string]: any }
+	[index: string]: any
 }
 interface SearchRowConf {
 	key: string

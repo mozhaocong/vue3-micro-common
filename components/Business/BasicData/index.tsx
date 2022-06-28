@@ -5,7 +5,7 @@ import { isArray, isTrue } from '@/utils'
 import { storeMapping } from '@/store/modules/erp/business/mapping'
 
 const Props = {
-	value: [String, Number] as PropType<string | number>,
+	value: [String, Number, Array] as PropType<string | number | Array<any>>,
 	label: [String, Number] as PropType<string | number>,
 	disabled: {
 		type: Boolean as PropType<boolean>,
