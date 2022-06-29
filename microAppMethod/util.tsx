@@ -114,7 +114,7 @@ export const microRouter = {
 	bimVite: {
 		path: '/childBim',
 		name: 'childBimVite',
-		// redirect: '/childBim/bimVite#/bim',
+		redirect: '/childBim/bimVite#/bimTest',
 		meta: {
 			title: 'bimVite',
 			keepAlive: true,
