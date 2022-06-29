@@ -1,7 +1,7 @@
 import { forEach, keys } from 'ramda'
 import { crmOptObject } from '@/config/modules/business/crm'
 import { omsOptObject } from '@/config/modules/business/oms'
-import { basisOptObject } from '@/config/modules/business/bim'
+import { basisOptObject } from '@/config/modules/business/logs'
 
 export const businessOptObject: Config = {
 	...crmOptObject,
