@@ -284,14 +284,14 @@ export const microRouterMap: microRouterMapListType = [
 	// 	// appUrl: 'http://localhost:8913/child/rma/',
 	// 	router: microRouter.rmaVite,
 	// },
-	{
-		type: 'vite',
-		appId: 'wmsVite',
-		baseUrl: '/child/wms/',
-		appUrl: origin + '/child/wms/',
-		// appUrl: 'http://localhost:8992/child/wms/',
-		router: microRouter.wmsVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'wmsVite',
+	// 	baseUrl: '/child/wms/',
+	// 	appUrl: origin + '/child/wms/',
+	// 	// appUrl: 'http://localhost:8992/child/wms/',
+	// 	router: microRouter.wmsVite,
+	// },
 	{
 		type: 'vite',
 		appId: 'logsVite',
