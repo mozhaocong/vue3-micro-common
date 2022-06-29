@@ -111,26 +111,26 @@ export const microRouter = {
 			},
 		],
 	},
-	bimVite: {
-		path: '/childBim',
-		name: 'childBimVite',
-		redirect: '/childBim/bimVite#/logsTest',
+	logsVite: {
+		path: '/childLogs',
+		name: 'childLogsVite',
+		redirect: '/childLogs/logsVite#/logsTest',
 		meta: {
-			title: 'bimVite',
+			title: 'logsVite',
 			keepAlive: true,
 			// 下面的属性只有微前端路由才有的
 			isMicro: true,
-			pathName: 'childBimVite',
-			appId: 'bimVite',
+			pathName: 'childLogsVite',
+			appId: 'logsVite',
 		},
 		component: () => import('@/layout/index'),
 		children: [
 			{
 				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
-				path: '/childBim/bimVite:page*',
-				name: 'bimVite',
-				component: () => import('@/microAppMethod/microApp/bimVite/index'),
+				path: '/childLogs/logsVite:page*',
+				name: 'logsVite',
+				component: () => import('@/microAppMethod/microApp/logsVite/index'),
 				meta: {
 					title: 'vite',
 					keepAlive: true,
@@ -254,7 +254,7 @@ export const microKeepAliveView = [
 	'erpVue2',
 	'rmaVite',
 	'wmsVite',
-	'bimVite',
+	'logsVite',
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
@@ -294,11 +294,11 @@ export const microRouterMap: microRouterMapListType = [
 	},
 	{
 		type: 'vite',
-		appId: 'bimVite',
-		baseUrl: '/child/bim/',
-		appUrl: origin + '/child/bim/',
-		// appUrl: 'http://localhost:8992/child/bim/',
-		router: microRouter.bimVite,
+		appId: 'logsVite',
+		baseUrl: '/child/logs/',
+		appUrl: origin + '/child/logs/',
+		// appUrl: 'http://localhost:8992/child/logs/',
+		router: microRouter.logsVite,
 	},
 ]
 
