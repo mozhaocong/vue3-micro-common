@@ -261,21 +261,21 @@ export const microKeepAliveView = [
 const origin = window.location.origin
 
 export const microRouterMap: microRouterMapListType = [
-	{
-		type: 'vite',
-		appId: 'omsVite',
-		baseUrl: '/child/oms/',
-		// appUrl: 'http://localhost:8991/child/oms/',
-		appUrl: origin + '/child/oms/',
-		router: microRouter.omsVite,
-	},
-	{
-		type: 'vite',
-		appId: 'crmVite',
-		baseUrl: '/child/crm/',
-		appUrl: origin + '/child/crm/',
-		router: microRouter.crmVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'omsVite',
+	// 	baseUrl: '/child/oms/',
+	// 	// appUrl: 'http://localhost:8991/child/oms/',
+	// 	appUrl: origin + '/child/oms/',
+	// 	router: microRouter.omsVite,
+	// },
+	// {
+	// 	type: 'vite',
+	// 	appId: 'crmVite',
+	// 	baseUrl: '/child/crm/',
+	// 	appUrl: origin + '/child/crm/',
+	// 	router: microRouter.crmVite,
+	// },
 	// {
 	// 	type: 'vite',
 	// 	appId: 'rmaVite',
@@ -284,14 +284,14 @@ export const microRouterMap: microRouterMapListType = [
 	// 	// appUrl: 'http://localhost:8913/child/rma/',
 	// 	router: microRouter.rmaVite,
 	// },
-	// {
-	// 	type: 'vite',
-	// 	appId: 'wmsVite',
-	// 	baseUrl: '/child/wms/',
-	// 	appUrl: origin + '/child/wms/',
-	// 	// appUrl: 'http://localhost:8992/child/wms/',
-	// 	router: microRouter.wmsVite,
-	// },
+	{
+		type: 'vite',
+		appId: 'wmsVite',
+		baseUrl: '/child/wms/',
+		appUrl: origin + '/child/wms/',
+		// appUrl: 'http://localhost:8992/child/wms/',
+		router: microRouter.wmsVite,
+	},
 	{
 		type: 'vite',
 		appId: 'logsVite',
