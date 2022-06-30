@@ -138,6 +138,7 @@ function mount() {
 	fixBugForVueRouter4(vueRouter)
 
 	if (isTrue(pushMount)) {
+		console.log('pushMount')
 		pushMount()
 	}
 }

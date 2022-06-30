@@ -50,7 +50,7 @@ export const actions = {
 				}
 			}
 		}
-
+		console.log('appDataInit', res)
 		await initRouter(res.code == 0 ? res : {})
 		commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 
