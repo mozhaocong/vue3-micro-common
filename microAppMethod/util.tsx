@@ -284,14 +284,14 @@ export const microRouterMap: microRouterMapListType = [
 	// 	// appUrl: 'http://localhost:8913/child/rma/',
 	// 	router: microRouter.rmaVite,
 	// },
-	{
-		type: 'vite',
-		appId: 'wmsVite',
-		baseUrl: '/child/wms/',
-		appUrl: origin + '/child/wms/',
-		// appUrl: 'http://localhost:8992/child/wms/',
-		router: microRouter.wmsVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'wmsVite',
+	// 	baseUrl: '/child/wms/',
+	// 	appUrl: origin + '/child/wms/',
+	// 	// appUrl: 'http://localhost:8992/child/wms/',
+	// 	router: microRouter.wmsVite,
+	// },
 	{
 		type: 'vite',
 		appId: 'logsVite',
@@ -303,7 +303,7 @@ export const microRouterMap: microRouterMapListType = [
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的
-export const microModelMap: microRouterMapListType = [
+const defMicroModelMap: microRouterMapListType = [
 	{
 		type: 'vue2',
 		appId: 'erpVue2',
@@ -315,6 +315,9 @@ export const microModelMap: microRouterMapListType = [
 		baseRoute: '/childErp/erpVue2',
 		router: microRouter.erpVue2,
 	},
+]
+
+let microModelMapList = [
 	{
 		type: 'iframe',
 		appId: 'kibana',
@@ -332,3 +335,8 @@ export const microModelMap: microRouterMapListType = [
 		router: microRouter.general,
 	},
 ]
+
+if (import.meta.env.VITE_ENV === 'prod') {
+	microModelMapList = []
+}
+export const microModelMap = [...defMicroModelMap, ...microModelMapList]
