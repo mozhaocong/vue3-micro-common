@@ -7,7 +7,7 @@ switch (import.meta?.env?.VITE_ENV) {
 		break
 	case 'prod':
 		erpUrl = 'https://erp.admin.htwig.com'
-		apiUrl = 'http://portal.admin.htwig.com:8000'
+		apiUrl = 'https://portal.admin.htwig.com'
 		break
 }
 
