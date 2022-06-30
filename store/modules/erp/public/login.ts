@@ -32,12 +32,12 @@ export const actions = {
 		function initData(res: any) {
 			commit('SetOwm', res.data)
 			commit('SetToken', localStorage.getItem('Authorization') || '')
-			localStorage.setItem('owm', JSON.stringify(res))
 		}
 		if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
 			res = await apiGetPermission({})
 			if (requestJudgment(res)) {
 				initData(res)
+				localStorage.setItem('owm', JSON.stringify(res))
 			}
 		} else {
 			const data = localStorage.getItem('owm')
@@ -51,7 +51,8 @@ export const actions = {
 			}
 		}
 
-		await initRouter(res.code === 0 ? res : {})
+		console.log('appDataInit', res)
+		await initRouter(res.code == 0 ? res : {})
 		commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 	},
 
