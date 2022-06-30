@@ -27,32 +27,41 @@ export const mutations = {
 
 export const actions = {
 	async appDataInit({ commit }: ObjectMap) {
+		// // 获取用户信息相关的数据
+		// let res: any = {}
+		// function initData(res: any) {
+		// 	commit('SetOwm', res.data)
+		// 	commit('SetToken', localStorage.getItem('Authorization') || '')
+		// }
+		// if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
+		// 	res = await apiGetPermission({})
+		// 	if (requestJudgment(res)) {
+		// 		initData(res)
+		// 		localStorage.setItem('owm', JSON.stringify(res))
+		// 	}
+		// } else {
+		// 	const data = localStorage.getItem('owm')
+		// 	if (data) {
+		// 		try {
+		// 			initData(JSON.parse(data))
+		// 			res = JSON.parse(data)
+		// 		} catch (e) {
+		// 			console.error('apiGetPermission JSON错误', e)
+		// 		}
+		// 	}
+		// }
+		//
+		// console.log('appDataInit', res)
+		// await initRouter(res.code == 0 ? res : {})
+		// commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
+
 		// 获取用户信息相关的数据
-		let res: any = {}
-		function initData(res: any) {
+		const res = await apiGetPermission({})
+		if (requestJudgment(res)) {
 			commit('SetOwm', res.data)
 			commit('SetToken', localStorage.getItem('Authorization') || '')
 		}
-		if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
-			res = await apiGetPermission({})
-			if (requestJudgment(res)) {
-				initData(res)
-				localStorage.setItem('owm', JSON.stringify(res))
-			}
-		} else {
-			const data = localStorage.getItem('owm')
-			if (data) {
-				try {
-					initData(JSON.parse(data))
-					res = JSON.parse(data)
-				} catch (e) {
-					console.error('apiGetPermission JSON错误', e)
-				}
-			}
-		}
-
-		console.log('appDataInit', res)
-		await initRouter(res.code == 0 ? res : {})
+		initRouter(res.code === 0 ? res : {})
 		commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 	},
 
