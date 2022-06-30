@@ -27,7 +27,7 @@ function getStoreConfig(type: string, that: any): ObjectMap {
 export class basicData extends VuexModule {
 	public listMapData = listMapData //做低代码优化识别
 	public basicSysUserList: Array<ObjectMap> = [] //系统用户
-	private basicSysUserListConfig: ObjectMap = { value: 'old_user_id', label: 'real_name', data: ['data', 'item'] }
+	private basicSysUserListConfig: ObjectMap = { value: 'old_user_id', label: 'real_name', data: ['data', 'items'] }
 	public basicCategoryList: Array<ObjectMap> = [] //系统用户
 	private basicCategoryListConfig: ObjectMap = { value: 'key', label: 'name' }
 
