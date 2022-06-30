@@ -29,11 +29,27 @@ export const actions = {
 	async appDataInit({ commit }: ObjectMap) {
 		// 获取用户信息相关的数据
 		const res = await apiGetPermission({})
-		if (requestJudgment(res)) {
+		function initData(res: any) {
 			commit('SetOwm', res.data)
 			commit('SetToken', localStorage.getItem('Authorization') || '')
+			localStorage.setItem('owm', JSON.stringify(res))
 		}
-		initRouter(res.code === 0 ? res : {})
+		if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
+			if (requestJudgment(res)) {
+				initData(res)
+			}
+		} else {
+			const data = localStorage.getItem('owm')
+			if (data) {
+				try {
+					initData(JSON.parse(data))
+				} catch (e) {
+					console.error('apiGetPermission JSON错误', e)
+				}
+			}
+		}
+
+		await initRouter(res.code === 0 ? res : {})
 		commit('erpLayout/SetLayoutSpinning', { type: false }, { root: true })
 	},
 
