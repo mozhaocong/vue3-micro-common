@@ -55,7 +55,7 @@ function setCurrencyRouter() {
 async function setVueRouteEager() {
 	let publicRouter = []
 	// 获取公共路由去src目录找文件 子模块不需要加载公共模块路由
-	if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
+	if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain' && import.meta.env.VITE_ENV === 'test') {
 		publicRouter = await getGlobEagerRouter('public')
 	}
 	// 获取当前项目的路由去child目录找文件
