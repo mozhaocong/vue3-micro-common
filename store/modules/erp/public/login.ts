@@ -28,13 +28,14 @@ export const mutations = {
 export const actions = {
 	async appDataInit({ commit }: ObjectMap) {
 		// 获取用户信息相关的数据
-		const res = await apiGetPermission({})
+		let res: any = {}
 		function initData(res: any) {
 			commit('SetOwm', res.data)
 			commit('SetToken', localStorage.getItem('Authorization') || '')
 			localStorage.setItem('owm', JSON.stringify(res))
 		}
 		if (import.meta.env.VITE_MICRO_TYPE === 'ViteMain') {
+			res = await apiGetPermission({})
 			if (requestJudgment(res)) {
 				initData(res)
 			}
@@ -43,6 +44,7 @@ export const actions = {
 			if (data) {
 				try {
 					initData(JSON.parse(data))
+					res = JSON.parse(data)
 				} catch (e) {
 					console.error('apiGetPermission JSON错误', e)
 				}
