@@ -84,9 +84,9 @@ export const microRouter = {
 		],
 	},
 	wmsVite: {
-		path: '/childRma',
+		path: '/childWms',
 		name: 'childWmsVite',
-		redirect: '/childRma/wmsVite#/rma',
+		redirect: '/childWms/wmsVite#/wms',
 		meta: {
 			title: 'wmsVite',
 			keepAlive: true,
@@ -100,7 +100,7 @@ export const microRouter = {
 			{
 				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
-				path: '/childRma/wmsVite:page*',
+				path: '/childWms/wmsVite:page*',
 				name: 'wmsVite',
 				component: () => import('@/microAppMethod/microApp/wmsVite/index'),
 				meta: {
@@ -131,6 +131,34 @@ export const microRouter = {
 				path: '/childLogs/logsVite:page*',
 				name: 'logsVite',
 				component: () => import('@/microAppMethod/microApp/logsVite/index'),
+				meta: {
+					title: 'vite',
+					keepAlive: true,
+					isMicro: true,
+				},
+			},
+		],
+	},
+	productsVite: {
+		path: '/childProducts',
+		name: 'childProductsVite',
+		redirect: '/childProducts/productsVite#/productsTest',
+		meta: {
+			title: 'productsVite',
+			keepAlive: true,
+			// 下面的属性只有微前端路由才有的
+			isMicro: true,
+			pathName: 'childProductsVite',
+			appId: 'productsVite',
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childproducts/productsVite:page*',
+				name: 'productsVite',
+				component: () => import('@/microAppMethod/microApp/productsVite/index'),
 				meta: {
 					title: 'vite',
 					keepAlive: true,
@@ -255,6 +283,7 @@ export const microKeepAliveView = [
 	'rmaVite',
 	'wmsVite',
 	'logsVite',
+	'productsVite',
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
@@ -299,6 +328,13 @@ export const microRouterMap: microRouterMapListType = [
 		appUrl: origin + '/child/logs/',
 		// appUrl: 'http://localhost:8992/child/logs/',
 		router: microRouter.logsVite,
+	},
+	{
+		type: 'vite',
+		appId: 'productsVite',
+		baseUrl: '/child/products/',
+		appUrl: origin + '/child/products/',
+		router: microRouter.productsVite,
 	},
 ]
 
