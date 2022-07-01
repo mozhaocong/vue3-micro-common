@@ -93,9 +93,7 @@ function mount() {
 		console.log('有重复的 VITE_APP_ID', MICROWINDOWDATA)
 		return
 	}
-	if (isTrue(pushMount)) {
-		pushMount()
-	}
+
 	// 与基座进行数据交互
 	function handleMicroData() {
 		// eventCenterForAppNameKey 是基座添加到window的数据通信对象
@@ -135,8 +133,14 @@ function mount() {
 		}
 	}
 	handleMicroData()
+	console.log('handleMicroData')
 
 	fixBugForVueRouter4(vueRouter)
+
+	if (isTrue(pushMount)) {
+		console.log('pushMount')
+		pushMount()
+	}
 }
 
 /**
@@ -151,7 +155,6 @@ function fixBugForVueRouter4(router: Router) {
 	const microRouteFilter = microRouterMap
 		.filter((item) => item.appId === import.meta.env.VITE_APP_ID)
 		.map((item) => {
-			console.log(item?.router?.children?.[0].path)
 			const router = item?.router?.children?.[0].path
 			if (isTrue(router)) {
 				return router.replace(':page*', '#')
@@ -167,7 +170,6 @@ function fixBugForVueRouter4(router: Router) {
 		console.warn('vite子应用路由配置有问题')
 		return
 	}
-	console.log('realBaseRoute', realBaseRoute)
 	/**
 	 * 重要说明：
 	 * 1、这里主应用下发的基础路由为：`/main-xxx/app-vite`，其中 `/main-xxx` 是主应用的基础路由，需要去掉，我们只取`/app-vite`，不同项目根据实际情况调整

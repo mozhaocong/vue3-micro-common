@@ -22,9 +22,7 @@ if (!ISMICROCHILD) {
 	vueInit()
 }
 function mount() {
-	if (!window[MICROWINDOWDATA as any]) {
-		vueInit()
-	}
+	vueInit()
 }
 
 function vueInit() {
