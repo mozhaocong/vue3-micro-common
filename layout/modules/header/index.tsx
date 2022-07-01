@@ -17,11 +17,13 @@ export default defineComponent({
 				rma: '客诉系统',
 				wms: '仓储系统',
 				logs: '日志系统',
+				products: '产品系统',
 				childOmsVite: '订单系统',
 				childCrmVite: '客户系统',
 				childRmaVite: '客诉系统',
 				childWmsVite: '仓储系统',
 				childLogsVite: '日志系统',
+				childProductsVite: '产品系统',
 			}
 			return titleMap[data] ?? data
 		}
