@@ -195,6 +195,34 @@ export const microRouter = {
 			},
 		],
 	},
+	baseVite: {
+		path: '/childBase',
+		name: 'childBaseVite',
+		redirect: '/childBase/baseVite#/baseTest',
+		meta: {
+			title: 'baseVite',
+			keepAlive: true,
+			// 下面的属性只有微前端路由才有的
+			isMicro: true,
+			pathName: 'childBaseVite',
+			appId: 'baseVite',
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childBase/baseVite:page*',
+				name: 'baseVite',
+				component: () => import('@/microAppMethod/microApp/baseVite/index'),
+				meta: {
+					title: 'vite',
+					keepAlive: true,
+					isMicro: true,
+				},
+			},
+		],
+	},
 	erpVue2: {
 		path: '/childErp',
 		name: 'childErp',
@@ -313,6 +341,7 @@ export const microKeepAliveView = [
 	'logsVite',
 	'productsVite',
 	'shippingVite',
+	'baseVite',
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
@@ -371,6 +400,13 @@ export const microRouterMap: microRouterMapListType = [
 		baseUrl: '/child/shipping/',
 		appUrl: origin + '/child/shipping/',
 		router: microRouter.shippingVite,
+	},
+	{
+		type: 'vite',
+		appId: 'baseVite',
+		baseUrl: '/child/base/',
+		appUrl: origin + '/child/base/',
+		router: microRouter.baseVite,
 	},
 ]
 
