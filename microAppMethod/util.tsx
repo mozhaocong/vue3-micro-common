@@ -156,9 +156,37 @@ export const microRouter = {
 			{
 				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
 				// 已解决带参数时页面丢失的问题
-				path: '/childproducts/productsVite:page*',
+				path: '/childProducts/productsVite:page*',
 				name: 'productsVite',
-				component: () => import('@/microAppMethod/microApp/productsVite/index'),
+				component: () => import('@/microAppMethod/microApp/products/index'),
+				meta: {
+					title: 'vite',
+					keepAlive: true,
+					isMicro: true,
+				},
+			},
+		],
+	},
+	shippingVite: {
+		path: '/childShipping',
+		name: 'childShippingVite',
+		redirect: '/childShipping/shippingVite#/shippingTest',
+		meta: {
+			title: 'shippingVite',
+			keepAlive: true,
+			// 下面的属性只有微前端路由才有的
+			isMicro: true,
+			pathName: 'childShippingVite',
+			appId: 'shippingVite',
+		},
+		component: () => import('@/layout/index'),
+		children: [
+			{
+				// 因为主应用为history路由，appName-vite子应用是hash路由，这里配置略微不同
+				// 已解决带参数时页面丢失的问题
+				path: '/childShipping/shippingVite:page*',
+				name: 'shippingVite',
+				component: () => import('@/microAppMethod/microApp/shipping/index'),
 				meta: {
 					title: 'vite',
 					keepAlive: true,
@@ -284,6 +312,7 @@ export const microKeepAliveView = [
 	'wmsVite',
 	'logsVite',
 	'productsVite',
+	'shippingVite',
 ]
 
 // micro路由 保留基座的header，与基座有互相通信
@@ -335,6 +364,13 @@ export const microRouterMap: microRouterMapListType = [
 		baseUrl: '/child/products/',
 		appUrl: origin + '/child/products/',
 		router: microRouter.productsVite,
+	},
+	{
+		type: 'vite',
+		appId: 'shippingVite',
+		baseUrl: '/child/shipping/',
+		appUrl: origin + '/child/shipping/',
+		router: microRouter.shippingVite,
 	},
 ]
 
