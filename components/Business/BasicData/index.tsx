@@ -90,6 +90,7 @@ const FormBasicData = defineComponent({
 			}
 		}
 		onMounted(() => {
+			console.log('onMounted onMounted onMounted')
 			if (props.storeName) {
 				const storeMappingData = storeNameMap[props.storeName]
 				if (storeMappingData) {
