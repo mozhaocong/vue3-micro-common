@@ -44,6 +44,7 @@ export function copyText(text: string) {
 	return res
 }
 
+import { mockDataSource } from './modules/mock'
 export {
 	isTrue,
 	isString,
@@ -73,4 +74,5 @@ export {
 	routeToRouterTagListData,
 	getSearchString,
 	ArrayObjectIncludes,
+	mockDataSource,
 }
