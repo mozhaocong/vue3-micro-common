@@ -2,17 +2,19 @@ import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-dec
 import { has, isEmpty, isNil, map } from 'ramda'
 import { isTrue, throttle } from '@/utils'
 import store from '@/store'
-import { getSysUserList } from '@/api/erp/user'
+import { getSysUserList, GetBaseCountryList } from '@/api/erp/user'
 import { orderOrderCategories } from '@/api/erp/oms'
 
 const throttleObject: ObjectMap = {
 	getBasicSysUserListThrottle: throttle(getSysUserList),
 	getBasicCategoryListThrottle: throttle(orderOrderCategories),
+	getBasicNationListThrottle: throttle(GetBaseCountryList),
 }
 
 // 做低代码优化识别
 const listMapData = {
 	basicSysUserList: '系统用户',
+	basicNationList: '国家',
 }
 
 function getStoreConfig(type: string, that: any): ObjectMap {
@@ -30,6 +32,8 @@ export class basicData extends VuexModule {
 	private basicSysUserListConfig: ObjectMap = { value: 'old_user_id', label: 'real_name', data: ['data', 'items'] }
 	public basicCategoryList: Array<ObjectMap> = [] //系统用户
 	private basicCategoryListConfig: ObjectMap = { value: 'key', label: 'name' }
+	public basicNationList: Array<ObjectMap> = [] // 国家
+	private basicNationListConfig: ObjectMap = { value: 'id', label: 'format_name', data: ['data'] }
 
 	@Action
 	public async getBasicDataList(item: { type: string; params?: ObjectMap }) {

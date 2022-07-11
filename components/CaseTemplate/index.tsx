@@ -47,8 +47,9 @@ export default defineComponent({
 					loading={loading.value}
 					search={rSearch}
 					v-model={[expand.value, 'expand']}
-					// lineLength={8}
+					// lineLength={8} // 自定义显示条件
 					v-slots={{
+						// 是否全部显示
 						...searchSlots(true),
 					}}
 					{...{ rowProps: defaultRowProps }}
@@ -60,6 +61,12 @@ export default defineComponent({
 				<RTable
 					searchKey={pageKey + 'Table'}
 					refresh={refresh}
+					v-slots={{
+						// 自定义
+						headerButton: () => {
+							return <div>1111</div>
+						},
+					}}
 					// dataSource={data.value?.data?.data}
 					dataSource={mockDataSource(tableRow)}
 					columns={tableRow}
