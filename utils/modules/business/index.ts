@@ -8,7 +8,7 @@ export function requestJudgment(item: ObjectMap): boolean {
 	return [200, 0].includes(item.code)
 }
 
-export function asyncApiRes(Api: Promise<any>, data?: { value: any }, call?: (item: any) => void): { value: any } {
+export function asyncApiRes(Api: Promise<any>, data?: { value?: any }, call?: (item: any) => void): { value: any } {
 	const returnData = ref()
 	Api.then((item) => {
 		if (requestJudgment(item)) {

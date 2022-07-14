@@ -155,7 +155,6 @@ function rSearchDataModel(pageSate: ObjectMap, searchForm: ObjectMap) {
 	}
 	return Object.assign(searchData, searchForm)
 }
-
 function setSearchRows(data: FormRowArray, pageSate: ObjectMap, searchForm: ObjectMap, type: boolean) {
 	if (!type) return {}
 	const searchSlots: ObjectMap = {}
@@ -215,6 +214,7 @@ export function commonly({
 		}
 
 		let data: ObjectMap = {}
+
 		data = Object.assign(rSearchDataModel(pageSate.value, searchForm.value), Pagination)
 
 		if (setSearchData) {
@@ -225,6 +225,7 @@ export function commonly({
 				delete data[i]
 			}
 		}
+
 		return data
 	}
 

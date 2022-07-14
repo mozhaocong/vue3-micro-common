@@ -35,6 +35,10 @@ export const businessOptObject: Config = {
 		4: '已发货',
 		5: '已取消',
 	},
+	workOrdersType: {
+		0: '质检工单',
+		1: '物流工单',
+	},
 }
 
 function getOptions(data: Config): { [index: string]: Array<OptionsValue> } {
