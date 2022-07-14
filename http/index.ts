@@ -104,7 +104,7 @@ export function methodType(url: string, method: string, data: any, options = {})
 		axios({
 			method: method as 'get',
 			url,
-			[method === 'get' ? 'data' : 'params']: data,
+			[method !== 'get' ? 'data' : 'params']: data,
 			...options,
 		})
 			.then((res) => {
