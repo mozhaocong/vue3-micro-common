@@ -1,18 +1,33 @@
-import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
-import { has, isEmpty, isNil, map } from 'ramda'
 import { isTrue, throttle } from '@/utils'
-import store from '@/store'
-import { getSysUserList } from '@/api/erp/user'
+import { GetBaseAreaList, GetBaseCountryList, getSysUserList } from '@/api/erp/user'
 import { orderOrderCategories } from '@/api/erp/oms'
+import { has, isEmpty, isNil, map } from 'ramda'
 
 const throttleObject: ObjectMap = {
 	getBasicSysUserListThrottle: throttle(getSysUserList),
 	getBasicCategoryListThrottle: throttle(orderOrderCategories),
+	getBasicNationListThrottle: throttle(GetBaseCountryList),
+	getBasicAreaListThrottle: throttle(GetBaseAreaList),
 }
 
 // 做低代码优化识别
 const listMapData = {
 	basicSysUserList: '系统用户',
+	basicNationList: '国家',
+	basicAreaList: '省/州',
+}
+
+// 定义menu模块下的state
+export const state: ObjectMap = {
+	listMapData: listMapData,
+	basicSysUserList: [], //系统用户
+	basicSysUserListConfig: { value: 'old_user_id', label: 'real_name', data: ['data', 'items'] },
+	basicCategoryList: [], // 订单渠道
+	basicCategoryListConfig: { value: 'key', label: 'name' },
+	basicNationList: [], // 国家
+	basicNationListConfig: { value: 'id', label: 'format_name', data: ['data', 'result'] },
+	basicAreaList: [], // 省/州
+	basicAreaListConfig: { value: 'id', label: 'name', data: ['data', 'result'] },
 }
 
 function getStoreConfig(type: string, that: any): ObjectMap {
@@ -22,17 +37,35 @@ function getStoreConfig(type: string, that: any): ObjectMap {
 		return {}
 	}
 }
+// 定义menu模块下的mutations
+export const mutations = {
+	SetBasicDataList(state: ObjectMap, item: ObjectMap) {
+		console.log(item)
+		const { type, data = [] } = item
+		if (has(type, state)) {
+			state[type] = map((res) => {
+				const label = has(type + 'Config', state)
+					? (state[type + 'Config'] as ObjectMap).label
+						? res[(state[type + 'Config'] as ObjectMap).label]
+						: res.real_name
+					: res.label
+				const value = has(type + 'Config', state)
+					? (state[type + 'Config'] as ObjectMap).value
+						? res[(state[type + 'Config'] as ObjectMap).value]
+						: res.value
+					: res.value
+				return {
+					label: label,
+					value: value,
+					...res,
+				}
+			}, data)
+		}
+	},
+}
 
-@Module({ namespaced: true, store, name: 'basicData', dynamic: true })
-export class basicData extends VuexModule {
-	public listMapData = listMapData //做低代码优化识别
-	public basicSysUserList: Array<ObjectMap> = [] //系统用户
-	private basicSysUserListConfig: ObjectMap = { value: 'old_user_id', label: 'real_name', data: ['data', 'items'] }
-	public basicCategoryList: Array<ObjectMap> = [] //系统用户
-	private basicCategoryListConfig: ObjectMap = { value: 'key', label: 'name' }
-
-	@Action
-	public async getBasicDataList(item: { type: string; params?: ObjectMap }) {
+export const actions = {
+	async getBasicDataList({ commit, state }: ObjectMap, item: { type: string; params?: ObjectMap }) {
 		const { type, params = {} } = item
 		const throttleName = 'get' + type.slice(0, 1).toUpperCase() + type.slice(1) + 'Throttle'
 		if (has(throttleName, throttleObject)) {
@@ -42,7 +75,7 @@ export class basicData extends VuexModule {
 			if (isNil(res) || isEmpty(res)) {
 				return
 			}
-			const typeMap = getStoreConfig(type, this)
+			const typeMap = getStoreConfig(type, state)
 			let returnData = res?.data?.result
 			if (isTrue(typeMap.data)) {
 				let forData = res
@@ -55,36 +88,17 @@ export class basicData extends VuexModule {
 					console.warn('getBasicDataList 配置报错', typeMap)
 				}
 			}
-			this.SETBASICDATALIST({ type, data: returnData })
+			commit('SetBasicDataList', { type, data: returnData })
 		} else {
 			console.error('basicData找不到' + type + '对应的接口')
 			return
 		}
-	}
-
-	@Mutation
-	private SETBASICDATALIST(item: ObjectMap) {
-		const { type, data = [] } = item
-		if (has(type, this)) {
-			this[type] = map((res) => {
-				const label = has(type + 'Config', this)
-					? (this[type + 'Config'] as ObjectMap).label
-						? res[(this[type + 'Config'] as ObjectMap).label]
-						: res.real_name
-					: res.label
-				const value = has(type + 'Config', this)
-					? (this[type + 'Config'] as ObjectMap).value
-						? res[(this[type + 'Config'] as ObjectMap).value]
-						: res.value
-					: res.value
-				return {
-					label: label,
-					value: value,
-					...res,
-				}
-			}, data)
-		}
-	}
+	},
 }
 
-export const basicDataModule = getModule(basicData)
+export default {
+	namespaced: true, // 声明命名空间
+	state,
+	mutations,
+	actions,
+}

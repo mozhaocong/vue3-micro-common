@@ -3,7 +3,6 @@ import { Select } from 'ant-design-vue'
 import { filterOption } from '../utils/index'
 import { isArray, isTrue } from '@/utils'
 import { storeMapping } from '@/store/modules/erp/business/mapping'
-import { useStore } from 'vuex'
 
 const Props = {
 	value: [String, Number, Array] as PropType<string | number | Array<any>>,
@@ -37,25 +36,21 @@ const Props = {
 		default: false,
 	},
 }
-
-const storeNameMap: ObjectMap = {
-	basicData: 'basicData',
-}
 const FormBasicData = defineComponent({
 	name: 'FormBasicData',
 	props: Props,
 	setup(props, { emit }) {
-		const { state, dispatch } = useStore()
-		const storeModelName = ref('')
+		const storeModule = ref()
+		const storeName = ref('')
 		const computeCount = computed(() => {
 			const filter = props.filter
-			if (!isTrue(storeModelName.value)) {
+			if (!storeModule.value) {
 				return []
 			}
 			if (filter) {
-				return filter(state[storeModelName.value][props.prop] as Options[])
+				return filter(storeModule.value[props.prop] as Options[])
 			} else {
-				return state[storeModelName.value][props.prop] || []
+				return storeModule.value[props.prop]
 			}
 		})
 
@@ -90,34 +85,25 @@ const FormBasicData = defineComponent({
 			}
 		}
 		onMounted(() => {
-			console.log('onMounted onMounted onMounted')
 			if (props.storeName) {
-				const storeMappingData = storeNameMap[props.storeName]
-				if (storeMappingData) {
-					if (state[storeMappingData] && state[storeMappingData][props.prop]) {
-						storeModelName.value = storeMappingData
-					} else {
-						console.error(`storeName： ${props.storeName}, 在storeMapping映射没有对应的值`)
-					}
+				if (storeMapping[props.storeName]) {
+					storeModule.value = storeMapping[props.storeName]
 				} else {
-					console.error(`storeName： ${props.storeName}, 在storeName映射找不到`)
+					console.error(`storeName： ${props.storeName}, 在storeMapping映射找不到`)
 					return false
 				}
 			} else {
-				for (const i in storeNameMap) {
-					if (state[storeNameMap[i]]) {
-						const stateStoreMappingData = state[storeNameMap[i]]
-						if (stateStoreMappingData[props.prop]) {
-							storeModelName.value = storeNameMap[i]
-							break
-						}
+				for (const i in storeMapping) {
+					if (storeMapping[i][props.prop]) {
+						storeName.value = i
+						storeModule.value = storeMapping[i]
+						break
 					}
 				}
 			}
-
-			if (isTrue(storeModelName.value)) {
-				if (!isTrue(state[storeModelName.value][props.prop])) {
-					dispatch(`${storeModelName.value}/getBasicDataList`, { type: props.prop as string })
+			if (isTrue(storeModule.value)) {
+				if (!isTrue(storeModule.value[props.prop])) {
+					storeModule.value.getBasicDataList({ type: props.prop as string })
 				}
 			} else {
 				console.error(`${props.storeName}, 在vux 找不到`)

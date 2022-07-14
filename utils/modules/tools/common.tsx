@@ -49,3 +49,7 @@ export const serialNumber = (
 	}
 	return index + 1 + currentPageSize
 }
+
+export const getToken: any = () => {
+	return localStorage.getItem('Authorization')
+}
