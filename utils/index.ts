@@ -26,7 +26,7 @@ import {
 	asyncApiRes,
 	routeToRouterTagListData,
 } from '@/utils/modules/business'
-import { throttle, debounce, defaultCustomRender } from './modules/tools/common'
+import { throttle, debounce, defaultCustomRender, getToken } from './modules/tools/common'
 import { jsBarcodeInit } from './modules/plugin'
 
 import { message } from 'ant-design-vue'
@@ -75,4 +75,5 @@ export {
 	getSearchString,
 	ArrayObjectIncludes,
 	mockDataSource,
+	getToken,
 }
