@@ -3,6 +3,7 @@ import { Form, Table } from 'ant-design-vue'
 import { isTrue } from '@/utils'
 import RFormItem from '@/components/Common/Form/components/FormItem'
 import { formItemConfig, formProps, formRulesName, setFormConfig } from '@/components/Common/Form/util'
+import { isFunctionOfOther } from '@/components/Common/utils'
 const Props = {
 	model: {
 		type: Array as PropType<any[]>,
@@ -23,7 +24,7 @@ export default defineComponent({
 	props: Props,
 	setup(props, { slots }) {
 		return () => {
-			const columnsList = props.columns.map((item: any) => {
+			let columnsList = props.columns.map((item: any) => {
 				const data: ObjectMap = {}
 				if (!item.customRender && isTrue(item.row)) {
 					data.customRender = ({ record, index }: any) => {
@@ -42,6 +43,9 @@ export default defineComponent({
 					}
 				}
 				return { ...item, ...data }
+			})
+			columnsList = columnsList.filter((item) => {
+				return isFunctionOfOther(item.display) !== false
 			})
 			const table = <Table pagination={props.pagination as any} dataSource={props.model} columns={columnsList} />
 			return !isTrue(props.rowKey) ? (

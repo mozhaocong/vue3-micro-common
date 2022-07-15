@@ -2,12 +2,14 @@ import { isTrue, throttle } from '@/utils'
 import { GetBaseAreaList, GetBaseCountryList, getSysUserList } from '@/api/erp/user'
 import { orderOrderCategories } from '@/api/erp/oms'
 import { has, isEmpty, isNil, map } from 'ramda'
+import { currencyList } from '@/api/erp/base'
 
 const throttleObject: ObjectMap = {
 	getBasicSysUserListThrottle: throttle(getSysUserList),
 	getBasicCategoryListThrottle: throttle(orderOrderCategories),
 	getBasicNationListThrottle: throttle(GetBaseCountryList),
 	getBasicAreaListThrottle: throttle(GetBaseAreaList),
+	getBasicCurrencyListThrottle: throttle(currencyList),
 }
 
 // 做低代码优化识别
@@ -15,6 +17,7 @@ const listMapData = {
 	basicSysUserList: '系统用户',
 	basicNationList: '国家',
 	basicAreaList: '省/州',
+	basicCurrencyList: '币种',
 }
 
 // 定义menu模块下的state
@@ -28,6 +31,8 @@ export const state: ObjectMap = {
 	basicNationListConfig: { value: 'id', label: 'format_name', data: ['data', 'result'] },
 	basicAreaList: [], // 省/州
 	basicAreaListConfig: { value: 'id', label: 'name', data: ['data', 'result'] },
+	basicCurrencyList: [], // 币种
+	basicCurrencyListConfig: { value: 'id', label: 'name', data: ['data', 'result'] },
 }
 
 function getStoreConfig(type: string, that: any): ObjectMap {
