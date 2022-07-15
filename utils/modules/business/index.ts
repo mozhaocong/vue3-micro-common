@@ -1,6 +1,6 @@
 import { configCurryFilter, configFilter } from './filter/index'
 import { ref } from 'vue'
-import { isObject, isTrue } from '@/utils'
+import { isArray, isObject, isTrue } from '@/utils'
 import { clone } from 'ramda'
 export { configCurryFilter, configFilter }
 // 请求成功判断
@@ -30,4 +30,16 @@ export function routeToRouterTagListData(route: ObjectMap) {
 	const path = JSON.parse(JSON.stringify(route.fullPath || ''))
 	const title = JSON.parse(JSON.stringify(route?.meta?.title || ''))
 	return { meta, name, path, title }
+}
+
+export function searchDataProcessing(data: ObjectMap = {}) {
+	const returnData: ObjectMap = {}
+	for (const key in data) {
+		if (isArray(data[key])) {
+			returnData[key] = data[key].join(',')
+		} else {
+			returnData[key] = data[key]
+		}
+	}
+	return returnData
 }

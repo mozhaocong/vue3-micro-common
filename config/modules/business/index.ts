@@ -2,11 +2,13 @@ import { forEach, keys } from 'ramda'
 import { crmOptObject } from '@/config/modules/business/crm'
 import { omsOptObject } from '@/config/modules/business/oms'
 import { basisOptObject } from '@/config/modules/business/logs'
+import { shippingOptObject } from '@/config/modules/business/shipping'
 
 export const businessOptObject: Config = {
 	...crmOptObject,
 	...omsOptObject,
 	...basisOptObject,
+	...shippingOptObject,
 	baseYesNoStatus: {
 		0: '否',
 		1: '是',
