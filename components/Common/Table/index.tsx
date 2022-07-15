@@ -25,6 +25,10 @@ const propsData = {
 		type: String as PropType<string>,
 		default: '',
 	},
+	title: {
+		type: String as PropType<string>,
+		default: '',
+	},
 	refresh: {
 		type: Function as PropType<() => void>,
 	},
@@ -177,7 +181,7 @@ const _Table = defineComponent({
 				<div style="display: flex;align-items: center;justify-content: space-between;">
 					<div style="margin: 6px 0  16px">
 						<UnorderedListOutlined style="margin: 0 8px 0 0 " />
-						<span style="font-size: 16px;">数据列表</span>
+						<span style="font-size: 16px;">{props.title ?? '数据列表'}</span>
 						{props.setup && (
 							<>
 								<Button
