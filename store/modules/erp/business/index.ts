@@ -21,7 +21,7 @@ const listMapData = {
 export const state: ObjectMap = {
 	listMapData: listMapData,
 	basicSysUserList: [], //系统用户
-	basicSysUserListConfig: { value: 'old_user_id', label: 'real_name', data: ['data', 'items'] },
+	basicSysUserListConfig: { value: 'id', label: 'real_name', data: ['data', 'items'] },
 	basicCategoryList: [], // 订单渠道
 	basicCategoryListConfig: { value: 'key', label: 'name' },
 	basicNationList: [], // 国家
