@@ -198,7 +198,7 @@ export const microRouter = {
 	baseVite: {
 		path: '/childBase',
 		name: 'childBaseVite',
-		redirect: '/childBase/baseVite#/baseTest',
+		redirect: '/childBase/baseVite#/base',
 		meta: {
 			title: 'baseVite',
 			keepAlive: true,
