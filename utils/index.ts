@@ -25,6 +25,7 @@ import {
 	requestJudgment,
 	asyncApiRes,
 	routeToRouterTagListData,
+	searchDataProcessing,
 } from '@/utils/modules/business'
 import { throttle, debounce, defaultCustomRender, getToken } from './modules/tools/common'
 import { jsBarcodeInit } from './modules/plugin'
@@ -76,4 +77,5 @@ export {
 	ArrayObjectIncludes,
 	mockDataSource,
 	getToken,
+	searchDataProcessing,
 }
