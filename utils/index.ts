@@ -18,6 +18,7 @@ import {
 	ObjectToArray,
 	getArrayFilterData,
 	ArrayObjectIncludes,
+	ObjectFilterNull,
 } from './modules/data'
 import {
 	configCurryFilter,
@@ -78,4 +79,5 @@ export {
 	mockDataSource,
 	getToken,
 	searchDataProcessing,
+	ObjectFilterNull,
 }
