@@ -45,7 +45,6 @@ function getStoreConfig(type: string, that: any): ObjectMap {
 // 定义menu模块下的mutations
 export const mutations = {
 	SetBasicDataList(state: ObjectMap, item: ObjectMap) {
-		console.log(item)
 		const { type, data = [] } = item
 		if (has(type, state)) {
 			state[type] = map((res) => {

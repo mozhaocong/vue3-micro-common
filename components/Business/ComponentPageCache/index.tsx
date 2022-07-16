@@ -8,6 +8,7 @@ const Props = {
 	setRequestData: { type: Function as PropType<(item: any) => ObjectMap> },
 	// 通过监听watchActivatedId 触发初始化
 	watchActivatedId: { type: Number as PropType<number>, required: true },
+	setRouteData: { type: Function as PropType<(item: any) => ObjectMap> },
 	defComponents: {
 		type: null,
 		default() {
@@ -35,9 +36,12 @@ export default defineComponent({
 			detailsList.value = detailsList.value.filter((item) => routerTagIdList.includes(item?.routerData?.path))
 		}
 		function init() {
-			const routeData: ObjectMap = routeToRouterTagListData(route)
+			let routeData: ObjectMap = routeToRouterTagListData(route)
 			if (detailsList.value.map((item) => item.routerData.path).includes(routeData.path)) {
 				return
+			}
+			if (props.setRouteData) {
+				routeData = props.setRouteData(routeData)
 			}
 			commit('erpLayout/AddDeleteRouterTagList', { type: 'add', data: deepClone(routeData) })
 			asyncApiRes(props.apiRequest(), { value: '' }, (item) => {

@@ -41,6 +41,12 @@ export const businessOptObject: Config = {
 		0: '质检工单',
 		1: '物流工单',
 	},
+	baseOperate: {
+		edit: '编辑',
+		add: '添加',
+		check: '产看',
+		delete: '删除',
+	},
 }
 
 function getOptions(data: Config): { [index: string]: Array<OptionsValue> } {
