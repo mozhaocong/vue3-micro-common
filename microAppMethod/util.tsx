@@ -401,13 +401,13 @@ export const microRouterMap: microRouterMapListType = [
 	// 	appUrl: origin + '/child/shipping/',
 	// 	router: microRouter.shippingVite,
 	// },
-	{
-		type: 'vite',
-		appId: 'baseVite',
-		baseUrl: '/child/base/',
-		appUrl: origin + '/child/base/',
-		router: microRouter.baseVite,
-	},
+	// {
+	// 	type: 'vite',
+	// 	appId: 'baseVite',
+	// 	baseUrl: '/child/base/',
+	// 	appUrl: origin + '/child/base/',
+	// 	router: microRouter.baseVite,
+	// },
 ]
 
 // micro模块 与基座没有通信，不保留基座的东西，这个个页面都是模块的
