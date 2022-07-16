@@ -16,7 +16,7 @@ export function axiosInit() {
 	//允许跨域携带cookie信息
 	// axios.defaults.withCredentials = true
 	//设置超时
-	axios.defaults.timeout = 10000
+	axios.defaults.timeout = 100000
 
 	axios.interceptors.request.use(
 		(config) => {
