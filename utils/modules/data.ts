@@ -122,3 +122,14 @@ export function ArrayObjectIncludes(data: ObjectMap[], key: string, item: string
 	if (!isTrue(data)) return false
 	return data.map((item) => item[key]).includes(item)
 }
+
+// 对象过滤空数据
+export function ObjectFilterNull(data: ObjectMap = {}) {
+	const params: ObjectMap = {}
+	for (const key in data) {
+		if (isTrue(data[key])) {
+			params[key] = data[key]
+		}
+	}
+	return params
+}
