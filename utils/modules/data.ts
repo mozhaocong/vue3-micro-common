@@ -118,13 +118,13 @@ export function deepClone(source: any) {
 }
 
 // data = [{id:1},{id:2}] key= 'id' item=2
-export function ArrayObjectIncludes(data: ObjectMap[], key: string, item: string) {
+export function ArrayObjectIncludes(data: ObjectMap[], key: string, item: string): boolean {
 	if (!isTrue(data)) return false
 	return data.map((item) => item[key]).includes(item)
 }
 
 // 对象过滤空数据
-export function ObjectFilterNull(data: ObjectMap = {}) {
+export function ObjectFilterNull(data: ObjectMap = {}): ObjectMap {
 	const params: ObjectMap = {}
 	for (const key in data) {
 		if (isTrue(data[key])) {
@@ -132,4 +132,16 @@ export function ObjectFilterNull(data: ObjectMap = {}) {
 		}
 	}
 	return params
+}
+
+// 判断ArrayObject是否存在空Object
+export function arrayObjectJudgeNullObject(data: Array<ObjectMap> = []): boolean {
+	let judge = true
+	for (const item of data) {
+		if (!isTrue(ObjectFilterNull(item))) {
+			judge = false
+			break
+		}
+	}
+	return judge
 }

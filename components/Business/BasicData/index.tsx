@@ -2,7 +2,6 @@ import { defineComponent, PropType, computed, onMounted, ref, App, markRaw, Plug
 import { Select } from 'ant-design-vue'
 import { filterOption } from '../utils/index'
 import { isArray, isTrue } from '@/utils'
-import { storeMapping } from '@/store/modules/erp/business/mapping'
 import { useStore } from 'vuex'
 
 const Props = {
@@ -40,6 +39,7 @@ const Props = {
 
 const storeNameMap: ObjectMap = {
 	basicData: 'basicData',
+	shippingData: 'shippingData',
 }
 const FormBasicData = defineComponent({
 	name: 'FormBasicData',

@@ -12,4 +12,10 @@ export const shippingOptObject: Config = {
 		1: '双月结',
 		2: '次结',
 	},
+	shippingCategory: {
+		0: '快递',
+		1: '平邮',
+		2: '货运',
+		3: '挂号',
+	},
 }

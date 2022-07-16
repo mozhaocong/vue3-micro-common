@@ -3,7 +3,6 @@ import { message } from 'ant-design-vue'
 import { throttle } from '@/utils'
 
 export function curryMessage(type: string, data: string) {
-	console.log(type, data)
 	if (type === 'error') {
 		message.error(data)
 	} else if (type === 'warning') {
