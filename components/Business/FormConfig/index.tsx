@@ -1,6 +1,6 @@
 import { computed, defineComponent, PropType, markRaw, App, Plugin } from 'vue'
 import { configBusinessDataOptions } from '@/config'
-import { isArray } from '@/utils'
+import { isArray, isTrue } from '@/utils'
 import { map } from 'ramda'
 import { Select } from 'ant-design-vue'
 // import { isTrue } from 'rantion-tools/es'
@@ -27,6 +27,17 @@ const Props = {
 		type: Function as PropType<(item: Options) => boolean>,
 	},
 	onChange: Function as PropType<(item: ObjectMap) => void>,
+	options: Array as PropType<Array<ObjectMap>>,
+	fieldNames: {
+		type: Object as PropType<ObjectMap>,
+		default() {
+			return { label: 'label', value: 'value', options: 'options' }
+		},
+	},
+	// valueIsNumber: {
+	// 	type: Boolean as PropType<boolean>,
+	// 	default: true,
+	// },
 } as const
 const FormConfig = defineComponent({
 	name: 'FormConfig',
@@ -35,20 +46,23 @@ const FormConfig = defineComponent({
 	setup(props, { emit }) {
 		const computeCount = computed(() => {
 			const filter = props.filter
+			const data = (props.options ?? configBusinessDataOptions[props.prop]) || []
 			if (filter) {
-				return (configBusinessDataOptions[props.prop] as Options[]).filter(filter)
+				return (data as Options[]).filter(filter)
 			} else {
-				return configBusinessDataOptions[props.prop]
+				return data
 			}
 		})
 
 		function onChange(value: any, option?: any) {
+			console.log('onChange', value, option)
 			if (isArray(value)) {
 				if (option && isArray(option)) {
 					emit(
 						'update:label',
 						map((item: Options) => {
-							return item.label
+							// @ts-ignore
+							return item[props?.fieldNames?.label as any] || ''
 						}, option)
 					)
 				} else {
@@ -61,8 +75,12 @@ const FormConfig = defineComponent({
 				}
 			} else {
 				if (option && !isArray(option)) {
-					emit('update:value', (option as Options).value)
-					emit('update:label', (option as Options).label)
+					// @ts-ignore
+					console.log((option as Options)[props?.fieldNames?.value as any])
+					// @ts-ignore
+					emit('update:value', (option as Options)[props?.fieldNames?.value as any])
+					// @ts-ignore
+					emit('update:label', (option as Options)[props?.fieldNames?.label as any])
 				} else {
 					emit('update:value', undefined)
 					emit('update:label', undefined)
@@ -74,9 +92,13 @@ const FormConfig = defineComponent({
 		}
 
 		return () => {
-			const def = isNaN(Number(props.value)) ? props.value : Number(props.value)
+			let def = props.value
+			if (!isTrue(props.options)) {
+				def = isNaN(Number(props.value)) ? props.value : Number(props.value)
+			}
 			return (
 				<Select
+					fieldNames={props.fieldNames}
 					onChange={onChange}
 					mode={props.mode as undefined}
 					disabled={props.disabled}
