@@ -19,6 +19,7 @@ import {
 	getArrayFilterData,
 	ArrayObjectIncludes,
 	ObjectFilterNull,
+	arrayObjectJudgeNullObject,
 } from './modules/data'
 import {
 	configCurryFilter,
@@ -80,4 +81,5 @@ export {
 	getToken,
 	searchDataProcessing,
 	ObjectFilterNull,
+	arrayObjectJudgeNullObject,
 }

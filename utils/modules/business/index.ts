@@ -1,7 +1,6 @@
 import { configCurryFilter, configFilter } from './filter/index'
 import { ref } from 'vue'
 import { isArray, isObject, isTrue } from '@/utils'
-import { clone } from 'ramda'
 export { configCurryFilter, configFilter }
 // 请求成功判断
 export function requestJudgment(item: ObjectMap): boolean {
@@ -12,8 +11,8 @@ export function asyncApiRes(Api: Promise<any>, data?: { value?: any }, call?: (i
 	const returnData = ref()
 	Api.then((item) => {
 		if (requestJudgment(item)) {
-			if (isTrue(data) && isObject(data) && isObject(item.data)) {
-				data.value = item.data
+			if (isTrue(data) && isObject(data) && isObject(item.data.result)) {
+				data.value = item.data.result
 			}
 			returnData.value = item
 			if (call) {

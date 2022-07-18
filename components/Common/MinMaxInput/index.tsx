@@ -7,6 +7,7 @@ const propsData = {
 	},
 	minValue: Number as PropType<number>,
 	maxValue: Number as PropType<number>,
+	disabled: Boolean as PropType<boolean>,
 } as const
 const _MinMaxInput = defineComponent({
 	props: propsData,
@@ -52,6 +53,7 @@ const _MinMaxInput = defineComponent({
 			return (
 				<div>
 					<InputNumber
+						disabled={props.disabled ?? false}
 						onBlur={onBlur}
 						value={minValue}
 						onChange={(e) => {
@@ -60,6 +62,7 @@ const _MinMaxInput = defineComponent({
 					/>
 					-
 					<InputNumber
+						disabled={props.disabled ?? false}
 						onBlur={onBlur}
 						value={maxValue}
 						onChange={(e) => {
