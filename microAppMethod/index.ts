@@ -19,6 +19,8 @@ export const ISWEbHASHHISTORY = ISMICROCHILD
 let pushMount: any = null
 // 微前端初始话
 export function microAppInit(item: any) {
+	console.log(item, '11111111111111111111111')
+
 	// // 微前端环境下，注册mount和unmount方法
 	// @ts-ignore
 	if (ISMICROCHILD) {
