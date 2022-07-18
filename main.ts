@@ -12,6 +12,8 @@ import { hover } from '@/directive'
 // import 'dayjs/locale/zh-cn'
 // dayjs.locale('zh-cn')
 
+console.log('14.23')
+
 // 京东框架微前端 初始化
 microAppInit({ mount })
 

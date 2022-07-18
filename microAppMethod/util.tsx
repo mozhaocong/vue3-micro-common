@@ -387,6 +387,13 @@ export const microRouterMap: microRouterMapListType = [
 		// appUrl: 'http://localhost:8992/child/logs/',
 		router: microRouter.logsVite,
 	},
+	{
+		type: 'vite',
+		appId: 'baseVite',
+		baseUrl: '/child/base/',
+		appUrl: origin + '/child/base/',
+		router: microRouter.baseVite,
+	},
 	// {
 	// 	type: 'vite',
 	// 	appId: 'productsVite',
