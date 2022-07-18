@@ -126,6 +126,7 @@ function setMicroRouter() {
 	if (ISMICROCHILD) {
 		return data
 	}
+	console.log('microRouterMap', microRouterMap)
 	microRouterMap.forEach((item: any) => {
 		if (!isTrue(item.router)) {
 			return
