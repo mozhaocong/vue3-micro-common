@@ -22,3 +22,10 @@ export function getShippingList(data: ObjectMap, options?: ObjectMap) {
 export function getShippingLabelList(data: ObjectMap, options?: ObjectMap) {
 	return get(apiUrl + '/shipping/api/shipping_label_list', data, options)
 }
+
+// 【Long】通过易仓派送方式
+// GET /shipping/api/ecang/shippeng_methods
+// 接口地址：https://www.apifox.cn/web/project/995104/apis/api-29404829
+export function getEcangShippingMethods(data: ObjectMap, options?: ObjectMap) {
+	return get(apiUrl + '/shipping/api/ecang/shipping_methods', data, options)
+}
