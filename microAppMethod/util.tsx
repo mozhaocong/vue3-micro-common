@@ -170,7 +170,7 @@ export const microRouter = {
 	shippingVite: {
 		path: '/childShipping',
 		name: 'childShippingVite',
-		redirect: '/childShipping/shippingVite#/shippingTest',
+		redirect: '/childShipping/shippingVite#/shipping',
 		meta: {
 			title: 'shippingVite',
 			keepAlive: true,
