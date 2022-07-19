@@ -1,5 +1,6 @@
 import { includes, isNil } from 'ramda'
-import { isTrue } from '@/utils'
+import { isNumber, isObject, isTrue } from '@/utils'
+import dayjs from 'dayjs'
 
 export function ObjectToArray(object: ObjectMap) {
 	return Object.keys(object).map((item) => {
@@ -144,4 +145,63 @@ export function arrayObjectJudgeNullObject(data: Array<ObjectMap> = []): boolean
 		}
 	}
 	return judge
+}
+
+export function dayJsDataToString(data: any, format = 'YYYY-MM-DD HH:mm:ss') {
+	const returnData: ObjectMap = {}
+	for (const key in data) {
+		const item = data[key]
+		if (isObject(item)) {
+			if (item.$d && item.$M) {
+				returnData[key] = dayjs(item as any).format(format)
+				continue
+			}
+		}
+		returnData[key] = deepClone(item)
+	}
+	return returnData
+}
+
+// 数据数字转字符串
+export function dataNumberToString(source: any) {
+	if (typeof source !== 'object') {
+		if (isNumber(source)) {
+			return source + ''
+		}
+		// 非对象类型(undefined、boolean、number、string、symbol)，直接返回原值即可
+		return source
+	}
+	if (source === null) {
+		// 为null类型的时候
+		return source
+	}
+	if (source instanceof Date) {
+		// Date类型
+		return new Date(source)
+	}
+	if (source instanceof RegExp) {
+		// RegExp正则类型
+		return new RegExp(source)
+	}
+
+	let result: any
+	if (Array.isArray(source)) {
+		// 数组
+		result = []
+		source.forEach((item) => {
+			result.push(dataNumberToString(item))
+		})
+		return result
+	} else {
+		// 为对象的时候
+		result = {}
+		const keys = [...Object.getOwnPropertyNames(source), ...Object.getOwnPropertySymbols(source)] // 取出对象的key以及symbol类型的key
+		keys.forEach((key) => {
+			const item = source[key]
+			console.log('item', item)
+			result[key] = dataNumberToString(item)
+		})
+
+		return result
+	}
 }
