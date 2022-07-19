@@ -47,14 +47,20 @@ export class TableRow {
 				dataIndex: 'null8',
 				align: 'center',
 				width: 150,
-				customRender: ({ text }) => {
+				customRender: ({ record }) => {
 					return (
 						<div>
 							<Button
 								type="primary"
 								onClick={() => {
-									operationClick.setModuleData({
-										record: text,
+									// operationClick.setModuleData({
+									// 	record: text,
+									// })
+									return operationClick.router.push({
+										name: 'checkDetails',
+										query: {
+											id: record.id,
+										},
 									})
 									// operationConfig.setModuleState({ checkForm: true })
 								}}
