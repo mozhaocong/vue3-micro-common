@@ -5,6 +5,8 @@ const { useSearch, useRequest, commonly } = Common
 import { servicesSupplierProductInfo } from '@child/api/products/index'
 import { defaultRowProps } from '@/config'
 import { mockDataSource } from '@/utils'
+import { useRouter } from 'vue-router'
+import { Button } from 'ant-design-vue'
 
 const pageKey = 'CaseTemplate'
 export default defineComponent({
@@ -13,6 +15,7 @@ export default defineComponent({
 		const pageSate = ref({}) // 搜索表单的特殊参数数据列表
 		const { searchForm, expand } = useSearch<ObjectMap>({}, true)
 		const searchRow = new SearchRow(searchForm).data // 搜索表单的数据列表
+		const router = useRouter()
 		const { run, data, renderPagination, getPagination, loading, refresh, pageSize, current } = useRequest(
 			servicesSupplierProductInfo,
 			{
@@ -36,6 +39,7 @@ export default defineComponent({
 		}
 		const tableRow = new TableRow({
 			setModuleData,
+			router,
 			tableData: { pageSize: pageSize, current: current },
 		}).data // 表单的数据列表1
 		return () => (
@@ -64,7 +68,7 @@ export default defineComponent({
 					v-slots={{
 						// 自定义
 						headerButton: () => {
-							return <div>1111</div>
+							return <Button type="primary">创建</Button>
 						},
 					}}
 					// dataSource={data.value?.data?.data}

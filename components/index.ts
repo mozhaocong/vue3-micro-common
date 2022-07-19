@@ -2,6 +2,7 @@ import { App } from 'vue'
 import PassWordInput from './PassWordInput/index'
 import Common from './Common'
 import FormConfig from './Business/FormConfig'
+import ImportCountry from './Business/ImportCountry'
 import FormBasicData from '@/components/Business/BasicData'
 import FormRadioGroup from '@/components/Business/RadioGroup'
 import ComponentPageCache from '@/components/Business/ComponentPageCache'
@@ -17,6 +18,7 @@ export {
 	RTable,
 	Common,
 	FormConfig,
+	ImportCountry,
 	FormBasicData,
 	FormRadioGroup,
 	KeepAliveView,
