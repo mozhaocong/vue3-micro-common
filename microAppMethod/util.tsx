@@ -394,6 +394,13 @@ export const microRouterMap: microRouterMapListType = [
 		appUrl: origin + '/child/base/',
 		router: microRouter.baseVite,
 	},
+	{
+		type: 'vite',
+		appId: 'shippingVite',
+		baseUrl: '/child/shipping/',
+		appUrl: origin + '/child/shipping/',
+		router: microRouter.shippingVite,
+	},
 	// {
 	// 	type: 'vite',
 	// 	appId: 'productsVite',
@@ -401,13 +408,7 @@ export const microRouterMap: microRouterMapListType = [
 	// 	appUrl: origin + '/child/products/',
 	// 	router: microRouter.productsVite,
 	// },
-	// {
-	// 	type: 'vite',
-	// 	appId: 'shippingVite',
-	// 	baseUrl: '/child/shipping/',
-	// 	appUrl: origin + '/child/shipping/',
-	// 	router: microRouter.shippingVite,
-	// },
+
 	// {
 	// 	type: 'vite',
 	// 	appId: 'baseVite',
