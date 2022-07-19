@@ -11,7 +11,6 @@ const Props = {
 	prop: {
 		type: String as PropType<string>,
 		default: 'status',
-		required: true,
 	},
 	disabled: {
 		type: Boolean as PropType<boolean>,
@@ -55,7 +54,6 @@ const FormConfig = defineComponent({
 		})
 
 		function onChange(value: any, option?: any) {
-			console.log('onChange', value, option)
 			if (isArray(value)) {
 				if (option && isArray(option)) {
 					emit(
@@ -75,8 +73,6 @@ const FormConfig = defineComponent({
 				}
 			} else {
 				if (option && !isArray(option)) {
-					// @ts-ignore
-					console.log((option as Options)[props?.fieldNames?.value as any])
 					// @ts-ignore
 					emit('update:value', (option as Options)[props?.fieldNames?.value as any])
 					// @ts-ignore
