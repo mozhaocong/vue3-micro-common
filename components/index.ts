@@ -8,6 +8,7 @@ import FormRadioGroup from '@/components/Business/RadioGroup'
 import ComponentPageCache from '@/components/Business/ComponentPageCache'
 import KeepAliveView from './KeepAliveView/index.vue'
 import RRangePicker from './Common/RangePicker'
+import ComponentsUtil from '@/components/Business/ComponentsUtil'
 
 const { RSearch, RForm, RTable, MinMaxInput, MinMaxInputString, RFormList, RFormTable } = Common
 export {
@@ -27,6 +28,7 @@ export {
 	RFormTable,
 	MinMaxInputString,
 	ComponentPageCache,
+	ComponentsUtil,
 }
 
 const components = [PassWordInput, RSearch, RForm, RTable, FormBasicData, FormConfig, FormRadioGroup, MinMaxInput]

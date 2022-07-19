@@ -1,11 +1,17 @@
 import { isTrue, throttle } from '@/utils'
 import { has, isEmpty, isNil, map } from 'ramda'
-import { getShippingLabelList, getShippingList, shippingMethodChannelsList } from '@/api/erp/shipping'
+import {
+	getEcangShippingMethods,
+	getShippingLabelList,
+	getShippingList,
+	shippingMethodChannelsList,
+} from '@/api/erp/shipping'
 
 const throttleObject: ObjectMap = {
 	[`getShippingChannelsListThrottle`]: throttle(shippingMethodChannelsList),
 	[`getShippingListThrottle`]: throttle(getShippingList),
 	[`getShippingLabelListThrottle`]: throttle(getShippingLabelList),
+	[`getEcangShippingMethodsListThrottle`]: throttle(getEcangShippingMethods),
 }
 
 // 做低代码优化识别
@@ -13,6 +19,7 @@ const listMapData = {
 	shippingChannelsList: '渠道',
 	shippingList: '物流商列表',
 	shippingLabelList: '物流属性',
+	ecangShippingMethods: '易仓派送方式',
 }
 
 // 定义menu模块下的state
@@ -22,8 +29,10 @@ export const state: ObjectMap = {
 	shippingChannelsListConfig: { value: 'id', label: 'name' },
 	shippingList: [], //物流商列表
 	shippingListConfig: { value: 'id', label: 'name' },
-	shippingLabelList: [], //物流商列表
+	shippingLabelList: [], //物流属性
 	shippingLabelListConfig: { value: 'id', label: 'name' },
+	ecangShippingMethodsList: [], //易仓派送方式
+	ecangShippingMethodsListConfig: { value: 'sm_code', label: 'sm_name_cn', data: ['data', 'data'] },
 }
 
 const modelKey = 'shipping'
