@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 import { FormConfig, RRangePicker } from '@/components'
 
 export const searchModelDefData = {
-	start_created_at: dayjs().format(valueFormat),
-	end_created_at: dayjs().subtract(1, 'M').format(valueFormat),
+	end_created_at: dayjs().format(valueFormat),
+	start_created_at: dayjs().subtract(1, 'M').format(valueFormat),
 	is_simple: 1,
 }
 
