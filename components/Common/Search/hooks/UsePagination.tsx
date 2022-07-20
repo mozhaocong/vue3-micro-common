@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { Button, InputNumber, Pagination, Select } from 'ant-design-vue'
 import { ParamsPaginationKey } from '@/components/Common/Search/hooks/UseRequest'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue'
+import { isObject } from '@/utils'
 
 export enum PageType {
 	new,
@@ -68,9 +69,12 @@ export function usePagination(
 		return { value: item, label: `${item} 条/页` }
 	})
 
-	function renderPagination(props: { is_simple: boolean } = { is_simple: false }) {
+	function renderPagination(props: { is_simple: boolean } | undefined = undefined) {
 		//默认简化查询
-		const is_simple = props.is_simple ?? true
+		let is_simple = false
+		if (isObject(props)) {
+			is_simple = props.is_simple ?? true
+		}
 		return (
 			<>
 				{!is_simple ? (
