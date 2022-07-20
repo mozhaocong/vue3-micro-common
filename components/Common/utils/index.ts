@@ -25,8 +25,9 @@ export function columnsSetArrayDiffArray(source: any[], comparison: any[]) {
 }
 let sort = 1000
 export function setCustomRow(item: ObjectMap, setData = {}) {
+	const key = item.dataIndex ?? item.key
 	return {
-		key: item.dataIndex ?? item.key,
+		key: JSON.stringify(key),
 		title: item.title,
 		sort: sort++,
 		required: item.required ?? false,
