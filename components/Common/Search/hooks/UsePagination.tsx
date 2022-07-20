@@ -102,6 +102,9 @@ export function usePagination(
 								type="link"
 								shape="circle"
 								disabled={current.value == 1}
+								onClick={() => {
+									handleCurrentChange(current.value - 1, pageSize.value)
+								}}
 								v-slots={{ icon: () => <LeftOutlined /> }}
 							/>
 							{current.value}
