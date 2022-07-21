@@ -21,22 +21,7 @@ export default defineComponent({
 		}
 
 		// 导入监听
-		function handleChange(val: any) {
-			prop.value
-				.api({
-					file: val.file,
-				})
-				.then((res: any) => {
-					if (res !== '') {
-						prop.value.showImport = false
-						emit('update', true)
-						console.log(res)
-					}
-				})
-		}
-
 		function beforeUpload(item: any) {
-			console.log(item)
 			prop.value
 				.api({
 					file: item,
@@ -53,7 +38,12 @@ export default defineComponent({
 
 		return () => (
 			<>
-				<Modal title={prop.value.title} width={600} visible={prop.value.showImport} onCancel={onCancel}>
+				<Modal
+					title={prop.value.title}
+					width={600}
+					visible={prop.value.showImport}
+					footer={[<Button onClick={onCancel}>关闭</Button>]}
+				>
 					<p>在导入资料时，如表格不规范,可能会导致导入失败，请用下载的导入表格模板进行导入</p>
 					<a style="font-size: 16px; color: #6fb4f8" href={prop.value.url}>
 						下载模板 <VerticalAlignBottomOutlined />
