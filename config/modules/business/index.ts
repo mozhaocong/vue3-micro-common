@@ -47,6 +47,16 @@ export const businessOptObject: Config = {
 		check: '产看',
 		delete: '删除',
 	},
+	platStauts: {
+		0: 'shopify',
+		1: 'b2c',
+		2: 'amazon',
+	},
+	productsStauts: {
+		0: '不可用',
+		1: '可用',
+		2: '待审核',
+	},
 }
 
 function getOptions(data: Config): { [index: string]: Array<OptionsValue> } {
