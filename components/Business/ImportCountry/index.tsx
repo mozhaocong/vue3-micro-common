@@ -2,6 +2,7 @@ import { Button, message, Modal, Select, SelectOption, Upload } from 'ant-design
 import { CloudUploadOutlined, VerticalAlignBottomOutlined } from '@ant-design/icons-vue'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import './index.less'
+import { requestJudgment } from '@/utils'
 const Props = {
 	value: {
 		type: Object as PropType<ObjectMap>,
@@ -34,6 +35,22 @@ export default defineComponent({
 				})
 		}
 
+		function beforeUpload(item: any) {
+			console.log(item)
+			prop.value
+				.api({
+					file: item,
+				})
+				.then((res: any) => {
+					if (res !== '') {
+						if (!requestJudgment(item)) return
+						prop.value.showImport = false
+						emit('update', true)
+					}
+				})
+			return false
+		}
+
 		return () => (
 			<>
 				<Modal title={prop.value.title} width={600} visible={prop.value.showImport} onCancel={onCancel}>
@@ -43,7 +60,7 @@ export default defineComponent({
 					</a>
 					<hr style="width: 100%; height: 1px; border: none; background: #eee; margin: 30px 0" />
 					<div style="padding-bottom: 18px; text-align: center; margin-top: 10px">
-						<Upload name="file" action="" accept="xlsx,csv" multiple onChange={handleChange}>
+						<Upload name="file" accept="xlsx,csv" multiple beforeUpload={beforeUpload}>
 							<div class="importClass">
 								<CloudUploadOutlined class="uploadIcon" />
 								<div class="el-upload__text">

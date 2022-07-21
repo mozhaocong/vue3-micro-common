@@ -32,7 +32,7 @@ export const state: ObjectMap = {
 	basicAreaList: [], // 省/州
 	basicAreaListConfig: { value: 'id', label: 'name', data: ['data', 'result'] },
 	basicCurrencyList: [], // 币种
-	basicCurrencyListConfig: { value: 'id', label: 'name', data: ['data', 'result'] },
+	basicCurrencyListConfig: { value: 'id', label: 'name_cn', data: ['data', 'result'] },
 }
 
 function getStoreConfig(type: string, that: any): ObjectMap {
