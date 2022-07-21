@@ -1,6 +1,7 @@
 import { clone, equals } from 'ramda'
 import { Ref, ref, onMounted } from 'vue'
 import { DefaultConfig, PageType, usePagination } from './UsePagination'
+import { deepClone, isTrue } from '@/utils'
 type ObjectMap<Key extends string | number | symbol = any, Value = any> = {
 	[key in Key]: Value
 }
@@ -64,6 +65,7 @@ export function useRequest<T extends (...arg: any) => Promise<any>>(
 	const loading = ref(options?.defaultLoading || false)
 	const data = ref({}) as Ref<PromiseReturnType<typeof service>>
 	const error = ref<string | null>(null)
+	const runSearchData = ref()
 	type ServiceParam = Parameters<typeof service>
 	const { getPagination, total, pageSize, renderPagination, current } = usePagination(
 		search,
@@ -73,6 +75,7 @@ export function useRequest<T extends (...arg: any) => Promise<any>>(
 	const params = ref(options?.defaultParams ?? []) as Ref<Parameters<typeof service>>
 	function run(...parm: ServiceParam) {
 		loading.value = true
+		runSearchData.value = deepClone(parm[0])
 		return new Promise((resolve) => {
 			service(...(parm as any))
 				.then(
@@ -84,9 +87,18 @@ export function useRequest<T extends (...arg: any) => Promise<any>>(
 						try {
 							if (options.pagination) {
 								const paginationKey = options.paginationKey ?? defPaginationKey
-								total.value = (data.value as any).data[paginationKey.total] * 1
-								current.value = (data.value as any).data[paginationKey.current] * 1
-								pageSize.value = (data.value as any).data[paginationKey.size] * 1
+								const totalData = (data.value as any).data[paginationKey.total]
+								const currentData = (data.value as any).data[paginationKey.current]
+								const pageSizeData = (data.value as any).data[paginationKey.size]
+								if (isTrue(totalData)) {
+									total.value = totalData
+								}
+								if (isTrue(currentData)) {
+									current.value = currentData
+								}
+								if (isTrue(pageSizeData)) {
+									pageSize.value = pageSizeData
+								}
 							}
 						} catch (error) {
 							console.warn('分页参数异常')
@@ -147,5 +159,6 @@ export function useRequest<T extends (...arg: any) => Promise<any>>(
 		total,
 		pageSize,
 		current,
+		runSearchData,
 	}
 }

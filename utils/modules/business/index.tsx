@@ -1,6 +1,6 @@
 import { configCurryFilter, configFilter } from './filter/index'
 import { ref } from 'vue'
-import { isArray, isObject, isTrue } from '@/utils'
+import { getSearchString, getToken, isArray, isObject, isTrue } from '@/utils'
 export { configCurryFilter, configFilter }
 // 请求成功判断
 export function requestJudgment(item: ObjectMap): boolean {
@@ -41,4 +41,9 @@ export function searchDataProcessing(data: ObjectMap = {}) {
 		}
 	}
 	return returnData
+}
+
+export function exportApiData(apiUrl: string, data: ObjectMap) {
+	const params = getSearchString(data || {})
+	window.open(`${apiUrl}?token=${getToken().replace('Bearer ', '')}${isTrue(params) ? `&${params}` : ''}`)
 }

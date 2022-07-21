@@ -18,44 +18,12 @@
 @tag_def_background: #FFFFFF;
 @tag_primary_color: #555555;
 
-.r_table .ant-table-sticky-scroll{
-  display: none;
-}
-
-body{
-  .ant-btn-primary{
-    background: @button_primary_background;
-    border-color: @button_primary_background;
-    border-radius: 4px;
-  }
-  .ant-btn-primary:focus,.ant-btn-primary:hover,.ant-btn-primary:active{
-    background: @button_primary_background;
-    border-color:@button_primary_background;
-
-  }
-}
-
-body.global{
-  .ant-form-item-label{
-    >label{
-      white-space: break-spaces;
-      min-height:32px;
-      height: auto;
-    }
-  }
-  .ant-form-item-control-input-content{
-    word-break: break-all;
-  }
-}
-
-
 &::-webkit-scrollbar {
   // 滚动条的背景
   width: 5px;
   height: 5px;
   background: #ffffff;
 }
-
 &::-webkit-scrollbar-track,
 &::-webkit-scrollbar-thumb {
   //border-radius: 999px;
@@ -93,4 +61,10 @@ body.global{
 }
 .margin-toBottom-16{
   margin: 16px 0;
+}
+.margin-leftRight-16{
+  margin: 0 16px;
+}
+.margin-leftRight-8{
+  margin: 0 8px;
 }

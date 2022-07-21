@@ -12,5 +12,8 @@ export default defineComponent({
 			commit('erpLayout/AddDeleteRouterTagList', { type: 'delete', data: routeData })
 		}
 		expose({ deleteRouter })
+		return () => {
+			return ''
+		}
 	},
 })

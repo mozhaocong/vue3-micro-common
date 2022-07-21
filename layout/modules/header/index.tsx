@@ -26,7 +26,7 @@ export default defineComponent({
 				childWmsVite: '仓储系统',
 				childLogsVite: '日志系统',
 				childProductsVite: '产品系统',
-				childShippingVite: '产品系统',
+				childShippingVite: '物流系统',
 				childBaseVite: '基础信息',
 			}
 			return titleMap[data] ?? data

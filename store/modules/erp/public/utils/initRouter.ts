@@ -71,7 +71,6 @@ async function setVueRouteEager() {
 		layoutHeaderList = [...layoutHeaderList, ...microHeaderList]
 	}
 
-	console.log('layoutHeaderList', layoutHeaderList)
 	// 要设置layoutRouterData数据，侧边栏是使用layoutRouterData来过滤出数据来的
 	store.commit('erpLayout/SetLayoutRouterDate', layoutHeaderList)
 	// 是子应用不需要header和加载微前端路由和微前端模块
@@ -126,7 +125,6 @@ function setMicroRouter() {
 	if (ISMICROCHILD) {
 		return data
 	}
-	console.log('microRouterMap', microRouterMap)
 	microRouterMap.forEach((item: any) => {
 		if (!isTrue(item.router)) {
 			return

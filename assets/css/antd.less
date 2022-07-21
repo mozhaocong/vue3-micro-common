@@ -1,0 +1,34 @@
+.r_table .ant-table-sticky-scroll{
+  display: none;
+}
+
+body{
+  .ant-btn-primary{
+    background: @button_primary_background;
+    border-color: @button_primary_background;
+    border-radius: 4px;
+  }
+  .ant-btn-primary:focus,.ant-btn-primary:hover,.ant-btn-primary:active{
+    background: @button_primary_background;
+    border-color:@button_primary_background;
+
+  }
+  .ant-table-tbody{
+    .ant-form-item{
+      margin: 0;
+    }
+  }
+}
+
+body.global{
+  .ant-form-item-label{
+    >label{
+      white-space: break-spaces;
+      min-height:32px;
+      height: auto;
+    }
+  }
+  .ant-form-item-control-input-content{
+    word-break: break-all;
+  }
+}

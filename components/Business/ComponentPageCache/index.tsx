@@ -50,8 +50,8 @@ export default defineComponent({
 			if (props.setRouteData) {
 				routeData = props.setRouteData(routeData)
 			}
-			commit('erpLayout/AddDeleteRouterTagList', { type: 'add', data: deepClone(routeData) })
 			setDetailsList(routeData)
+			commit('erpLayout/AddDeleteRouterTagList', { type: 'add', data: deepClone(routeData) })
 		}
 
 		const currentRoutePath = computed(() => {

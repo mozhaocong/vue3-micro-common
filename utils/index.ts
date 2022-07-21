@@ -20,6 +20,8 @@ import {
 	ArrayObjectIncludes,
 	ObjectFilterNull,
 	arrayObjectJudgeNullObject,
+	dayJsDataToString,
+	dataNumberToString,
 } from './modules/data'
 import {
 	configCurryFilter,
@@ -28,6 +30,7 @@ import {
 	asyncApiRes,
 	routeToRouterTagListData,
 	searchDataProcessing,
+	exportApiData,
 } from '@/utils/modules/business'
 import { throttle, debounce, defaultCustomRender, getToken } from './modules/tools/common'
 import { jsBarcodeInit } from './modules/plugin'
@@ -82,4 +85,7 @@ export {
 	searchDataProcessing,
 	ObjectFilterNull,
 	arrayObjectJudgeNullObject,
+	dayJsDataToString,
+	dataNumberToString,
+	exportApiData,
 }
