@@ -152,7 +152,7 @@ const _Table = defineComponent({
 			}
 			if (isTrue(data)) {
 				const columnsCopy = propsColumns.value.map((item) => {
-					item.key = item.dataIndex ?? item.key
+					item.key = JSON.stringify(item.dataIndex ?? item.key)
 					return item
 				})
 				const setData = columnsSetArrayDiffArray(columnsCopy, JSON.parse(data))
