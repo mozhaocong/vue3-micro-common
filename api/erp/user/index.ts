@@ -13,3 +13,8 @@ export function GetBaseCountryList(data: ObjectMap, options?: ObjectMap) {
 export function GetBaseAreaList(data: ObjectMap, options?: ObjectMap) {
 	return get(apiUrl + '/base/api/area_list', data, options)
 }
+
+// 查询产品属性 / product/api/product_attributes
+export function GetProductAttributes(data: ObjectMap, options?: ObjectMap) {
+	return get(apiUrl + '/product/api/product_attributes', data, options)
+}
