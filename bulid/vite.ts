@@ -10,7 +10,8 @@ import { microViteSub } from '../plugins'
 
 const target = 'http://crm_test.htwig.com'
 
-export default ({ mode }: any) => {
+export default (mode: any) => {
+	console.log(mode)
 	let configBase = ''
 	const modeData = loadEnv(mode, process.cwd())
 	console.log(modeData)
