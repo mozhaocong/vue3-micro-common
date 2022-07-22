@@ -31,7 +31,7 @@ const _RFormList = defineComponent({
 				const listRows = props.list.map((res: any) => {
 					return { ...res, name: formRulesName(props, res, index) }
 				})
-				const list = <RFormItem model={item} rows={listRows} v-slots={slots} {...formItemConfig(props)} />
+				const list = <RFormItem model={item} rows={listRows} v-slots={slots} index={index} {...formItemConfig(props)} />
 				return (
 					<>
 						<div>{isFunctionOfOther(props.header, { record: item, dataSource, index: index })}</div>

@@ -25,6 +25,7 @@ const Props = {
 		type: Array as PropType<FormRowArray>,
 		required: true,
 	},
+	index: { type: Number as PropType<number>, default: 0 },
 	colSpan: [Number, String] as PropType<number | ''>,
 	formItemStyle: Object as PropType<ObjectMap>,
 } as const
@@ -42,7 +43,7 @@ const _FormItem = defineComponent({
 
 		function itemDom(row: ObjectMap) {
 			if (row.customRender) {
-				return row.customRender({ text: getFormName(props.model, row.key), record: props.model })
+				return row.customRender({ text: getFormName(props.model, row.key), record: props.model, index: props.index })
 			} else if (row.component) {
 				return itemH(isString(row.component) ? resolveComponent(row.component) : row.component, row)
 			} else if (props.customRender) {
