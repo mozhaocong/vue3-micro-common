@@ -142,7 +142,7 @@ export const microRouter = {
 	productsVite: {
 		path: '/childProducts',
 		name: 'childProductsVite',
-		redirect: '/childProducts/productsVite#/productsTest',
+		redirect: '/childProducts/productsVite#/information',
 		meta: {
 			title: 'productsVite',
 			keepAlive: true,
