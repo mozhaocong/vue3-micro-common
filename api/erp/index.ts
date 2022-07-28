@@ -11,7 +11,7 @@ try {
 		case 'prod':
 			erpUrl = 'https://erp.admin.htwig.com'
 			apiUrl = 'https://portal.admin.htwig.com'
-			ossUrl = 'http://oss.htwig.com'
+			ossUrl = 'https://oss.htwig.com'
 			break
 	}
 } catch (e) {
