@@ -42,6 +42,7 @@ export default defineComponent({
 					title={prop.value.title}
 					width={600}
 					visible={prop.value.showImport}
+					closable={false}
 					footer={[<Button onClick={onCancel}>关闭</Button>]}
 				>
 					<p>在导入资料时，如表格不规范,可能会导致导入失败，请用下载的导入表格模板进行导入</p>

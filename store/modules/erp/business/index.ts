@@ -36,7 +36,7 @@ export const state: ObjectMap = {
 	basicCurrencyList: [], // 币种
 	basicCurrencyListConfig: { value: 'id', label: 'name_cn', data: ['data', 'result'] },
 	basicProductAttributesList: [], // 产品属性
-	basicProductAttributesListConfig: { value: 'id', label: 'name', data: ['data', 'result'] },
+	basicProductAttributesListConfig: { value: 'id', label: 'name', data: ['data', 'result'], params: [{ ppx: 11 }] },
 }
 
 function getStoreConfig(type: string, that: any): ObjectMap {
@@ -76,10 +76,12 @@ export const actions = {
 	async getBasicDataList({ commit, state }: ObjectMap, item: { type: string; params?: ObjectMap }) {
 		const { type, params = {} } = item
 		const throttleName = 'get' + type.slice(0, 1).toUpperCase() + type.slice(1) + 'Throttle'
+		const config = state[type + 'Config'] || {}
+		const defParam = config.params?.[0] || {}
 		if (has(throttleName, throttleObject)) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			const res = await throttleObject[throttleName]({ size: 999, current: 1, ...params })
+			const res = await throttleObject[throttleName]({ size: 999, current: 1, ...defParam, ...params })
 			if (isNil(res) || isEmpty(res)) {
 				return
 			}
