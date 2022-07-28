@@ -18,3 +18,8 @@ export function GetBaseAreaList(data: ObjectMap, options?: ObjectMap) {
 export function GetProductAttributes(data: ObjectMap, options?: ObjectMap) {
 	return get(apiUrl + '/product/api/product_attributes', data, options)
 }
+
+// 查询一级产品属性 / product/api/product_attributes
+export function GetProductFirstAttributes(data: ObjectMap, options?: ObjectMap) {
+	return get(apiUrl + '/product/api/product_first_attributes', data, options)
+}
