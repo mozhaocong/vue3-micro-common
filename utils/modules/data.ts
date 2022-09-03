@@ -1,4 +1,4 @@
-import { includes, isNil } from 'ramda'
+import { isNil } from 'ramda'
 import { isNumber, isObject, isTrue } from '@/utils'
 import dayjs from 'dayjs'
 
@@ -204,4 +204,23 @@ export function dataNumberToString(source: any) {
 
 		return result
 	}
+}
+
+export function setTreeData(item: {
+	data: ObjectMap[]
+	idKey?: string
+	pidKey?: string
+	childrenName?: string
+	setPushHooks?: (father: ObjectMap, children: any[]) => void
+}) {
+	const { data, idKey = 'id', pidKey = 'pId', childrenName = 'children', setPushHooks } = item
+	return data.filter((father) => {
+		const children = data.filter((item) => item[pidKey] === father[idKey])
+		if (isTrue(setPushHooks) && isTrue(children)) {
+			// @ts-ignore
+			setPushHooks(father, children)
+		}
+		father[childrenName] = children && children.length ? children : ''
+		return data.every((e) => e[idKey] != father[pidKey])
+	})
 }

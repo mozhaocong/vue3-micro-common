@@ -38,6 +38,15 @@ const index: RouteRecordRaw = {
 				keepAlive: true,
 			},
 		},
+		{
+			path: '/basis/pageGroup',
+			name: 'basisPageGroup',
+			component: () => import('@/views/modules/basis/basisPageGroup'),
+			meta: {
+				title: '群组管理',
+				keepAlive: true,
+			},
+		},
 	],
 }
 export default index

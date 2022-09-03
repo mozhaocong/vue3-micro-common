@@ -22,6 +22,7 @@ import {
 	arrayObjectJudgeNullObject,
 	dayJsDataToString,
 	dataNumberToString,
+	setTreeData,
 } from './modules/data'
 import {
 	configCurryFilter,
@@ -88,4 +89,5 @@ export {
 	dayJsDataToString,
 	dataNumberToString,
 	exportApiData,
+	setTreeData,
 }
