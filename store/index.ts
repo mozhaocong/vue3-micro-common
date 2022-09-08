@@ -24,10 +24,22 @@ type testData = {
 	[K in keyof vuexModulesType]: getCommitName<vuexModulesType[K]>
 }
 
+type keyofData<K, T> = `${K & string}/${keyof T & string}`
+
+type testTest = {
+	[k in keyof testData]: keyofData<k, testData[k]>
+}[keyof testData]
+
 type storeType = {
 	getters?: ObjectMap
-	commit?: ObjectMap
+	commitA(item: testTest): string
+
 	dispatch?: ObjectMap
 }
 
-const store: storeType = {}
+const store: storeType = {
+	commitA: (item) => {
+		return '1'
+	},
+}
+store.commitA('erpLayout/AddDeleteRouterTagList')
