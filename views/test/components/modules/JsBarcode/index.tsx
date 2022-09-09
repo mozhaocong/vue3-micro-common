@@ -1,9 +1,6 @@
-import { defineComponent, onMounted, reactive, ref } from 'vue'
-import Sortable from 'sortablejs'
+import { defineComponent, ref } from 'vue'
 import { Button } from 'ant-design-vue'
-import { deepClone, jsBarcodeInit } from '@/utils'
-import { clone } from 'ramda'
-import QRCode from 'qrcodejs2-fix'
+import { jsBarcodeInit } from '@/utils'
 
 export default defineComponent({
 	setup() {

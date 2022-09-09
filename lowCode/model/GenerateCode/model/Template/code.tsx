@@ -3,7 +3,7 @@ export function testInitial(pageKey: string, configArray: string[]) {
 	return `
   import { defineComponent, ref } from 'vue'
   import { Common, RSearch, RTable } from '@/components'
-  import { SearchRow, TableRow } from './util'
+  import { SearchRow } from './util'
   ${operationComponents ? "import Modules from './modules'" : ''}
   import { defaultRowProps } from '@/config'
   const { useSearch, useRequest, commonly } = Common
@@ -49,7 +49,7 @@ export function testInitial(pageKey: string, configArray: string[]) {
             loading={loading.value}
             search={rSearch}
             v-slots={{
-              ...searchSlots(true),
+              ...searchSlots(true)
             }}
             {...{ rowProps: defaultRowProps}}
             model={searchForm.value}

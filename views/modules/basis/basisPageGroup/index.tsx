@@ -4,10 +4,7 @@ import { groupFindAll } from '@/api/localhost/base/group'
 import { Tree, Dropdown, Modal } from 'ant-design-vue'
 import { RForm } from '@/components'
 
-
-const groupRowList:FormRowArray = [
-	{name: '群组名称'}
-]
+const groupRowList: FormRowArray = [{ name: '群组名称' }]
 
 export default defineComponent({
 	name: 'basisPageGroup',
@@ -55,7 +52,7 @@ export default defineComponent({
 				)}
 				<Modal visible={modalVisible.value}>
 					<div>
-						<RForm rows={} >
+						<RForm rows={} />
 					</div>
 				</Modal>
 			</div>

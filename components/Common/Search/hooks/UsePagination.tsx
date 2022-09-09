@@ -1,4 +1,3 @@
-import { pick } from 'ramda'
 import { ref } from 'vue'
 import { Button, InputNumber, Pagination, Select } from 'ant-design-vue'
 import { ParamsPaginationKey } from '@/components/Common/Search/hooks/UseRequest'
@@ -26,14 +25,14 @@ export interface DefaultConfig extends Pagination {
 /**
  * 集成分页
  * @param search
- * @param defaultConfig
+ // * @param defaultConfig
  * @param paramsPaginationKey
  * @returns
  */
 export function usePagination(
 	search: (type?: PageType) => void,
-	paramsPaginationKey: ParamsPaginationKey,
-	defaultConfig?: DefaultConfig
+	paramsPaginationKey: ParamsPaginationKey
+	// defaultConfig?: DefaultConfig
 ) {
 	const total = ref(0)
 	const pageSize = ref(10)
@@ -60,7 +59,7 @@ export function usePagination(
 
 	const jumpPage = ref(undefined)
 
-	function onPressEnter(e: any) {
+	function onPressEnter() {
 		handleCurrentChange(jumpPage.value as any, pageSize.value)
 		jumpPage.value = undefined
 	}

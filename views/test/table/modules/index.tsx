@@ -1,4 +1,4 @@
-import { defineComponent, computed, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import Form from './Form/index'
 import Form2 from './Form2/index'
 const Props = {
@@ -11,7 +11,7 @@ const Props = {
 }
 export default defineComponent({
 	props: Props,
-	setup(prop, { emit }) {
+	setup(prop) {
 		return () => (
 			<>
 				{prop.value.form && <Form v-model={[prop.value.form, 'value']} />}

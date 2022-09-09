@@ -8,7 +8,7 @@ export default defineComponent({
 	setup(porp, { emit }) {
 		const model = ref<ObjectMap>({})
 		const rows = new FormRow(model).data
-		function finish(value?: any) {
+		function finish() {
 			emit('update:value', false)
 		}
 		return () => (

@@ -1,7 +1,6 @@
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import Sortable from 'sortablejs'
 import { Button } from 'ant-design-vue'
-import { deepClone } from '@/utils'
 import { clone } from 'ramda'
 
 export default defineComponent({

@@ -43,7 +43,7 @@ export default defineComponent({
 		function operation(item: ObjectMap) {
 			moduleState.value = item
 		}
-		const { run, data, renderPagination, getPagination, loading, refresh } = useRequest(customer, {
+		const { run, renderPagination, getPagination, loading, refresh } = useRequest(customer, {
 			manual: true,
 			pagination: true,
 			defaultParams: [[]],

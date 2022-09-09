@@ -6,7 +6,6 @@ import FormTable from '@/views/test/components/modules/FormTable'
 import FormAddFormTable from '@/views/test/components/modules/FormAddFormTable'
 import SortableTest from './modules/SortableTest/index'
 import MinMaxInputString from '@/components/Common/MinMaxInputString'
-import { Button } from 'ant-design-vue'
 import JsBarcode from './modules/JsBarcode'
 import JsQRCode from './modules/JsQRCode'
 export default defineComponent({

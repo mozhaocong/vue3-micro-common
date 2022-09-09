@@ -1,5 +1,5 @@
 import { computed, defineComponent, PropType, ref, watch } from 'vue'
-import { Dropdown, InputSearch, Menu, MenuItem, Tree } from 'ant-design-vue'
+import { Dropdown, InputSearch, Tree } from 'ant-design-vue'
 import { debounce, deepClone, isTrue } from '@/utils'
 
 interface fieldNamesType {

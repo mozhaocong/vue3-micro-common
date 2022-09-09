@@ -1,4 +1,3 @@
-import { configCurryFilter } from '@/utils'
 import { FormBasicData, RRangePicker } from '@/components'
 
 export class SearchRow {
@@ -73,7 +72,7 @@ export class SearchRow {
 
 export class TableRow {
 	data: tableColumnsType
-	constructor(operationClick?: any) {
+	constructor() {
 		this.data = [
 			{ title: 'asna', dataIndex: 'null1', align: 'center', width: 300 },
 			{ title: 'asyhfk,', dataIndex: 'null2', align: 'center', width: 300 },

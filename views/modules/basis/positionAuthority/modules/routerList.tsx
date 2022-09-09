@@ -40,7 +40,7 @@ export default defineComponent({
 					onSelect={(item) => {
 						emit('select', item)
 					}}
-					dropdownOverlay={(item) => {
+					dropdownOverlay={() => {
 						return (
 							<Menu>
 								<MenuItem key={1}>添加路由</MenuItem>

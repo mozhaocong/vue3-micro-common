@@ -1,6 +1,6 @@
 import { computed, defineComponent, PropType, markRaw, App, Plugin } from 'vue'
 import { configBusinessDataOptions } from '@/config'
-import { isArray, isNumber, isTrue } from '@/utils'
+import { isArray, isTrue } from '@/utils'
 import { map } from 'ramda'
 import { Select } from 'ant-design-vue'
 // import { isTrue } from 'rantion-tools/es'
@@ -98,8 +98,7 @@ const FormConfig = defineComponent({
 					filterOption={(inputValue, option: any) => {
 						const label = option[props?.fieldNames?.label] + '' || ''
 						const value = option[props?.fieldNames?.value] + '' || ''
-						if (label.includes(inputValue + '') || value.includes(inputValue + '')) return true
-						return false
+						return label.includes(inputValue + '') || value.includes(inputValue + '')
 					}}
 					fieldNames={props.fieldNames}
 					onChange={onChange}

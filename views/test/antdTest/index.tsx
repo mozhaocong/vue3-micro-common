@@ -11,7 +11,7 @@ export default defineComponent({
 		]
 		class TableRow {
 			data: tableColumnsType
-			constructor(operationClick?: any) {
+			constructor() {
 				this.data = [
 					{ title: 'asna1', dataIndex: 'null1', align: 'center', width: 300 },
 					{ title: 'asyhfk,', dataIndex: 'null2', align: 'center', width: 300 },
@@ -57,7 +57,7 @@ export default defineComponent({
 			})
 			watch(
 				() => tableRow.value,
-				async (value) => {
+				async () => {
 					setTimeout(() => {
 						scrollWidth.value = tableDom?.offsetWidth
 					}, 0)

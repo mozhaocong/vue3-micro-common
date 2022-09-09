@@ -1,13 +1,13 @@
-import { PropType, ref, defineComponent, App, Plugin, renderSlot, watch, computed } from 'vue'
-import { DownOutlined, SearchOutlined } from '@ant-design/icons-vue'
+import { App, computed, defineComponent, Plugin, PropType, ref, renderSlot, watch } from 'vue'
+import { DoubleRightOutlined, SearchOutlined } from '@ant-design/icons-vue'
 import { RForm } from '@/components'
 import { clone } from 'ramda'
 import Reconfigure from '../Configure'
 import { deepClone, isTrue } from '@/utils'
 import { columnsSetArrayDiffArray, setCustomRow } from '@/components/Common/utils'
 import { Button, Divider } from 'ant-design-vue'
-import { DoubleRightOutlined } from '@ant-design/icons-vue'
 import './index.less'
+
 const Props = {
 	model: {
 		type: Object as PropType<ObjectMap>,
@@ -126,10 +126,6 @@ const Rsearch = defineComponent({
 			}
 		}
 		function filterColumnsData(data: any[]) {
-			const returnData = data.filter((item, index) => {
-				if (props.expand === null || expandData.value) return true
-				return index + 1 <= props.lineLength
-			})
 			// returnData.push({
 			// 	render: () => {
 			// 		return (
@@ -160,7 +156,10 @@ const Rsearch = defineComponent({
 			// 		)
 			// 	},
 			// })
-			return returnData
+			return data.filter((item, index) => {
+				if (props.expand === null || expandData.value) return true
+				return index + 1 <= props.lineLength
+			})
 		}
 
 		function searchQuery() {

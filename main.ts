@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import Antd from 'ant-design-vue'
 import { axiosInit } from '@/http'
-import { ISMICROCHILD, microAppInit, MICROWINDOWDATA } from '@/microAppMethod'
+import { ISMICROCHILD, microAppInit } from '@/microAppMethod'
 import { isTrue } from '@/utils'
 import { hover } from '@/directive'
 // 日期中文问题

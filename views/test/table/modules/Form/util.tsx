@@ -2,7 +2,7 @@ import { FormConfig } from '@/components'
 
 export class FormRow {
 	data: FormRowArray
-	constructor(formModel?: ObjectMap) {
+	constructor() {
 		this.data = [
 			{
 				title: '供应商',
