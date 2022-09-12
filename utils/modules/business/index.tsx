@@ -7,20 +7,28 @@ export function requestJudgment(item: ObjectMap): boolean {
 	return [200, 0].includes(item.code)
 }
 
-export function asyncApiRes(Api: Promise<any>, data: { value?: any }, call?: (item: any) => void): { value: any } {
+export function asyncApiRes(
+	Api: Promise<any>,
+	data: { value?: any },
+	call?: (item: any) => void
+): { run: () => any; data: any } {
 	const returnData = ref()
-	Api.then((item) => {
-		if (requestJudgment(item)) {
-			if (isTrue(data) && isObject(data) && isObject(item.data.result)) {
-				data.value = item.data.result
+	const run = () => {
+		Api.then((item) => {
+			if (requestJudgment(item)) {
+				if (isTrue(data) && isObject(data) && isObject(item.data.result)) {
+					data.value = item.data.result
+				}
+				returnData.value = item
+				if (call) {
+					call(item)
+				}
 			}
-			returnData.value = item
-			if (call) {
-				call(item)
-			}
-		}
-	})
-	return returnData
+		})
+		return returnData
+	}
+	run()
+	return { data: returnData, run }
 }
 
 export function routeToRouterTagListData(route: ObjectMap) {

@@ -47,6 +47,15 @@ const index: RouteRecordRaw = {
 				keepAlive: true,
 			},
 		},
+		{
+			path: '/basis/pageRole',
+			name: 'basisPageRole',
+			component: () => import('@/views/modules/basis/basisPageRole'),
+			meta: {
+				title: '职位管理',
+				keepAlive: true,
+			},
+		},
 	],
 }
 export default index

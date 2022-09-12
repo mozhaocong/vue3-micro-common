@@ -69,8 +69,8 @@ export function useRequest<T extends (...arg: any) => Promise<any>>(
 	type ServiceParam = Parameters<typeof service>
 	const { getPagination, total, pageSize, renderPagination, current } = usePagination(
 		search,
-		options.paramsPaginationKey ?? defParamsPaginationKey,
-		options.paginationDefaultConfig
+		options.paramsPaginationKey ?? defParamsPaginationKey
+		// options.paginationDefaultConfig
 	)
 	const params = ref(options?.defaultParams ?? []) as Ref<Parameters<typeof service>>
 	function run(...parm: ServiceParam) {
