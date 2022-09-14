@@ -8,8 +8,10 @@ import ComponentPageCache from '@/components/Business/ComponentPageCache'
 import KeepAliveView from './KeepAliveView/index.vue'
 import RRangePicker from './Common/RangePicker'
 import ComponentsUtil from '@/components/Business/ComponentsUtil'
+import SimpleSearchTable from '@/components/Common/SimpleSearchTable'
 
 const { RSearch, RForm, RTable, MinMaxInput, MinMaxInputString, RFormList, RFormTable } = Common
+
 export {
 	PassWordInput,
 	RSearch,
@@ -27,6 +29,7 @@ export {
 	MinMaxInputString,
 	ComponentPageCache,
 	ComponentsUtil,
+	SimpleSearchTable,
 }
 
 const components = [PassWordInput, RSearch, RForm, RTable, FormBasicData, FormConfig, FormRadioGroup, MinMaxInput]

@@ -1,34 +1,68 @@
-import { defineComponent } from 'vue'
-import { Common } from '@/components'
-import { roleFindAll } from '@/api/localhost/base/role'
-import { Button } from 'ant-design-vue'
-const { useRequest } = Common
+import { defineComponent, ref } from 'vue'
+import { Common, SimpleSearchTable } from '@/components'
+import { baseCountry } from '@/api/erp/base'
+
+function setSearchRow(data: any) {
+	return [
+		{
+			title: '国家(中文)',
+			key: 'no',
+			props: {
+				onChange: (item: any) => {
+					console.log(item, data)
+				},
+			},
+		},
+	]
+}
 
 export default defineComponent({
 	name: 'basisPageRole',
 	setup() {
-		const { run, data } = useRequest(roleFindAll, {
-			manual: true,
-			onSuccess: (item) => {
-				console.log('item', item)
+		let data: any = null
+		const searchRow = ref([
+			{
+				title: '国家(中文)',
+				key: 'no',
+				props: {
+					onChange: (item: any) => {
+						data.value.no1 = 123
+					},
+				},
 			},
-		})
-		setTimeout(() => {
-			console.log(data)
-		}, 1000)
+			{
+				title: '国家(中文)',
+				key: 'no1',
+				display: () => {
+					return data?.value?.no == 11
+				},
+				props: {
+					onChange: (item: any) => {
+						console.log(item, data.value)
+					},
+				},
+			},
+		])
+		const tableRow = ref([
+			{ title: '中文国家/地区名称', dataIndex: 'name_cn', align: 'center', width: 300 },
+			{ title: '英文国家/地区名称', dataIndex: 'name', align: 'center', width: 300 },
+		])
+		function onInitComplete(item: any) {
+			console.log(item)
+			data = item.searchForm
+			searchRow.value = setSearchRow(item) as any
+		}
 		return () => (
-			<div>
-				{data.value?.data?.map((item: any) => {
-					return JSON.stringify(item)
-				})}
-				<Button
-					onClick={() => {
-						run()
-					}}
-				>
-					刷新
-				</Button>
-			</div>
+			<SimpleSearchTable
+				pageKey="basisPageRole"
+				onInitComplete={onInitComplete}
+				searchRow={searchRow.value}
+				tableRow={tableRow.value}
+				useRequestApi={baseCountry}
+				tableDataSource={(item) => {
+					return item?.data?.data || []
+				}}
+			/>
 		)
 	},
 })

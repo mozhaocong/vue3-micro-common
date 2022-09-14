@@ -1,63 +1,65 @@
-import { computed, defineComponent, PropType, ref } from 'vue'
-import { Common, RSearch, RTable } from '@/components'
-import { customer } from '@/api/erp/crm/customer'
+import { defineComponent, PropType, ref } from 'vue'
+import { RSearch, RTable } from '@/components'
 import { defaultRowProps } from '@/config'
-import { isTrue } from '@/utils'
-const { useSearch, useRequest, commonly } = Common
+import { useSearch } from '@/components/Common/Search/hooks/UseSearch'
+import { commonly } from '@/components/Common/Search/hooks/PublicMethod'
+import { useRequest } from '@/components/Common/Search/hooks/UseRequest'
+// const { useSearch, useRequest, commonly } = Common
 
 type optionConfig = {
-	setTableDataSource?: (item: ObjectMap[]) => ObjectMap[]
+	// setTableDataSource?: (item: ObjectMap[]) => ObjectMap[]
 }
 const Props = {
 	pageKey: { type: String as PropType<string>, required: true },
 	searchRow: { type: Array as PropType<any[]>, required: true },
 	tableRow: { type: Array as PropType<any[]>, required: true },
+	useRequestApi: { type: Function as PropType<() => Promise<any>>, required: true },
+	tableDataSource: { type: Function as PropType<(item: ObjectMap) => any[]>, required: true },
 	optionConfig: { type: Object as PropType<optionConfig> },
 } as const
 export default defineComponent({
 	props: Props,
-	setup(props, { expose }) {
-		const { setTableDataSource } = props.optionConfig || {}
+	emits: ['initComplete'],
+	setup(props, { expose, emit }) {
 		const { searchForm } = useSearch<ObjectMap>({})
 		const pageSate = ref({}) // 搜索表单的特殊参数数据列表
 		const searchRow = props.searchRow // 搜索表单的数据列表
 		const dataSource = ref<any[]>([])
-		const { run, data, runSearchData, renderPagination, getPagination, loading, refresh, pageSize, current } =
-			useRequest(customer, {
+		const { run, runSearchData, renderPagination, getPagination, loading, refresh, pageSize, current } = useRequest(
+			props.useRequestApi,
+			{
 				manual: true,
 				pagination: true,
 				defaultParams: [],
 				onSuccess: (item) => {
-					if (setTableDataSource) {
-						dataSource.value = setTableDataSource(item)
-					}
+					dataSource.value = props.tableDataSource(item)
 				},
-			})
+			}
+		)
 
-		const tableDataSource = computed(() => {
-			return []
-		})
 		const { searchSlots, rSearch, rClear } = commonly({
 			pageSate,
 			searchForm,
 			searchRows: searchRow,
 			run,
 			getPagination,
-			setSearchData(item) {
-				if (isTrue(item.category)) {
-					item.category = item.category.join(',')
-				}
-				return item
-			},
+			// setSearchData(item) {
+			// 	if (isTrue(item.category)) {
+			// 		item.category = item.category.join(',')
+			// 	}
+			// 	return item
+			// },
 		})
 
 		const tableRow = props.tableRow
 
-		expose({ pageSize, current, data })
+		expose({ pageSize, current, dataSource })
+		emit('initComplete', { searchForm })
+
 		return () => (
 			<div>
 				<RSearch
-					searchKey={pageKey + 'Search'}
+					searchKey={props.pageKey + 'Search'}
 					clear={rClear}
 					loading={loading.value}
 					search={rSearch}
@@ -69,9 +71,9 @@ export default defineComponent({
 					rows={searchRow}
 				/>
 				<RTable
-					searchKey={pageKey + 'Table'}
+					searchKey={props.pageKey + 'Table'}
 					refresh={refresh}
-					dataSource={data.value?.data?.data}
+					dataSource={dataSource.value}
 					columns={tableRow}
 					{...{ loading: loading.value }}
 				/>

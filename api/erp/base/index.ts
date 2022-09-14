@@ -7,3 +7,6 @@ import { apiUrl } from '@/api/erp'
 export function currencyList(data = {}, options?: ObjectMap) {
 	return get(apiUrl + '/base/api/currency_list', data, options)
 }
+export function baseCountry(data = {}, options?: ObjectMap) {
+	return get(apiUrl + '/base/api/country', data, options)
+}
