@@ -112,9 +112,6 @@ export default defineComponent({
 														<Popconfirm title={`确定删除 ${item.groupName}`} onConfirm={() => deleteGroup(item.data)}>
 															<a-menu-item key="delete">删除</a-menu-item>
 														</Popconfirm>
-														{/*<a-menu-item key="delete">*/}
-														{/*	删除*/}
-														{/*</a-menu-item>*/}
 													</a-menu>
 												)
 											},

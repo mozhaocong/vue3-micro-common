@@ -1,68 +1,71 @@
-import { defineComponent, ref } from 'vue'
-import { Common, SimpleSearchTable } from '@/components'
-import { baseCountry } from '@/api/erp/base'
+import { defineComponent, reactive, ref } from 'vue'
+import { SimpleSearchTable } from '@/components'
+import { roleFindParams } from '@/api/localhost/base/role'
+import { Button } from 'ant-design-vue'
+import AssociationGroup from './model/AssociationGroup'
+function searchRow() {
+	const data: FormRowArray = [
+		{ key: 'id', title: 'ID' },
+		{ key: 'roleName', title: '角色名称' },
+	]
+	return data
+}
 
-function setSearchRow(data: any) {
-	return [
+function tableRow(config: ObjectMap): formTableColumnsType {
+	const data: formTableColumnsType = [
+		{ dataIndex: 'id', title: 'ID', width: 100, align: 'center' },
+		{ dataIndex: 'roleName', title: '角色名称', width: 100, align: 'center' },
+		{ dataIndex: 'createdAt', title: '创建时间', width: 100, align: 'center' },
+		{ dataIndex: 'updateAt', title: '更新时间', width: 100, align: 'center' },
 		{
-			title: '国家(中文)',
-			key: 'no',
-			props: {
-				onChange: (item: any) => {
-					console.log(item, data)
-				},
+			dataIndex: 'operate',
+			title: '操作',
+			align: 'center',
+			width: 100,
+			customRender: ({ record }) => {
+				return (
+					<div>
+						<Button onClick={() => config.associationGroup(record)}>关联群组</Button>
+					</div>
+				)
 			},
 		},
 	]
+	return data
 }
 
 export default defineComponent({
 	name: 'basisPageRole',
 	setup() {
-		let data: any = null
-		const searchRow = ref([
-			{
-				title: '国家(中文)',
-				key: 'no',
-				props: {
-					onChange: (item: any) => {
-						data.value.no1 = 123
-					},
-				},
-			},
-			{
-				title: '国家(中文)',
-				key: 'no1',
-				display: () => {
-					return data?.value?.no == 11
-				},
-				props: {
-					onChange: (item: any) => {
-						console.log(item, data.value)
-					},
-				},
-			},
-		])
-		const tableRow = ref([
-			{ title: '中文国家/地区名称', dataIndex: 'name_cn', align: 'center', width: 300 },
-			{ title: '英文国家/地区名称', dataIndex: 'name', align: 'center', width: 300 },
-		])
+		let searchForm = ''
+		const operateData = reactive({
+			associationGroupVisible: false,
+		})
 		function onInitComplete(item: any) {
-			console.log(item)
-			data = item.searchForm
-			searchRow.value = setSearchRow(item) as any
+			searchForm = item.searchForm
+		}
+		const tableOperateConfig = {
+			associationGroup: (item: any) => {
+				operateData.associationGroupVisible = true
+				// console.log('item', item)
+			},
 		}
 		return () => (
-			<SimpleSearchTable
-				pageKey="basisPageRole"
-				onInitComplete={onInitComplete}
-				searchRow={searchRow.value}
-				tableRow={tableRow.value}
-				useRequestApi={baseCountry}
-				tableDataSource={(item) => {
-					return item?.data?.data || []
-				}}
-			/>
+			<>
+				<SimpleSearchTable
+					pageKey="basisPageRole"
+					onInitComplete={onInitComplete}
+					searchRow={searchRow()}
+					tableRow={tableRow(tableOperateConfig)}
+					useRequestApi={roleFindParams}
+					tableDataSource={(item) => {
+						return item?.data?.list || []
+					}}
+				/>
+				{operateData.associationGroupVisible && (
+					<AssociationGroup v-model={[operateData.associationGroupVisible, 'visible']} />
+				)}
+			</>
 		)
 	},
 })
