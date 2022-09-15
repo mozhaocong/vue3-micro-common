@@ -38,7 +38,7 @@ export default defineComponent({
 			},
 		}) // 搜索表单的特殊参数数据列表
 		const searchRow = new SearchRow(searchForm).data // 搜索表单的数据列表
-		const tableRow = new TableRow({ operation }).data // 表单的数据列表
+		const tableRow = new TableRow().data // 表单的数据列表
 		const moduleState = ref({}) //表单操作列 操作modules组件的参数
 		function operation(item: ObjectMap) {
 			moduleState.value = item
