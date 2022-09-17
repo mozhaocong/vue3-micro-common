@@ -54,7 +54,7 @@ export default defineComponent({
 		const tableRow = props.tableRow
 
 		expose({ pageSize, current, dataSource })
-		emit('initComplete', { searchForm })
+		emit('initComplete', { searchForm, refresh })
 
 		return () => (
 			<div>
