@@ -28,6 +28,7 @@ export default defineComponent({
 		onMounted(() => {
 			// 给router-view 高度
 			const data: any = document.querySelector('.ht_router_list')
+			if (!data) return
 			const marginBottom: any = getComputedStyle(data).marginBottom.replace('px', '')
 			const marginTop: any = getComputedStyle(data).marginTop.replace('px', '')
 			const tabListHeight = marginBottom * 1 + marginTop * 1 + data.offsetHeight

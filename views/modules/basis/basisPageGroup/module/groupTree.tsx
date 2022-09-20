@@ -10,7 +10,7 @@ const groupRowList: FormRowArray = [
 
 export default defineComponent({
 	emits: ['click'],
-	setup() {
+	setup(props, { emit }) {
 		const treeData = ref<any[]>([])
 		const buttonLoading = ref(false)
 		const selectedKeys = ref<any[]>([])
@@ -81,9 +81,9 @@ export default defineComponent({
 
 		function onSelect(item: any, e: any) {
 			const {
-				node: { eventKey },
+				node: { eventKey, dataRef },
 			} = e
-			console.log(item)
+			emit('click', dataRef)
 			selectedKeys.value = [eventKey]
 		}
 
