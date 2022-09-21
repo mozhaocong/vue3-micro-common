@@ -23,7 +23,11 @@ export default defineComponent({
 		let currentRecord: any = null
 		function initData() {
 			asyncApiRes(groupFindParams(), {}, (item) => {
-				const data = setTreeData({ data: item.data })
+				console.log('item', item)
+				const {
+					data: { list },
+				} = item
+				const data = setTreeData({ data: list })
 				treeData.value = data
 			})
 		}

@@ -1,6 +1,8 @@
 import { defineComponent, PropType, ref, watch } from 'vue'
 import { Button } from 'ant-design-vue'
 import AddRole from './addRole'
+import { isTrue, requestJudgment } from '@/utils'
+import { roleFindParams } from '@/api/localhost/base/role'
 
 const Props = {
 	recordData: { type: Object as PropType<ObjectMap>, required: true },
@@ -14,10 +16,18 @@ export default defineComponent({
 		const showAddRole = ref(false)
 		watch(
 			() => props.recordData,
-			() => {
-				const { roleList: recordRoleList } = props.recordData || {}
-				roleList.value = recordRoleList || []
-				console.log(recordRoleList)
+			async () => {
+				const { id } = props.recordData || {}
+				roleList.value = []
+				if (!isTrue(id)) {
+					return
+				}
+				const res = await roleFindParams({ groupId: id })
+				if (!requestJudgment(res)) return
+				const {
+					data: { list },
+				} = res
+				roleList.value = list
 			},
 			{
 				immediate: true,

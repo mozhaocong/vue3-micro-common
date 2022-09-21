@@ -50,6 +50,7 @@ const propsData = {
 		default: false,
 	},
 	scrollDom: null, // 父类的滚动节点
+	isCustomRow: { type: Boolean as PropType<boolean>, default: true }, // 是否显示自定按钮
 } as const
 
 const _Table = defineComponent({
@@ -147,8 +148,10 @@ const _Table = defineComponent({
 
 		function setTableColumnsData() {
 			let data: any
-			if (isTrue(props.searchKey)) {
-				data = localStorage.getItem(props.searchKey + '-table')
+			if (props.isCustomRow) {
+				if (isTrue(props.searchKey)) {
+					data = localStorage.getItem(props.searchKey + '-table')
+				}
 			}
 			if (isTrue(data)) {
 				const columnsCopy = propsColumns.value.map((item) => {
@@ -184,15 +187,17 @@ const _Table = defineComponent({
 						<span style="font-size: 16px;">{props.title ?? '数据列表'}</span>
 						{props.setup && (
 							<>
-								<Button
-									type="primary"
-									style="margin: 0 0 0 16px;"
-									onClick={() => {
-										visible.value = true
-									}}
-								>
-									自定义显示
-								</Button>
+								{props.isCustomRow && (
+									<Button
+										type="primary"
+										style="margin: 0 0 0 16px;"
+										onClick={() => {
+											visible.value = true
+										}}
+									>
+										自定义显示
+									</Button>
+								)}
 								<Button loading={props.loading} type="primary" style="margin: 0 0 0 16px;" onClick={refresh}>
 									刷新页面
 								</Button>

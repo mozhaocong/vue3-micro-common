@@ -56,6 +56,7 @@ const Props = {
 		required: true,
 	},
 	colSpan: { type: [Number, String] as PropType<number | ''>, default: '' },
+	isCustomRow: { type: Boolean as PropType<boolean>, default: true }, // 是否显示自定按钮
 } as const
 
 const Rsearch = defineComponent({
@@ -63,7 +64,6 @@ const Rsearch = defineComponent({
 	props: Props,
 	emits: ['update:expand'],
 	setup(props, { emit, slots, attrs }) {
-		// console.log(attrs)
 		const customRow = ref<FormRowArray>([]) // 用户自定义的
 		const propsRows = ref<any[]>([])
 		const columnsData = ref<any[]>([])
@@ -110,8 +110,10 @@ const Rsearch = defineComponent({
 
 		function setColumnsData() {
 			let data: any
-			if (isTrue(props.searchKey)) {
-				data = localStorage.getItem(props.searchKey + '-search')
+			if (props.isCustomRow) {
+				if (isTrue(props.searchKey)) {
+					data = localStorage.getItem(props.searchKey + '-search')
+				}
 			}
 			if (isTrue(data)) {
 				const columnsCopy = deepClone(propsRows.value)
@@ -126,36 +128,6 @@ const Rsearch = defineComponent({
 			}
 		}
 		function filterColumnsData(data: any[]) {
-			// returnData.push({
-			// 	render: () => {
-			// 		return (
-			// 			<a-form-item labelCol={{ span: 0 }} wrapperCol={{ style: { width: '200px' } }} style={formItemStyle}>
-			// 				<a-button type="primary" loading={props.loading} onClick={props.search}>
-			// 					查询
-			// 				</a-button>
-			// 				<a-button onClick={props.clear}>清除</a-button>
-			// {
-			// 	props.expand !== null && columnsData.value.length > props.lineLength && (
-			// 		<a
-			// 			class="expand"
-			// 			onClick={() => {
-			// 				expandData.value = !expandData.value
-			// 			}}
-			// 		>
-			// 			<DownOutlined rotate={expandData.value ? 180 : 0} />
-			// 			{expandData.value ? '收起' : '更多'}
-			// 		</a>
-			// 	)
-			// }
-			// 				<a class="expand" onClick={custom}>
-			// 					<a-tooltip placement="topLeft" title="自定义显示">
-			// 						<SettingOutlined />
-			// 					</a-tooltip>
-			// 				</a>
-			// 			</a-form-item>
-			// 		)
-			// 	},
-			// })
 			return data.filter((item, index) => {
 				if (props.expand === null || expandData.value) return true
 				return index + 1 <= props.lineLength
@@ -176,22 +148,11 @@ const Rsearch = defineComponent({
 						<Button loading={props.loading} type="primary" style="margin: 0 0 0 16px;" onClick={props.clear}>
 							重置
 						</Button>
-						{/*{props.expand !== null && columnsData.value.length > props.lineLength && (*/}
-						{/*	<Button*/}
-						{/*		type="primary"*/}
-						{/*		style="margin: 0 0 0 16px;"*/}
-						{/*		onClick={() => {*/}
-						{/*			expandData.value = !expandData.value*/}
-						{/*		}}*/}
-						{/*	>*/}
-						{/*		{expandData.value ? '收起' : '更多'}查询*/}
-						{/*		<DownOutlined rotate={expandData.value ? 180 : 0} />*/}
-						{/*	</Button>*/}
-						{/*)}*/}
-
-						<Button type="primary" onClick={custom} style="margin: 0 0 0 16px;">
-							自定义显示
-						</Button>
+						{props.isCustomRow && (
+							<Button type="primary" onClick={custom} style="margin: 0 0 0 16px;">
+								自定义显示
+							</Button>
+						)}
 					</div>
 				</div>
 			)

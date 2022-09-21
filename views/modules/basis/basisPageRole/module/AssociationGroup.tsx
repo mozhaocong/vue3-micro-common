@@ -15,7 +15,10 @@ export default defineComponent({
 		const selected = ref()
 		function initData() {
 			asyncApiRes(groupFindAll(), {}, (item) => {
-				const data = setTreeData({ data: item.data })
+				const {
+					data: { list },
+				} = item
+				const data = setTreeData({ data: list })
 				treeData.value = data
 			})
 		}

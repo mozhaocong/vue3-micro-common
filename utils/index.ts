@@ -53,6 +53,7 @@ export function copyText(text: string) {
 
 import { mockDataSource } from './modules/mock'
 export { requestChangeLoading } from './modules/tools/request'
+export { editApiRequest } from './modules/business/index'
 export {
 	isTrue,
 	isString,

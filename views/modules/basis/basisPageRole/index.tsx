@@ -4,7 +4,7 @@ import { roleFindParams } from '@/api/localhost/base/role'
 import { Button } from 'ant-design-vue'
 import AssociationGroup from './module/AssociationGroup'
 import { isTrue } from '@/utils'
-function searchRow() {
+export function searchRow() {
 	const data: FormRowArray = [
 		{ key: 'id', title: 'ID' },
 		{ key: 'roleName', title: '角色名称' },
@@ -12,7 +12,7 @@ function searchRow() {
 	return data
 }
 
-function tableRow(config: ObjectMap): formTableColumnsType {
+export function tableRow(config: ObjectMap): formTableColumnsType {
 	const data: formTableColumnsType = [
 		{ dataIndex: 'id', title: 'ID', width: 100, align: 'center' },
 		{ dataIndex: 'roleName', title: '角色名称', width: 100, align: 'center' },

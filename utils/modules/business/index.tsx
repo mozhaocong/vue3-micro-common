@@ -55,3 +55,24 @@ export function exportApiData(apiUrl: string, data: ObjectMap) {
 	const params = getSearchString(data || {})
 	window.open(`${apiUrl}?token=${getToken().replace('Bearer ', '')}${isTrue(params) ? `&${params}` : ''}`)
 }
+
+export function defFunction(item?: any) {
+	return item
+}
+
+export async function editApiRequest(item: {
+	api: () => Promise<any>
+	setMethod?: (item: boolean) => void
+	callBack?: () => void
+}) {
+	const { setMethod = defFunction, api, callBack = defFunction } = item
+	setMethod(true)
+	const res = await api()
+	setMethod(false)
+	callBack()
+	if (requestJudgment(res)) {
+		return Promise.resolve(res)
+	} else {
+		return Promise.reject()
+	}
+}

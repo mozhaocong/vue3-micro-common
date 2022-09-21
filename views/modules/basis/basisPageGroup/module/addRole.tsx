@@ -1,6 +1,8 @@
 import { defineComponent, PropType, ref } from 'vue'
 import { Modal } from 'ant-design-vue'
 import { RForm } from '@/components'
+import { editApiRequest } from '@/utils'
+import { roleCreate } from '@/api/localhost/base/role'
 const Props = {
 	recordData: { type: Object as PropType<ObjectMap>, required: true },
 } as const
@@ -21,9 +23,16 @@ export default defineComponent({
 			emit('update:visible', false)
 		}
 		const loading = ref(false)
-		function finish(item: any) {
+
+		async function finish(item: any) {
 			const params = { ...item, groupId: props?.recordData?.id }
-			console.log(params)
+			const res = await editApiRequest({
+				api: () => roleCreate(params),
+				setMethod: (item) => {
+					loading.value = item
+				},
+			})
+			console.log(res)
 		}
 		return () => (
 			<Modal

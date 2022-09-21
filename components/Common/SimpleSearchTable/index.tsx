@@ -16,6 +16,7 @@ const Props = {
 	useRequestApi: { type: Function as PropType<() => Promise<any>>, required: true },
 	tableDataSource: { type: Function as PropType<(item: ObjectMap) => any[]>, required: true },
 	optionConfig: { type: Object as PropType<optionConfig> },
+	isCustomRow: { type: Boolean as PropType<boolean>, default: true }, // 是否显示自定按钮
 } as const
 export default defineComponent({
 	props: Props,
@@ -69,8 +70,10 @@ export default defineComponent({
 					{...{ rowProps: defaultRowProps }}
 					model={searchForm.value}
 					rows={searchRow}
+					isCustomRow={props.isCustomRow}
 				/>
 				<RTable
+					isCustomRow={props.isCustomRow}
 					searchKey={props.pageKey + 'Table'}
 					refresh={refresh}
 					dataSource={dataSource.value}
