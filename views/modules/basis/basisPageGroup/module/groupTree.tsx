@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue'
-import { asyncApiRes, isTrue, requestChangeLoading, setTreeData } from '@/utils'
-import { groupCreate, groupDelete, groupFindParams, groupUpdate } from '@/api/localhost/base/group'
+import { asyncApiRes, isTrue, requestChangeLoading } from '@/utils'
+import { getGroupTree, groupCreate, groupDelete, groupUpdate } from '@/api/localhost/base/group'
 import { Tree, Dropdown, Modal, Popconfirm } from 'ant-design-vue'
 import { RForm } from '@/components'
 
@@ -22,13 +22,13 @@ export default defineComponent({
 		// 当前选中数据
 		let currentRecord: any = null
 		function initData() {
-			asyncApiRes(groupFindParams(), {}, (item) => {
+			asyncApiRes(getGroupTree(), {}, (item) => {
 				console.log('item', item)
 				const {
 					data: { list },
 				} = item
-				const data = setTreeData({ data: list })
-				treeData.value = data
+				console.log('list', list)
+				treeData.value = list
 			})
 		}
 

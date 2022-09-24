@@ -57,13 +57,18 @@ export default defineComponent({
 			},
 		}
 
-		function onSuccess() {
+		function associationSuccess() {
 			simpleSearchTable.refresh()
 		}
+
 		return () => (
 			<>
 				{operateData.associationRoleVisible && (
-					<AssociationRole v-model={[operateData.associationRoleVisible, 'visible']} record={record.value} />
+					<AssociationRole
+						v-model={[operateData.associationRoleVisible, 'visible']}
+						record={record.value}
+						onSuccess={associationSuccess}
+					/>
 				)}
 				<SimpleSearchTable
 					pageKey="userManagement"

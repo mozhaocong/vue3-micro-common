@@ -3,7 +3,7 @@ import { SimpleSearchTable } from '@/components'
 import { roleFindParams } from '@/api/localhost/base/role'
 import { searchRow, tableRow } from '@/views/modules/basis/basisPageRole'
 import { Modal, Button } from 'ant-design-vue'
-import { deepClone, editApiRequest } from '@/utils'
+import { deepClone, editApiRequest, requestJudgment } from '@/utils'
 import { userUpdate } from '@/api/localhost/base/user'
 
 const Props = {
@@ -11,7 +11,7 @@ const Props = {
 } as const
 
 export default defineComponent({
-	emits: ['update:visible'],
+	emits: ['update:visible', 'success'],
 	props: Props,
 	setup(props, { emit }) {
 		const { roleList } = props.record
@@ -28,7 +28,6 @@ export default defineComponent({
 		tableRowData.forEach((item: any) => {
 			if (item.dataIndex === 'operate') {
 				item.customRender = ({ record }: any) => {
-					console.log('roleListId', roleListId, record.id)
 					return (
 						<div>
 							{roleListId.includes(record.id) ? (
@@ -45,7 +44,6 @@ export default defineComponent({
 				}
 			}
 		})
-		console.log('tableRowData', tableRowData)
 
 		async function associationClick(record: any) {
 			const params = deepClone(props.record)
@@ -56,7 +54,10 @@ export default defineComponent({
 					loading.value = item
 				},
 			})
-			console.log(res)
+			if (requestJudgment(res)) {
+				emit('success', true)
+				onCancel()
+			}
 		}
 
 		let simpleSearchTable: ObjectMap = {}

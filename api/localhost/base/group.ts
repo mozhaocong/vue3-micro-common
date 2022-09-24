@@ -18,3 +18,6 @@ export function groupCreate(data?: ObjectMap, options?: ObjectMap) {
 export function groupDelete(data?: ObjectMap, options?: ObjectMap) {
 	return post(apiUrl + '/base/group/destroy', data, options)
 }
+export function getGroupTree(data?: ObjectMap, options?: ObjectMap) {
+	return get(apiUrl + '/base/group/getGroupTree', data, options)
+}
