@@ -72,7 +72,8 @@ export default defineComponent({
 					break
 				}
 				case 'add': {
-					params = { pId: item.id, ...value }
+					params = { pId: item.id, ...value, pLevel: item.level }
+					console.log('params', params)
 					const res = await requestChangeLoading({ api: groupCreate(params), value: buttonLoading })
 					console.log(res)
 					break
