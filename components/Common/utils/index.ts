@@ -1,7 +1,7 @@
-import { ArrayKeyToMap, isFunction, isTrue } from '@/utils'
+import { arrayKeyToMap, isFunction, isTrue } from '@/utils'
 
 export function columnsSetArrayDiffArray(source: any[], comparison: any[]) {
-	const sourceObject = ArrayKeyToMap(source, 'key')
+	const sourceObject = arrayKeyToMap(source, 'key')
 	const returnData: any[] = []
 	const returnComparison: any[] = []
 	comparison.forEach((item) => {

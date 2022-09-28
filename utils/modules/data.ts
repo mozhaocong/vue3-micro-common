@@ -1,40 +1,6 @@
-import { isNil } from 'ramda'
 import { isNumber, isObject, isTrue } from '@/utils'
 import dayjs from 'dayjs'
 
-export function ObjectToArray(object: ObjectMap) {
-	return Object.keys(object).map((item) => {
-		return { value: item, label: object[item] }
-	})
-}
-
-export function ArrayKeyToMap(list: Array<ObjectMap>, key: string): Map<string, any> {
-	const data: Map<string, any> = new Map()
-	list.forEach((item) => {
-		if (item[key]) {
-			data.set(item[key], item)
-		}
-	})
-	return data
-}
-
-export function ArrayKeyToObject(list: Array<ObjectMap>, key: string): ObjectMap {
-	const data: ObjectMap = {}
-	list.forEach((item) => {
-		if (item[key]) {
-			data[item[key]] = item
-		}
-	})
-	return data
-}
-
-export function setObjetToObject(data: ObjectMap, setData: ObjectMap) {
-	for (const i in data) {
-		if (!isNil(setData[i])) {
-			data[i] = setData[i]
-		}
-	}
-}
 // 设置递归数组
 export function setArrayData(item: any[], call: (callItem: ObjectMap) => ObjectMap): ObjectMap[] {
 	return item.map((res) => {
@@ -79,45 +45,6 @@ export function getArrayFilterData(item: any[], call: (callItem: ObjectMap) => b
 	return data
 }
 
-// 递归深拷贝
-export function deepClone(source: any) {
-	if (typeof source !== 'object') {
-		// 非对象类型(undefined、boolean、number、string、symbol)，直接返回原值即可
-		return source
-	}
-	if (source === null) {
-		// 为null类型的时候
-		return source
-	}
-	if (source instanceof Date) {
-		// Date类型
-		return new Date(source)
-	}
-	if (source instanceof RegExp) {
-		// RegExp正则类型
-		return new RegExp(source)
-	}
-
-	let result: any
-	if (Array.isArray(source)) {
-		// 数组
-		result = []
-		source.forEach((item) => {
-			result.push(deepClone(item))
-		})
-		return result
-	} else {
-		// 为对象的时候
-		result = {}
-		const keys = [...Object.getOwnPropertyNames(source), ...Object.getOwnPropertySymbols(source)] // 取出对象的key以及symbol类型的key
-		keys.forEach((key) => {
-			const item = source[key]
-			result[key] = deepClone(item)
-		})
-		return result
-	}
-}
-
 // data = [{id:1},{id:2}] key= 'id' item=2
 export function ArrayObjectIncludes(data: ObjectMap[], key: string, item: string): boolean {
 	if (!isTrue(data)) return false
@@ -133,33 +60,6 @@ export function ObjectFilterNull(data: ObjectMap = {}): ObjectMap {
 		}
 	}
 	return params
-}
-
-// 判断ArrayObject是否存在空Object
-export function arrayObjectJudgeNullObject(data: Array<ObjectMap> = []): boolean {
-	let judge = true
-	for (const item of data) {
-		if (!isTrue(ObjectFilterNull(item))) {
-			judge = false
-			break
-		}
-	}
-	return judge
-}
-
-export function dayJsDataToString(data: any, format = 'YYYY-MM-DD HH:mm:ss') {
-	const returnData: ObjectMap = {}
-	for (const key in data) {
-		const item = data[key]
-		if (isObject(item)) {
-			if (item.$d && item.$M) {
-				returnData[key] = dayjs(item as any).format(format)
-				continue
-			}
-		}
-		returnData[key] = deepClone(item)
-	}
-	return returnData
 }
 
 // 数据数字转字符串

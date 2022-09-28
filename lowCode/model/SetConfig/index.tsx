@@ -1,6 +1,6 @@
 import { defineComponent, ref } from 'vue'
 import { businessOptObject } from '@/config'
-import { copyText, ObjectToArray } from '@/utils'
+import { copyText, objectToArray } from '@/utils'
 // 低代码开发
 export default defineComponent({
 	name: 'setConfig',
@@ -22,7 +22,7 @@ export default defineComponent({
 					v-model={[configSelect.value, 'value']}
 					mode="multiple"
 					autoClearSearchValue={false}
-					options={ObjectToArray(data)}
+					options={objectToArray(data)}
 					filterOption={filterOption}
 				/>
 				<div style="flex: 1;max-height: 100px;overflow: auto; box-sizing: border-box;padding: 0 10px;">
