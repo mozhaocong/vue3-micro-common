@@ -7,6 +7,7 @@ import Rconfigure from '@/components/Common/Configure'
 import { UnorderedListOutlined } from '@ant-design/icons-vue'
 import { ColumnsType } from 'ant-design-vue/lib/table/interface'
 import './index.less'
+import { isString } from 'html-mzc-tool'
 let uuid = 1
 const propsData = {
 	dataSource: {
@@ -155,7 +156,8 @@ const _Table = defineComponent({
 			}
 			if (isTrue(data)) {
 				const columnsCopy = propsColumns.value.map((item) => {
-					item.key = JSON.stringify(item.dataIndex ?? item.key)
+					const key = item.dataIndex ?? item.key
+					item.key = isString(key) ? key : JSON.stringify(key)
 					return item
 				})
 				const setData = columnsSetArrayDiffArray(columnsCopy, JSON.parse(data))

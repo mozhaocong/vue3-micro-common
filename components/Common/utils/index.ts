@@ -1,4 +1,5 @@
 import { arrayKeyToMap, isFunction, isTrue } from '@/utils'
+import { isString } from 'html-mzc-tool'
 
 export function columnsSetArrayDiffArray(source: any[], comparison: any[]) {
 	const sourceObject = arrayKeyToMap(source, 'key')
@@ -27,7 +28,7 @@ let sort = 1000
 export function setCustomRow(item: ObjectMap, setData = {}) {
 	const key = item.dataIndex ?? item.key
 	return {
-		key: JSON.stringify(key),
+		key: isString(key) ? key : JSON.stringify(key),
 		title: item.title,
 		sort: sort++,
 		required: item.required ?? false,
